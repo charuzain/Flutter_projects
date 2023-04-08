@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# my_profile_card
-=======
-# dice
->>>>>>> 4ce0758 (Initial commit)
+
 
 A new Flutter project.
 
