@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +31,8 @@ class _MyAppState extends State<MyApp> {
               child: TextButton(
                 onPressed: () {
                   setState(() {
-                    dice1 = 4;
+                    dice1 = Random().nextInt(6) + 1;
+                    dice2 = Random().nextInt(6) + 1 ;
                   });
                 },
                 child: Image(image: AssetImage('images/dice$dice1.png')),
@@ -40,7 +42,8 @@ class _MyAppState extends State<MyApp> {
               child: TextButton(
                 onPressed: (){
                   setState(() {
-                    dice2 = 2;
+                    dice1 = Random().nextInt(6) + 1 ;
+                    dice2 = Random().nextInt(6) + 1 ;
                   });
                 },
                   child: Image(image: AssetImage('images/dice$dice2.png'))),
@@ -49,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
           backgroundColor: Colors.red,
+
     ));
   }
 }
