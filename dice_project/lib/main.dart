@@ -15,6 +15,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int dice1 = 1;
   int dice2 = 5;
+
+ void generateRandomNum (){
+   setState(() {
+     dice1 = Random().nextInt(6) + 1;
+     dice2 = Random().nextInt(6) + 1 ;
+   });
+
+ }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,10 +39,7 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: TextButton(
                 onPressed: () {
-                  setState(() {
-                    dice1 = Random().nextInt(6) + 1;
-                    dice2 = Random().nextInt(6) + 1 ;
-                  });
+                  generateRandomNum();
                 },
                 child: Image(image: AssetImage('images/dice$dice1.png')),
               ),
@@ -41,10 +47,7 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: TextButton(
                 onPressed: (){
-                  setState(() {
-                    dice1 = Random().nextInt(6) + 1 ;
-                    dice2 = Random().nextInt(6) + 1 ;
-                  });
+                  generateRandomNum();
                 },
                   child: Image(image: AssetImage('images/dice$dice2.png'))),
             )
