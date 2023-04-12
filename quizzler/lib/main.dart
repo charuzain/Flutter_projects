@@ -29,24 +29,29 @@ class QuizApp extends StatefulWidget {
 }
 
 class _QuizAppState extends State<QuizApp> {
-  int num = 1;
+  int num = 0;
+  List<String> questions = ['Slug\'s blood is green ?',
+  'Canada is a in North America',
+  'I\'m an Indian'];
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-
         Expanded(
           flex: 5,
           child: Padding(
-            padding:EdgeInsets.symmetric(vertical: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                "This is where question will go",
-                style: TextStyle(color: Colors.white70,
-                fontSize: 28),
-
+                 questions[num],
+                style: TextStyle(color: Colors.white70, fontSize: 28),
               ),
             ),
           ),
@@ -55,37 +60,77 @@ class _QuizAppState extends State<QuizApp> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
-              child: Text('True' , style: TextStyle(fontSize: 24),),
+              child: Text(
+                'True',
+                style: TextStyle(fontSize: 24),
+              ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+                backgroundColor: Colors.green,
               ),
               onPressed: () {
                 setState(() {
-                  num = 2;
+                  num = num + 1;
+
                 });
               },
             ),
           ),
         ),
-        
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    num = 6;
-                  });
-                },
-                child: Text('False' , style: TextStyle(
+              onPressed: () {
+                setState(() {
+                  num = num + 1;
+                });
+              },
+              child: Text(
+                'False',
+                style: TextStyle(
                   fontSize: 24,
-                ),),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-
-            ),),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+            ),
           ),
         ),
+        Row(
+          children: [
+            Icon(
+              Icons.clear,
+              color: Colors.red,
+            ),
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+
+          ],
+        )
       ],
     );
   }
