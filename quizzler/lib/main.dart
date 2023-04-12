@@ -31,8 +31,16 @@ class QuizApp extends StatefulWidget {
 class _QuizAppState extends State<QuizApp> {
   int num = 0;
   List<String> questions = ['Slug\'s blood is green ?',
-  'Canada is a in North America',
+  'Canada is in South America',
   'I\'m an Indian'];
+
+
+  List <bool> answers = [true , false , true];
+
+  List <Icon> scoreKeeper = [
+
+
+  ];
 
 
 
@@ -68,8 +76,18 @@ class _QuizAppState extends State<QuizApp> {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
+
                 setState(() {
+                  print(num);
+                  if (answers[num] == true){
+                    scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
+                  }
+                  else{
+                    scoreKeeper.add(Icon(Icons.clear , color: Colors.red,));
+                  }
                   num = num + 1;
+                  print(num);
+
 
                 });
               },
@@ -82,6 +100,12 @@ class _QuizAppState extends State<QuizApp> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
+                  if (answers[num] == false){
+                    scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
+                  }
+                  else{
+                    scoreKeeper.add(Icon(Icons.clear , color: Colors.red,));
+                  }
                   num = num + 1;
                 });
               },
@@ -98,38 +122,7 @@ class _QuizAppState extends State<QuizApp> {
           ),
         ),
         Row(
-          children: [
-            Icon(
-              Icons.clear,
-              color: Colors.red,
-            ),
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-
-          ],
+          children: scoreKeeper
         )
       ],
     );
