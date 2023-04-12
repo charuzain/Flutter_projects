@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,21 +31,28 @@ class QuizApp extends StatefulWidget {
 
 class _QuizAppState extends State<QuizApp> {
   int num = 0;
-  List<String> questions = ['Slug\'s blood is green ?',
-  'Canada is in South America',
-  'I\'m an Indian'];
 
+  // Question q1 = new Question('Slug\'s blood is green ?', true);
+  // Question q2 = new Question('Canada is in South America', false);
+  // Question q3 = new Question('I\'m an Indian', false);
+  //
+  // List <Question> questionBank = [q1,q2,q3];
 
-  List <bool> answers = [true , false , true];
-
-  List <Icon> scoreKeeper = [
-
-
+  List<Question> questions = [
+    Question(q:'Slug\'s blood is green ?', a:true),
+    Question(q:'Canada is in South America',a: false),
+    Question(q:'I\'m an Indian', a:false)
   ];
 
 
+  // List<String> questions = ['Slug\'s blood is green ?',
+  // 'Canada is in South America',
+  // 'I\'m an Indian'];
+  //
+  //
+  // List <bool> answers = [true , false , true];
 
-
+  List<Icon> scoreKeeper = [];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +66,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                 questions[num],
+                questions[num].question,
                 style: TextStyle(color: Colors.white70, fontSize: 28),
               ),
             ),
@@ -76,19 +84,22 @@ class _QuizAppState extends State<QuizApp> {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-
+                print(questions[num].question);
                 setState(() {
                   print(num);
-                  if (answers[num] == true){
-                    scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
-                  }
-                  else{
-                    scoreKeeper.add(Icon(Icons.clear , color: Colors.red,));
+                  if (questions[num].answer == true) {
+                    scoreKeeper.add(Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    scoreKeeper.add(Icon(
+                      Icons.clear,
+                      color: Colors.red,
+                    ));
                   }
                   num = num + 1;
                   print(num);
-
-
                 });
               },
             ),
@@ -100,11 +111,16 @@ class _QuizAppState extends State<QuizApp> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (answers[num] == false){
-                    scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
-                  }
-                  else{
-                    scoreKeeper.add(Icon(Icons.clear , color: Colors.red,));
+                  if (questions[num].answer == false) {
+                    scoreKeeper.add(Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    scoreKeeper.add(Icon(
+                      Icons.clear,
+                      color: Colors.red,
+                    ));
                   }
                   num = num + 1;
                 });
@@ -121,9 +137,7 @@ class _QuizAppState extends State<QuizApp> {
             ),
           ),
         ),
-        Row(
-          children: scoreKeeper
-        )
+        Row(children: scoreKeeper)
       ],
     );
   }
