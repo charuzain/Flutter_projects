@@ -1,14 +1,17 @@
 
 class Question {
 
-  late String question;
-  late bool answer;
+  late String _question;
+  late bool _answer;
 
-  Question({required String q, required bool a}) {
+  Question(this._question , this._answer);
 
-    question = q;
-    answer = a;
+  String getQuestion(){
+    return _question;
+  }
 
+  bool getAnswer(){
+    return _answer;
   }
 
 }
