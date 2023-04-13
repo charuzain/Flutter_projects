@@ -39,19 +39,45 @@ class _QuizAppState extends State<QuizApp> {
 
   void checkAnswer (bool userSelectedAnswer){
     setState(() {
+      if (ques.isFinished(ques.num) == true) {
+        //alert
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "End of Quiz",
+          desc: "Do you want to play again.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Restart",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
 
-      if (ques.getAnswer(ques.num) == userSelectedAnswer) {
-        scoreKeeper.add(const Icon(
-          Icons.check,
-          color: Colors.green,
-        ));
-      } else {
-        scoreKeeper.add(const Icon(
-          Icons.clear,
-          color: Colors.red,
-        ));
+        ques.resetQuiz();
+        scoreKeeper = [];
+
       }
-      ques.increaseCount();
+else {
+        if (ques.getAnswer(ques.num) == userSelectedAnswer) {
+          scoreKeeper.add(const Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(const Icon(
+            Icons.clear,
+            color: Colors.red,
+          ));
+        }
+
+        ques.increaseCount();
+        print(ques.num);
+      }
     });
   }
 
@@ -81,28 +107,9 @@ class _QuizAppState extends State<QuizApp> {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                if(ques.isFinished(ques.num) == true){
-                  //alert
-                  Alert(
-                    context: context,
-                    type: AlertType.error,
-                    title: "End of Quiz",
-                    desc: "Do you want to play again.",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "Restat",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        width: 120,
-                      )
-                    ],
-                  ).show();
-                }
-                else {
+
                   checkAnswer(true);
-                }
+
 
 
               },
@@ -118,27 +125,9 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               onPressed: () {
-                if(ques.isFinished(ques.num) == true){
-                  Alert(
-                    context: context,
-                    type: AlertType.error,
-                    title: "RFLUTTER ALERT",
-                    desc: "Flutter is more awesome with RFlutter Alert.",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "COOL",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        width: 120,
-                      )
-                    ],
-                  ).show();
-                }
-                else {
+
                   checkAnswer(false);
-                }
+
                 // setState(() {
                 //   if (ques.getAnswer(ques.num) == false) {
                 //     scoreKeeper.add(const Icon(

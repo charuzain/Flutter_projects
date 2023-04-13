@@ -47,6 +47,10 @@ class QuestionBank {
 
   }
 
+  void resetQuiz(){
+    num = 0;
+  }
+
   String getQuestion(int num){
     return _questions[num].question;
   }
