@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question_brain.dart';
 import 'question.dart';
 
 void main() {
@@ -38,11 +39,11 @@ class _QuizAppState extends State<QuizApp> {
   //
   // List <Question> questionBank = [q1,q2,q3];
 
-  List<Question> questions = [
-    Question(q:'Slug\'s blood is green ?', a:true),
-    Question(q:'Canada is in South America',a: false),
-    Question(q:'I\'m an Indian', a:false)
-  ];
+  // List<Question> questions = [
+  //   Question(q:'Slug\'s blood is green ?', a:true),
+  //   Question(q:'Canada is in South America',a: false),
+  //   Question(q:'I\'m an Indian', a:false)
+  // ];
 
 
   // List<String> questions = ['Slug\'s blood is green ?',
@@ -53,6 +54,7 @@ class _QuizAppState extends State<QuizApp> {
   // List <bool> answers = [true , false , true];
 
   List<Icon> scoreKeeper = [];
+  QuestionBank ques = QuestionBank();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                questions[num].question,
+                ques.questions[num].question,
                 style: TextStyle(color: Colors.white70, fontSize: 28),
               ),
             ),
@@ -84,10 +86,10 @@ class _QuizAppState extends State<QuizApp> {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                print(questions[num].question);
+                print(ques.questions[num].question);
                 setState(() {
                   print(num);
-                  if (questions[num].answer == true) {
+                  if (ques.questions[num].answer == true) {
                     scoreKeeper.add(Icon(
                       Icons.check,
                       color: Colors.green,
@@ -111,7 +113,7 @@ class _QuizAppState extends State<QuizApp> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (questions[num].answer == false) {
+                  if (ques.questions[num].answer == false) {
                     scoreKeeper.add(Icon(
                       Icons.check,
                       color: Colors.green,
