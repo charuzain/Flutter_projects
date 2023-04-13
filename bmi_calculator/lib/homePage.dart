@@ -13,68 +13,30 @@ class _HomePageState extends State<HomePage> {
     return (Scaffold(
       appBar: AppBar(title: Text("BMI Calcualtor")),
       body: Column(
-
-        
         children: [
-          
-
           Expanded(
-
             child: Row(
-
               children: [
-
-
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(16.0),
-
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0xFF1D1E33),
-
-                      ),
-                    ),
-                  ),
-                
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                          color: Color(0xFF1D1E33)
-                      ),
-                    ),
+                  child: ResuableCard(),
                 ),
-
+                Expanded(
+                  child: ResuableCard(),
+                ),
               ],
             ),
           ),
-
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(16.0),
-                color: Color(0xFF1D1E33)
-            ),
+            child: ResuableCard(),
           ),
-
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(16.0),
-                      color: Color(0xFF1D1E33)
-
-                  ),
+                  child: ResuableCard(),
                 ),
-
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(16.0),
-                      color: Color(0xFF1D1E33)
-
-                  ),
+                  child: ResuableCard(),
                 ),
               ],
             ),
@@ -84,12 +46,31 @@ class _HomePageState extends State<HomePage> {
 
       // or wrap a  widget in Theme widget and change the style
       floatingActionButton: Theme(
-        data: ThemeData(accentColor: Colors.pink),
+        data: ThemeData(
+            colorScheme:
+                ColorScheme.fromSwatch().copyWith(secondary: Colors.pink)),
         child: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {},
         ),
       ),
     ));
+  }
+}
+
+class ResuableCard extends StatelessWidget {
+  const ResuableCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color(0xFF1D1E33),
+      ),
+    );
   }
 }
