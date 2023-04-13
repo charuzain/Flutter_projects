@@ -33,26 +33,6 @@ class QuizApp extends StatefulWidget {
 class _QuizAppState extends State<QuizApp> {
   int num = 0;
 
-  // Question q1 = new Question('Slug\'s blood is green ?', true);
-  // Question q2 = new Question('Canada is in South America', false);
-  // Question q3 = new Question('I\'m an Indian', false);
-  //
-  // List <Question> questionBank = [q1,q2,q3];
-
-  // List<Question> questions = [
-  //   Question(q:'Slug\'s blood is green ?', a:true),
-  //   Question(q:'Canada is in South America',a: false),
-  //   Question(q:'I\'m an Indian', a:false)
-  // ];
-
-
-  // List<String> questions = ['Slug\'s blood is green ?',
-  // 'Canada is in South America',
-  // 'I\'m an Indian'];
-  //
-  //
-  // List <bool> answers = [true , false , true];
-
   List<Icon> scoreKeeper = [];
   QuestionBank ques = QuestionBank();
 
@@ -68,7 +48,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                ques.questions[num].question,
+                ques.questions[num].getQuestion(),
                 style: TextStyle(color: Colors.white70, fontSize: 28),
               ),
             ),
@@ -86,10 +66,10 @@ class _QuizAppState extends State<QuizApp> {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                print(ques.questions[num].question);
+                print(ques.questions[num].getQuestion());
                 setState(() {
                   print(num);
-                  if (ques.questions[num].answer == true) {
+                  if (ques.questions[num].getAnswer() == true) {
                     scoreKeeper.add(Icon(
                       Icons.check,
                       color: Colors.green,
@@ -113,7 +93,7 @@ class _QuizAppState extends State<QuizApp> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (ques.questions[num].answer == false) {
+                  if (ques.questions[num].getAnswer() == false) {
                     scoreKeeper.add(Icon(
                       Icons.check,
                       color: Colors.green,
