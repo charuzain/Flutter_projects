@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/question_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'question.dart';
 
 void main() {
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
+    return const MaterialApp(
         home: Scaffold(
       body: SafeArea(
         child: Padding(
@@ -31,10 +32,28 @@ class QuizApp extends StatefulWidget {
 }
 
 class _QuizAppState extends State<QuizApp> {
-  int num = 0;
+  // int num = 0;
 
   List<Icon> scoreKeeper = [];
   QuestionBank ques = QuestionBank();
+
+  void checkAnswer (bool userSelectedAnswer){
+    setState(() {
+
+      if (ques.getAnswer(ques.num) == userSelectedAnswer) {
+        scoreKeeper.add(const Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
+      } else {
+        scoreKeeper.add(const Icon(
+          Icons.clear,
+          color: Colors.red,
+        ));
+      }
+      ques.increaseCount();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +64,11 @@ class _QuizAppState extends State<QuizApp> {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                ques.questions[num].getQuestion(),
-                style: TextStyle(color: Colors.white70, fontSize: 28),
+                ques.getQuestion(ques.num),
+                style: const TextStyle(color: Colors.white70, fontSize: 28),
               ),
             ),
           ),
@@ -58,32 +77,39 @@ class _QuizAppState extends State<QuizApp> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
-              child: Text(
-                'True',
-                style: TextStyle(fontSize: 24),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                print(ques.questions[num].getQuestion());
-                setState(() {
-                  print(num);
-                  if (ques.questions[num].getAnswer() == true) {
-                    scoreKeeper.add(Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ));
-                  } else {
-                    scoreKeeper.add(Icon(
-                      Icons.clear,
-                      color: Colors.red,
-                    ));
-                  }
-                  num = num + 1;
-                  print(num);
-                });
+                if(ques.isFinished(ques.num) == true){
+                  //alert
+                  Alert(
+                    context: context,
+                    type: AlertType.error,
+                    title: "End of Quiz",
+                    desc: "Do you want to play again.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "Restat",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show();
+                }
+                else {
+                  checkAnswer(true);
+                }
+
+
               },
+              child: const Text(
+                'True',
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ),
         ),
@@ -92,29 +118,50 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               onPressed: () {
-                setState(() {
-                  if (ques.questions[num].getAnswer() == false) {
-                    scoreKeeper.add(Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ));
-                  } else {
-                    scoreKeeper.add(Icon(
-                      Icons.clear,
-                      color: Colors.red,
-                    ));
-                  }
-                  num = num + 1;
-                });
+                if(ques.isFinished(ques.num) == true){
+                  Alert(
+                    context: context,
+                    type: AlertType.error,
+                    title: "RFLUTTER ALERT",
+                    desc: "Flutter is more awesome with RFlutter Alert.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "COOL",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show();
+                }
+                else {
+                  checkAnswer(false);
+                }
+                // setState(() {
+                //   if (ques.getAnswer(ques.num) == false) {
+                //     scoreKeeper.add(const Icon(
+                //       Icons.check,
+                //       color: Colors.green,
+                //     ));
+                //   } else {
+                //     scoreKeeper.add(const Icon(
+                //       Icons.clear,
+                //       color: Colors.red,
+                //     ));
+                //   }
+                //   ques.increaseCount();
+                // });
               },
-              child: Text(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              child: const Text(
                 'False',
                 style: TextStyle(
                   fontSize: 24,
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
               ),
             ),
           ),
