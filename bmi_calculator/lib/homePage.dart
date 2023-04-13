@@ -12,11 +12,74 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return (Scaffold(
       appBar: AppBar(title: Text("BMI Calcualtor")),
-      body: Center(
-        child: Text(
-          "Body",
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+      body: Column(
+
+        
+        children: [
+          
+
+          Expanded(
+
+            child: Row(
+
+              children: [
+
+
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(16.0),
+
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFF1D1E33),
+
+                      ),
+                    ),
+                  ),
+                
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                          color: Color(0xFF1D1E33)
+                      ),
+                    ),
+                ),
+
+              ],
+            ),
+          ),
+
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.all(16.0),
+                color: Color(0xFF1D1E33)
+            ),
+          ),
+
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                      color: Color(0xFF1D1E33)
+
+                  ),
+                ),
+
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                      color: Color(0xFF1D1E33)
+
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
 
       // or wrap a  widget in Theme widget and change the style
