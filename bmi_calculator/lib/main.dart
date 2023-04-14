@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
-          scaffoldBackgroundColor: Color(0xFF0A0E21),
+          scaffoldBackgroundColor: Color(0xFF353838),
         ),
       // theme: ThemeData.dark().copyWith(
       //   // copy all the properties  of dark them and the properties what we want to change we write here
