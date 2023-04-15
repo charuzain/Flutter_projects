@@ -23,20 +23,9 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: ResuableCard(
                       colour: widgetColor,
-                      cardChild: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.male,
-                            size: 80,
-                          ),
-                          SizedBox(height: 15,),
-                          Text(
-                            'Male',
-                            style: TextStyle(
-                                fontSize: 22, color: Color(0xFF8D8E98)),
-                          )
-                        ],
+                      cardChild: CustomIconContent(
+                        icon: Icons.male,
+                        text: 'Male',
                       )),
                 ),
                 Expanded(
@@ -78,6 +67,32 @@ class _HomePageState extends State<HomePage> {
       //   ),
       // ),
     ));
+  }
+}
+
+class CustomIconContent extends StatelessWidget {
+  final IconData? icon;
+  final String? text;
+  const CustomIconContent({super.key, this.icon, this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: 80,
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          text!,
+          style: TextStyle(fontSize: 22, color: Color(0xFF8D8E98)),
+        )
+      ],
+    );
   }
 }
 
