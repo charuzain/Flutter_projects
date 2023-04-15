@@ -5,6 +5,7 @@ import 'icon_content.dart';
 
 const widgetColor = Color(0xFF1D1E33);
 final bottomHeight = 70.9;
+const activeColor = Color(0xFFA41C1C);
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Color maleCardColor = widgetColor;
+  Color femaleCardColor = widgetColor;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -24,19 +27,37 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ResuableCard(
-                      colour: widgetColor,
-                      cardChild: CustomIconContent(
-                        icon: Icons.male,
-                        text: 'Male',
-                      )),
+                  child: GestureDetector(
+
+                    child: ResuableCard(
+                        colour: maleCardColor,
+                        cardChild: CustomIconContent(
+                          icon: Icons.male,
+                          text: 'Male',
+                        )),
+                    onTap: (){
+                      setState(() {
+                        maleCardColor = activeColor;
+                      });
+
+
+
+                    },
+                  ),
                 ),
                 Expanded(
-                  child: ResuableCard(
-                    colour: widgetColor,
-                    cardChild: CustomIconContent(
-                      icon: Icons.female,
-                      text: 'Female',
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        femaleCardColor = activeColor;
+                      });
+                    },
+                    child: ResuableCard(
+                      colour: femaleCardColor,
+                      cardChild: CustomIconContent(
+                        icon: Icons.female,
+                        text: 'Female',
+                      ),
                     ),
                   ),
                 ),
