@@ -5,7 +5,8 @@ import 'icon_content.dart';
 
 const widgetColor = Color(0xFF1D1E33);
 final bottomHeight = 70.9;
-const activeColor = Color(0xFFA41C1C);
+const activeColor = Color(0xFF6F6666);
+const activeCardColor = Colors.purple;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,7 +29,6 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                   child: GestureDetector(
-
                     child: ResuableCard(
                         colour: maleCardColor,
                         cardChild: CustomIconContent(
@@ -36,22 +36,19 @@ class _HomePageState extends State<HomePage> {
                           text: 'Male',
                         )),
                     onTap: (){
-                      setState(() {
-                        maleCardColor = activeColor;
-                      });
-
-
-
+                setState(() {
+                  if(maleCardColor == activeCardColor){
+                    maleCardColor = widgetColor;
+                  }else {
+                    maleCardColor = activeCardColor;
+                  }
+                  femaleCardColor = widgetColor;
+                });
                     },
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        femaleCardColor = activeColor;
-                      });
-                    },
                     child: ResuableCard(
                       colour: femaleCardColor,
                       cardChild: CustomIconContent(
@@ -59,6 +56,21 @@ class _HomePageState extends State<HomePage> {
                         text: 'Female',
                       ),
                     ),
+                    onTap: (){
+                      setState(() {
+                        // if femalecard is alreaduy selected and user click on it again
+                        // set its color to widget card color else set its color to selected widget color
+                       if(femaleCardColor == activeCardColor){
+                         femaleCardColor = widgetColor;
+                       }
+                       else{
+
+                         femaleCardColor = activeCardColor;
+                       }
+                       maleCardColor = widgetColor;
+
+                      });
+                    },
                   ),
                 ),
               ],
