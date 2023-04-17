@@ -18,6 +18,32 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Color maleCardColor = widgetColor;
   Color femaleCardColor = widgetColor;
+
+
+  void updateWidgetColor (int cardNum){
+    // if male card is selected
+    if(cardNum ==1){
+      setState(() {
+        if(maleCardColor == activeCardColor){
+          maleCardColor = widgetColor;
+        }else {
+          maleCardColor = activeCardColor;
+        }
+        femaleCardColor = widgetColor;
+      });
+    }
+    // if female card is selected
+else {
+      setState(() {
+        if (femaleCardColor == activeCardColor) {
+          femaleCardColor = widgetColor;
+        } else {
+          femaleCardColor = activeCardColor;
+        }
+        maleCardColor = widgetColor;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -36,14 +62,15 @@ class _HomePageState extends State<HomePage> {
                           text: 'Male',
                         )),
                     onTap: (){
-                setState(() {
-                  if(maleCardColor == activeCardColor){
-                    maleCardColor = widgetColor;
-                  }else {
-                    maleCardColor = activeCardColor;
-                  }
-                  femaleCardColor = widgetColor;
-                });
+                      updateWidgetColor(1);
+                // setState(() {
+                //   if(maleCardColor == activeCardColor){
+                //     maleCardColor = widgetColor;
+                //   }else {
+                //     maleCardColor = activeCardColor;
+                //   }
+                //   femaleCardColor = widgetColor;
+                // });
                     },
                   ),
                 ),
@@ -57,19 +84,20 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onTap: (){
-                      setState(() {
-                        // if femalecard is alreaduy selected and user click on it again
-                        // set its color to widget card color else set its color to selected widget color
-                       if(femaleCardColor == activeCardColor){
-                         femaleCardColor = widgetColor;
-                       }
-                       else{
-
-                         femaleCardColor = activeCardColor;
-                       }
-                       maleCardColor = widgetColor;
-
-                      });
+                      updateWidgetColor(2);
+                      // setState(() {
+                      //   // if femalecard is alreaduy selected and user click on it again
+                      //   // set its color to widget card color else set its color to selected widget color
+                      //  if(femaleCardColor == activeCardColor){
+                      //    femaleCardColor = widgetColor;
+                      //  }
+                      //  else{
+                      //
+                      //    femaleCardColor = activeCardColor;
+                      //  }
+                      //  maleCardColor = widgetColor;
+                      //
+                      // });
                     },
                   ),
                 ),
