@@ -8,6 +8,13 @@ final bottomHeight = 70.9;
 const activeColor = Color(0xFF6F6666);
 const activeCardColor = Colors.purple;
 
+// enums cant be created inside classes , so we create it here
+
+enum GenderType {
+  male,
+  female,
+}
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -18,32 +25,35 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Color maleCardColor = widgetColor;
   Color femaleCardColor = widgetColor;
+  GenderType ? selected ;
 
 
-  void updateWidgetColor (int cardNum){
-    // if male card is selected
-    if(cardNum ==1){
-      setState(() {
-        if(maleCardColor == activeCardColor){
-          maleCardColor = widgetColor;
-        }else {
-          maleCardColor = activeCardColor;
-        }
-        femaleCardColor = widgetColor;
-      });
-    }
-    // if female card is selected
-else {
-      setState(() {
-        if (femaleCardColor == activeCardColor) {
-          femaleCardColor = widgetColor;
-        } else {
-          femaleCardColor = activeCardColor;
-        }
-        maleCardColor = widgetColor;
-      });
-    }
-  }
+//   void updateWidgetColor (GenderType gender){
+//     // if male card is selected
+//     if(gender == GenderType.male){
+//       setState(() {
+//       maleCardColor =  maleCardColor == activeCardColor ? widgetColor : activeCardColor;
+//         // if(maleCardColor == activeCardColor){
+//         //   maleCardColor = widgetColor;
+//         // }else {
+//         //   maleCardColor = activeCardColor;
+//         // }
+//         femaleCardColor = widgetColor;
+//       });
+//     }
+//     // if female card is selected
+// if(gender == GenderType.female) {
+//       setState(() {
+//         femaleCardColor = femaleCardColor == activeCardColor ? widgetColor :activeCardColor;
+//         // if (femaleCardColor == activeCardColor) {
+//         //   femaleCardColor = widgetColor;
+//         // } else {
+//         //   femaleCardColor = activeCardColor;
+//         // }
+//         maleCardColor = widgetColor;
+//       });
+//     }
+//   }
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -56,35 +66,35 @@ else {
                 Expanded(
                   child: GestureDetector(
                     child: ResuableCard(
-                        colour: maleCardColor,
+                        colour: selected == GenderType.male ? activeCardColor : widgetColor,
                         cardChild: CustomIconContent(
                           icon: Icons.male,
                           text: 'Male',
                         )),
                     onTap: (){
-                      updateWidgetColor(1);
-                // setState(() {
-                //   if(maleCardColor == activeCardColor){
-                //     maleCardColor = widgetColor;
-                //   }else {
-                //     maleCardColor = activeCardColor;
-                //   }
-                //   femaleCardColor = widgetColor;
-                // });
+                      setState(() {
+                        selected = selected == GenderType.male ? null : GenderType.male;
+                      });
+
                     },
                   ),
+
                 ),
                 Expanded(
                   child: GestureDetector(
                     child: ResuableCard(
-                      colour: femaleCardColor,
+                      colour: selected == GenderType.female ? activeCardColor : widgetColor,
                       cardChild: CustomIconContent(
                         icon: Icons.female,
                         text: 'Female',
                       ),
                     ),
                     onTap: (){
-                      updateWidgetColor(2);
+                      setState(() {
+                        selected = selected == GenderType.female ? null : GenderType.female;
+                      });
+
+
                       // setState(() {
                       //   // if femalecard is alreaduy selected and user click on it again
                       //   // set its color to widget card color else set its color to selected widget color
