@@ -10,12 +10,16 @@ class ResuableCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: cardChild,
-      margin: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: colour,
+    return GestureDetector(
+
+      child: Container(
+        child: cardChild,
+        margin: const EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: colour,
+
+        ),
       ),
     );
   }

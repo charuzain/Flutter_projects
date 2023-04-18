@@ -1,12 +1,8 @@
 import 'package:bmi_calculator/resuable_card.dart';
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
 import 'icon_content.dart';
-
-const widgetColor = Color(0xFF1D1E33);
-final bottomHeight = 70.9;
-const activeColor = Color(0xFF6F6666);
-const activeCardColor = Colors.purple;
 
 // enums cant be created inside classes , so we create it here
 
@@ -23,10 +19,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color maleCardColor = widgetColor;
-  Color femaleCardColor = widgetColor;
+  Color maleCardColor = kWidgetColor;
+  Color femaleCardColor = kWidgetColor;
   GenderType? selected;
-  int height = 120;
+  int height = 110;
 
 //   void updateWidgetColor (GenderType gender){
 //     // if male card is selected
@@ -68,8 +64,8 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector(
                     child: ResuableCard(
                         colour: selected == GenderType.male
-                            ? activeCardColor
-                            : widgetColor,
+                            ? kActiveCardColor
+                            : kWidgetColor,
                         cardChild: CustomIconContent(
                           icon: Icons.male,
                           text: 'Male',
@@ -87,8 +83,8 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector(
                     child: ResuableCard(
                       colour: selected == GenderType.female
-                          ? activeCardColor
-                          : widgetColor,
+                          ? kActiveCardColor
+                          : kWidgetColor,
                       cardChild: CustomIconContent(
                         icon: Icons.female,
                         text: 'Female',
@@ -122,40 +118,39 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: ResuableCard(
-              colour: widgetColor,
+              colour: kWidgetColor,
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Height"),
+                  Text(
+                  "Height",
+                    style: kLabelTextStyle,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(height.toString(),
-                          style: TextStyle(
-                            fontSize: 50,
-                          )),
+                          style: kNumberTextStyle),
                       Text("cm")
                     ],
                   ),
                   Slider(
-                    value: 120.0,
+                    // value: height.toDouble(),
+                    value: height.toDouble(),
                     min: 100.0,
-                    max: 200.0,
-                    secondaryTrackValue: 190.0,
+                    max: 220.0,
+                    // secondaryTrackValue: 190.0,
+                    activeColor: Colors.pink,
+                    inactiveColor: Colors.brown,
 
                     onChanged: (double value) {
                       setState(() {
+                        print(value);
                         height = value.toInt();
-
                       });
                     },
-                    activeColor: Colors.pink,
-                    inactiveColor: Colors.blueGrey,
-
-
-
                   )
                 ],
               ),
@@ -165,20 +160,23 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ResuableCard(colour: widgetColor),
+                  child: ResuableCard(colour: kWidgetColor),
                 ),
                 Expanded(
-                  child: ResuableCard(colour: widgetColor),
+                  child: ResuableCard(colour: kWidgetColor),
                 ),
               ],
             ),
           ),
           Container(
             color: Colors.pink,
-            height: bottomHeight,
+            height: kBottomHeight,
           )
         ],
       ),
     ));
   }
 }
+
+// Container: If they have no children they will size themselve as large as parent allow
+// one it have child they resize itself to fit the size of child.
