@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bmi_calculator/resuable_card.dart';
 import 'package:flutter/material.dart';
 
@@ -123,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                  "Height",
+                    "Height",
                     style: kLabelTextStyle,
                   ),
                   Row(
@@ -131,26 +133,31 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(height.toString(),
-                          style: kNumberTextStyle),
+                      Text(height.toString(), style: kNumberTextStyle),
                       Text("cm")
                     ],
                   ),
-                  Slider(
-                    // value: height.toDouble(),
-                    value: height.toDouble(),
-                    min: 100.0,
-                    max: 220.0,
-                    // secondaryTrackValue: 190.0,
-                    activeColor: Colors.pink,
-                    inactiveColor: Colors.brown,
-
-                    onChanged: (double value) {
-                      setState(() {
-                        print(value);
-                        height = value.toInt();
-                      });
-                    },
+                  SliderTheme(
+                    // copywith : add changes, only thing we want to change
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 25),
+                      thumbColor: Colors.pink,
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Colors.grey,
+                      overlayColor: Color(0x40EB1555),
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 100.0,
+                      max: 220.0,
+                      onChanged: (double value) {
+                        setState(() {
+                          print(value);
+                          height = value.toInt();
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
@@ -180,3 +187,4 @@ class _HomePageState extends State<HomePage> {
 
 // Container: If they have no children they will size themselve as large as parent allow
 // one it have child they resize itself to fit the size of child.
+
