@@ -25,8 +25,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Color maleCardColor = widgetColor;
   Color femaleCardColor = widgetColor;
-  GenderType ? selected ;
-
+  GenderType? selected;
+  int height = 120;
 
 //   void updateWidgetColor (GenderType gender){
 //     // if male card is selected
@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
     return (Scaffold(
       appBar: AppBar(title: Text("BMI Calcualtor")),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
@@ -66,34 +67,39 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: GestureDetector(
                     child: ResuableCard(
-                        colour: selected == GenderType.male ? activeCardColor : widgetColor,
+                        colour: selected == GenderType.male
+                            ? activeCardColor
+                            : widgetColor,
                         cardChild: CustomIconContent(
                           icon: Icons.male,
                           text: 'Male',
                         )),
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        selected = selected == GenderType.male ? null : GenderType.male;
+                        selected = selected == GenderType.male
+                            ? null
+                            : GenderType.male;
                       });
-
                     },
                   ),
-
                 ),
                 Expanded(
                   child: GestureDetector(
                     child: ResuableCard(
-                      colour: selected == GenderType.female ? activeCardColor : widgetColor,
+                      colour: selected == GenderType.female
+                          ? activeCardColor
+                          : widgetColor,
                       cardChild: CustomIconContent(
                         icon: Icons.female,
                         text: 'Female',
                       ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        selected = selected == GenderType.female ? null : GenderType.female;
+                        selected = selected == GenderType.female
+                            ? null
+                            : GenderType.female;
                       });
-
 
                       // setState(() {
                       //   // if femalecard is alreaduy selected and user click on it again
@@ -115,7 +121,45 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: ResuableCard(colour: widgetColor),
+            child: ResuableCard(
+              colour: widgetColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Height"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(height.toString(),
+                          style: TextStyle(
+                            fontSize: 50,
+                          )),
+                      Text("cm")
+                    ],
+                  ),
+                  Slider(
+                    value: 120.0,
+                    min: 100.0,
+                    max: 200.0,
+                    secondaryTrackValue: 190.0,
+
+                    onChanged: (double value) {
+                      setState(() {
+                        height = value.toInt();
+
+                      });
+                    },
+                    activeColor: Colors.pink,
+                    inactiveColor: Colors.blueGrey,
+
+
+
+                  )
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: Row(
