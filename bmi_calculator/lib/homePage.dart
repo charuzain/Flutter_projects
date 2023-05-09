@@ -1,4 +1,9 @@
+import 'dart:math';
+
+import 'package:bmi_calculator/question_brain.dart';
 import 'package:bmi_calculator/resuable_card.dart';
+import 'package:bmi_calculator/screen_two.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
@@ -10,6 +15,8 @@ enum GenderType {
   male,
   female,
 }
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +30,14 @@ class _HomePageState extends State<HomePage> {
   Color femaleCardColor = kWidgetColor;
   GenderType? selected;
   int height = 110;
+  int weight = 50;
+  int age = 20;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
 //   void updateWidgetColor (GenderType gender){
 //     // if male card is selected
@@ -123,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                  "Height",
+                    "Height",
                     style: kLabelTextStyle,
                   ),
                   Row(
@@ -131,26 +146,31 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(height.toString(),
-                          style: kNumberTextStyle),
+                      Text(height.toString(), style: kNumberTextStyle),
                       Text("cm")
                     ],
                   ),
-                  Slider(
-                    // value: height.toDouble(),
-                    value: height.toDouble(),
-                    min: 100.0,
-                    max: 220.0,
-                    // secondaryTrackValue: 190.0,
-                    activeColor: Colors.pink,
-                    inactiveColor: Colors.brown,
-
-                    onChanged: (double value) {
-                      setState(() {
-                        print(value);
-                        height = value.toInt();
-                      });
-                    },
+                  SliderTheme(
+                    // copywith : add changes, only thing we want to change
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 25),
+                      thumbColor: Colors.pink,
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Colors.grey,
+                      overlayColor: Color(0x40EB1555),
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 100.0,
+                      max: 220.0,
+                      onChanged: (double value) {
+                        setState(() {
+                          print(value);
+                          height = value.toInt();
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
@@ -160,21 +180,143 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ResuableCard(colour: kWidgetColor),
+                  child: ResuableCard(
+                      colour: kWidgetColor,
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Weight",
+                            style: kLabelTextStyle,
+                          ),
+                          Text(
+                            weight.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                onPress: () {
+                                  setState(() {
+                                    weight++;
+                                  });
+                                },
+                                icon: CupertinoIcons.plus,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              RoundIconButton(
+                                onPress: () {
+                                  setState(() {
+                                    weight--;
+                                  });
+                                },
+                                icon: CupertinoIcons.minus,
+                              )
+                            ],
+                          )
+                        ],
+                      )),
                 ),
                 Expanded(
-                  child: ResuableCard(colour: kWidgetColor),
+                  child: ResuableCard(
+                    colour: kWidgetColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Age",
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: Icons.add,
+                              onPress: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            RoundIconButton(
+                              icon: Icons.mode_comment,
+                              onPress: () {
+                                if (age > 0) {
+                                  setState(() {
+                                    age--;
+                                  });
+                                }
+                              },
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: Colors.pink,
-            height: kBottomHeight,
+          GestureDetector(
+            onTap: () {
+              CalculatorBrain calc = CalculatorBrain(height: height, weight: weight);
+              // print(height);
+              // print(weight);
+              // print(calc.bmi());
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResultPage(
+                    bmi:calc.bmi() , bmiResult : calc.bmiResult() , resultText: calc.message()
+
+                  )));
+            },
+            child: Container(
+              child: Center(
+                child: Text(
+                  "calculate".toUpperCase(),
+                  style: TextStyle(fontSize: 28),
+
+
+                ),
+              ),
+              color: Colors.pink,
+              height: kBottomHeight,
+            ),
           )
         ],
       ),
     ));
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  const RoundIconButton({super.key, this.icon, required this.onPress});
+  final IconData? icon;
+  // VoidCallback is just shorthand for void Function() so you could also define it as
+  // final void Function() onPressed;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: onPress,
+      fillColor: Colors.pink,
+      shape: CircleBorder(),
+      constraints: const BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+    );
   }
 }
 
