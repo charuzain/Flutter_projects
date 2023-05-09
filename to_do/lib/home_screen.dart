@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         TextField(
                           autofocus: true,
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
