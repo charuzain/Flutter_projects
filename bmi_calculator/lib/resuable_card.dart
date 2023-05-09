@@ -11,7 +11,6 @@ class ResuableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-
       child: Container(
         child: cardChild,
         margin: const EdgeInsets.all(15.0),
