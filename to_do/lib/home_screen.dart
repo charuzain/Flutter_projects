@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:to_do/widgets/list_tile.dart';
+import 'package:to_do/widgets/task_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -42,12 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         TextField(
                           autofocus: true,
                           decoration: InputDecoration(
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(
-                            //     width: 10,
-                            //
-                            //   )
-                            // ),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                               color: Colors.lightBlueAccent,
@@ -138,55 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: ListView(
-                  children: [
-                    checkBoxTile(
-                      title: "Task1",
-                      selected: true,
-                      onChange: (val) {},
-                    ),
-                    checkBoxTile(
-                      title: "Task2",
-                      selected: true,
-                      onChange: (val) {},
-                    ),
-                    checkBoxTile(
-                      title: "Task3",
-                      selected: true,
-                      onChange: (val) {},
-                    ),
-                  ],
-                ),
+                child: TaskList(),
               ),
             ),
           )
         ],
       ),
       backgroundColor: Colors.lightBlueAccent,
-    );
-  }
-}
-
-class checkBoxTile extends StatelessWidget {
-  checkBoxTile(
-      {required this.title, required this.selected, required this.onChange});
-
-  final bool selected;
-  final String title;
-  dynamic onChange;
-
-  @override
-  Widget build(BuildContext context) {
-    return CheckboxListTile(
-      onChanged: onChange,
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-      ),
-      value: selected,
-      controlAffinity: ListTileControlAffinity.platform,
-      activeColor: Colors.lightBlueAccent,
-      checkColor: Colors.black,
     );
   }
 }
