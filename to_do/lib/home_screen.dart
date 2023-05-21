@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do/widgets/list_tile.dart';
 import 'package:to_do/widgets/task_list.dart';
 
+import 'model/task.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -14,7 +16,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  List<Task> taskList = [
+    Task(taskName: 'Learn Dart'),
+    Task(taskName: 'Learn about widgets'),
+    Task(taskName: 'Learn about networking'),
+  ];
   bool? selected = false;
+  late String newTask;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 5,
                             )),
                           ),
+                          onChanged: (val){
+                            newTask = val;
+                            print(newTask);
+                          },
                         ),
                         SizedBox(
                           height: 60,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print("-----------");
+                            print(newTask);
+                            setState(() {
+                              taskList.add(Task(taskName: newTask));
+                            });
+                           Navigator.pop(context);
+
+                          },
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 20),
                             child: Text(
@@ -138,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: TaskList(),
+                child: TaskList(taskList: taskList,),
               ),
             ),
           )
