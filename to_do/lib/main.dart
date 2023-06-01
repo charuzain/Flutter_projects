@@ -46,9 +46,19 @@ class DataProvider extends ChangeNotifier{
 
   int sizeTaskList(){
     return taskList.length;
+  }
+
+  void deleteTask(Task task){
+    taskList.remove(task);
     notifyListeners();
   }
 
+  void taskUpdate(Task task){
+    task.taskDone();
+    notifyListeners();
+
+
+  }
 
 }
 
