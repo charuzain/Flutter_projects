@@ -22,19 +22,20 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<DataProvider>(
-      builder: (BuildContext context, value, Widget? child) =>
-       ListView.builder(
-        itemCount: value.sizeTaskList(),
-        itemBuilder: (context , index){
-        return TaskTiles(name: value.taskList[index].taskName,
-        isSelected: value.taskList[index].isDone, callBackFunc: (val){
-          // setState(() {
-          //   widget.taskList[index].taskDone();
-          // });
+      builder: (BuildContext context, value, Widget? child) {
+        return ListView.builder(
+          itemCount: value.sizeTaskList(),
+          itemBuilder: (context, index) {
+            return TaskTiles(name: value.taskList[index].taskName,
+              isSelected: value.taskList[index].isDone, callBackFunc: (val) {
+                // setState(() {
+                //   widget.taskList[index].taskDone();
+                // });
+              },
+            );
           },
         );
-      },
-      ),
+      }
     );
   }
 }
