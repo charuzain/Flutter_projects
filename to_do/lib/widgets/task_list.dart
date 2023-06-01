@@ -8,16 +8,10 @@ import '../main.dart';
 import '../model/task.dart';
 import 'list_tile.dart';
 
-class TaskList extends StatefulWidget {
+class TaskList extends StatelessWidget {
   // final List<Task> taskList;
   //
   // TaskList({required this.taskList});
-
-  @override
-  State<TaskList> createState() => _TaskListState();
-}
-
-class _TaskListState extends State<TaskList> {
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +21,17 @@ class _TaskListState extends State<TaskList> {
           itemCount: value.sizeTaskList(),
           itemBuilder: (context, index) {
             return TaskTiles(name: value.taskList[index].taskName,
-              isSelected: value.taskList[index].isDone, callBackFunc: (val) {
+              isSelected: value.taskList[index].isDone,
+                callBackFunc: (checkBoxState) {
+                value.taskUpdate(value.taskList[index]);
                 // setState(() {
                 //   widget.taskList[index].taskDone();
                 // });
               },
+                longPressCallBack: (){
+              value.deleteTask(value.taskList[index]);
+
+                }
             );
           },
         );
