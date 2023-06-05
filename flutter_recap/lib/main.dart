@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter_recap/win_message.dart';
+
+
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
@@ -66,21 +69,8 @@ class _MainAppState extends State<MainApp> {
   }
 }
 
-class WinMessage extends StatelessWidget {
-// Constructor for public widget required named parameter key , which is then passed to StatelessWidget class.{required key} is named parameter , which is passed to statelessWidget class when its constructor is invoked using super 
-  const WinMessage({required key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "You Won!!!!!!!Congratulations",
-      style: TextStyle(
-          fontSize: 42,
-          color: Colors.white,
-          letterSpacing: 10,
-          backgroundColor: Color.fromARGB(100, 209, 123, 80)),
-    );
-  }
-}
+// It is considered as a good practice to keep the custom widget in a separate file
+
 
 // const is a keyword which optimize runtime performance of the app.
 // When a widget lets say text widget is defined with a text hello in the app that widget
