@@ -52,10 +52,7 @@ class _MainAppState extends State<MainApp> {
                       child: num == 4
                           ? const Padding(
                               padding: EdgeInsets.all(20.0),
-                              child: Text(
-                                "You Won!!!!!!!Congratulations",
-                                style: TextStyle(fontSize: 42),
-                              ),
+                              child: WinMessage(),
                             )
                           : const Text("Roll Dice")),
                 ),
@@ -69,19 +66,31 @@ class _MainAppState extends State<MainApp> {
   }
 }
 
+class WinMessage extends StatelessWidget {
+// Constructor for public widget required named parameter key , which is then passed to StatelessWidget class.{required key} is named parameter , which is passed to statelessWidget class when its constructor is invoked using super 
+  const WinMessage({required key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      "You Won!!!!!!!Congratulations",
+      style: TextStyle(
+          fontSize: 42,
+          color: Colors.white,
+          letterSpacing: 10,
+          backgroundColor: Color.fromARGB(100, 209, 123, 80)),
+    );
+  }
+}
 
 // const is a keyword which optimize runtime performance of the app.
-// When a widget lets say text widget is defined with a text hello in the app that widget 
+// When a widget lets say text widget is defined with a text hello in the app that widget
 // is stored int he internal memeory of the device on whoch the app is running. And when that text widget with the same message is used for the second time the app use tjhe existing memory is reused instead of new memory object being created
-//so it avoid duplictaion of data in memeory  
-
-
+//so it avoid duplictaion of data in memeory
 
 // Root widget for setting overall app -> MaterialApp
-// Scaffold-> must be inside materialApp , set up good looking screen 
-
+// Scaffold-> must be inside materialApp , set up good looking screen
 
 // ? either value is there or null
 // all widgets are objects and are saved as objects
-// Conatiner: very useful for styling and layout . doestnot supoort setting it to const neither the parent can be const. 
+// Conatiner: very useful for styling and layout . doestnot supoort setting it to const neither the parent can be const.
 // with background color we cant achieve gradient.
