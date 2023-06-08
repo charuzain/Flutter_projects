@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
-
-import 'package:flutter_recap/win_message.dart';
-
+import 'dice_roller.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  int num = 2;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,37 +22,11 @@ class _MainAppState extends State<MainApp> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color.fromARGB(199, 227, 161, 6), Colors.yellow],
+              colors: [Color(0xB7564664), Colors.yellow],
             ),
           ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image(
-                  height: 100,
-                  image: AssetImage('images/dice-$num.png'),
-                  fit: BoxFit.cover,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          num = Random().nextInt(6) + 1;
-                        });
-                      },
-                      child: num == 4
-                          ? const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child: WinMessage(),
-                            )
-                          : const Text("Roll Dice")),
-                ),
-                // num == 4 ? Text("You Won") : Container()
-              ],
-            ),
+          child: const Center(
+            child:DiceRoller()
           ),
         ),
       ),
