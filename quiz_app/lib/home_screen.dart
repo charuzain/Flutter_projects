@@ -18,22 +18,29 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/quiz-logo.png', width: 300,
+              'assets/quiz-logo.png',
+              width: 300,
             ),
             const SizedBox(
               height: 80,
             ),
+           
             const Text("Learn flutter the fun way!",
                 style: TextStyle(color: Colors.white, fontSize: 24)),
             const SizedBox(
               height: 30,
             ),
-            OutlinedButton(
+            OutlinedButton.icon(
+                icon: const Icon(
+                  Icons.login,
+                  size: 28,
+                  color: Colors.white,
+                ),
                 style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
                 onPressed: () {
                   print("Pressed");
                 },
-                child: const Text(
+                label: const Text(
                   "Start Quiz",
                 ))
           ],
@@ -42,3 +49,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+// we can add an icon in the outlineButton we have to use OutlineButton.icon , if we use this then we no longer have child property we have to use label . 
+
