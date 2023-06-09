@@ -1,53 +1,46 @@
 import 'package:flutter/material.dart';
 
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 78, 13, 150),
-          Color.fromARGB(255, 117, 15, 168)
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Opacity(
-            //   opacity: 0.5,
-            //   child: Image.asset(
-            //     'assets/quiz-logo.png',
-            //     width: 300,
-            //   ),
-            // ),
-            Image.asset(
-              'assets/quiz-logo.png',
-              width: 300,
-              color: const Color.fromARGB(150, 255, 255, 255),
-            ),
-            const SizedBox(
-              height: 80,
-            ),
-            const Text("Learn flutter the fun way!",
-                style: TextStyle(color: Colors.white, fontSize: 24)),
-            const SizedBox(
-              height: 30,
-            ),
-            OutlinedButton.icon(
-                icon: const Icon(Icons.login, size: 28, color: Colors.white),
-                style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
-                onPressed: () {
-                  print("Pressed");
-                },
-                label: const Text(
-                  "Start Quiz",
-                ))
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Opacity( NOT RECOMMENDED
+          //   opacity: 0.5,
+          //   child: Image.asset(
+          //     'assets/quiz-logo.png',
+          //     width: 300,
+          //   ),
+          // ),
+          Image.asset(
+            'assets/quiz-logo.png',
+            width: 300,
+            color: const Color.fromARGB(150, 255, 255, 255),
+          ),
+          const SizedBox(
+            height: 80,
+          ),
+          const Text("Learn flutter the fun way!",
+              style: TextStyle(color: Colors.white, fontSize: 24)),
+          const SizedBox(
+            height: 30,
+          ),
+          OutlinedButton.icon(
+              icon: const Icon(Icons.login, size: 28, color: Colors.white),
+              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+              onPressed: () {
+              // Navigator.push(context, Questions())
+              },
+              label: const Text(
+                "Start Quiz",
+              ))
+        ],
       ),
     );
   }
