@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(this.changeScreen, {super.key});
+  final VoidCallback changeScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,8 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.login, size: 28, color: Colors.white),
               style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
               onPressed: () {
-              // Navigator.push(context, Questions())
+                changeScreen();
+                // Navigator.push(context, Questions())
               },
               label: const Text(
                 "Start Quiz",
