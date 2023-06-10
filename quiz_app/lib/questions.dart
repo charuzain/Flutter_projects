@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:quiz_app/widgets/answer_button.dart';
+import 'data/question_bank.dart';
 
 class Questions extends StatefulWidget {
   const Questions({super.key});
@@ -14,8 +15,8 @@ class _QuestionsState extends State<Questions> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // mainAxisSize: MainAxisSize.max,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
@@ -25,10 +26,23 @@ class _QuestionsState extends State<Questions> {
           const SizedBox(
             height: 30,
           ),
-          ElevatedButton(onPressed: () {}, child: Text("Answer 1")),
-          ElevatedButton(onPressed: () {}, child: Text("Answer 2")),
-          ElevatedButton(onPressed: () {}, child: Text("Answer 3")),
-          ElevatedButton(onPressed: () {}, child: Text("Answer 3")),
+
+          AnswerButton(
+            question: questionBank[1].answers[0],
+          ),
+          AnswerButton(
+            question: questionBank[1].answers[1],
+          ),
+          AnswerButton(
+            question: questionBank[1].answers[2],
+          ),
+          AnswerButton(
+            question: questionBank[1].answers[3],
+          ),
+
+          // const AnswerButton(),
+          // const AnswerButton(),
+          // const AnswerButton(),
         ],
       ),
     );
