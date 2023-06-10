@@ -20,4 +20,7 @@ const questionBank = [
         Question(
       question: "What are the main building blovk of Flutter UIS",
       answers: ['Widget', 'API', 'Bloc', 'State']),
+        Question(
+      question: "What are the main building blovk of Flutter UIS",
+      answers: ['Widget', 'API', 'Bloc', 'State']),
 ];

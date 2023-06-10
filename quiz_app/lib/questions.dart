@@ -11,6 +11,7 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,8 +20,8 @@ class _QuestionsState extends State<Questions> {
         // crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "What is flutter popular for in the programming world ?",
+          Text(
+            questionBank[index].question,
             style: TextStyle(color: Colors.white, fontSize: 32),
           ),
           const SizedBox(
@@ -28,19 +29,42 @@ class _QuestionsState extends State<Questions> {
           ),
 
           AnswerButton(
-            question: questionBank[1].answers[0],
+            question: questionBank[index].answers[0],
+            onClick: () {
+              setState(() {
+                index = index + 1;
+              });
+            },
           ),
           AnswerButton(
-            question: questionBank[1].answers[1],
+            question: questionBank[index].answers[1],
+            onClick: () {
+              setState(() {
+                index = index + 1;
+              });
+            },
           ),
           AnswerButton(
-            question: questionBank[1].answers[2],
+            question: questionBank[index].answers[2],
+            onClick: () { 
+              setState(() {
+                index = index + 1;
+              });
+            },
           ),
           AnswerButton(
-            question: questionBank[1].answers[3],
+            question: questionBank[index].answers[3],
+            onClick: () {
+              setState(() {
+                index = index + 1;
+              });
+            },
           ),
 
           // const AnswerButton(),
+          // const AnswerButton(),
+          // const AnswerButton(),
+            // const AnswerButton(),
           // const AnswerButton(),
           // const AnswerButton(),
         ],
