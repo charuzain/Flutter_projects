@@ -12,6 +12,7 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,49 +23,58 @@ class _QuestionsState extends State<Questions> {
         children: [
           Text(
             questionBank[index].question,
-            style: TextStyle(color: Colors.white, fontSize: 32),
+            style: const TextStyle(color: Colors.white, fontSize: 32),
           ),
           const SizedBox(
             height: 30,
           ),
 
-          AnswerButton(
-            question: questionBank[index].answers[0],
-            onClick: () {
-              setState(() {
-                index = index + 1;
-              });
-            },
-          ),
-          AnswerButton(
-            question: questionBank[index].answers[1],
-            onClick: () {
-              setState(() {
-                index = index + 1;
-              });
-            },
-          ),
-          AnswerButton(
-            question: questionBank[index].answers[2],
-            onClick: () { 
-              setState(() {
-                index = index + 1;
-              });
-            },
-          ),
-          AnswerButton(
-            question: questionBank[index].answers[3],
-            onClick: () {
-              setState(() {
-                index = index + 1;
-              });
-            },
-          ),
+          ...questionBank[index].answers.map((answer) => AnswerButton(
+                option: answer,
+                onClick: () {
+                  setState(() {
+                    index = index + 1;
+                  });
+                },
+              )),
+          // AnswerButton(
+          //   option: questionBank[index].answers[0],
+          //   onClick: () {
+          //     setState(() {
+          //       print(questionBank);
+          //       index = index + 1;
+          //     });
+          //   },
+          // ),
+          // AnswerButton(
+          //   option: questionBank[index].answers[1],
+          //   onClick: () {
+          //     setState(() {
+          //       index = index + 1;
+          //     });
+          //   },
+          // ),
+          // AnswerButton(
+          //   option: questionBank[index].answers[2],
+          //   onClick: () {
+          //     setState(() {
+          //       index = index + 1;
+          //     });
+          //   },
+          // ),
+          // AnswerButton(
+          //   option: questionBank[index].answers[3],
+          //   onClick: () {
+          //     setState(() {
+          //       index = index + 1;
+          //     });
+          //   },
+          // ),
 
           // const AnswerButton(),
           // const AnswerButton(),
           // const AnswerButton(),
-            // const AnswerButton(),
+          // const AnswerButton(),
           // const AnswerButton(),
           // const AnswerButton(),
         ],
