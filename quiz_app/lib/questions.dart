@@ -16,68 +16,75 @@ class _QuestionsState extends State<Questions> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        // mainAxisSize: MainAxisSize.max,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            questionBank[index].question,
-            style: const TextStyle(color: Colors.white, fontSize: 32),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 28),
+        child: Column(
+          // mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
 
-          ...questionBank[index].answers.map((answer) => AnswerButton(
-                option: answer,
-                onClick: () {
-                  setState(() {
-                    index = index + 1;
-                  });
-                },
-              )),
-          // AnswerButton(
-          //   option: questionBank[index].answers[0],
-          //   onClick: () {
-          //     setState(() {
-          //       print(questionBank);
-          //       index = index + 1;
-          //     });
-          //   },
-          // ),
-          // AnswerButton(
-          //   option: questionBank[index].answers[1],
-          //   onClick: () {
-          //     setState(() {
-          //       index = index + 1;
-          //     });
-          //   },
-          // ),
-          // AnswerButton(
-          //   option: questionBank[index].answers[2],
-          //   onClick: () {
-          //     setState(() {
-          //       index = index + 1;
-          //     });
-          //   },
-          // ),
-          // AnswerButton(
-          //   option: questionBank[index].answers[3],
-          //   onClick: () {
-          //     setState(() {
-          //       index = index + 1;
-          //     });
-          //   },
-          // ),
+          children: [
+            Text(
+              questionBank[index].question,
+              style: const TextStyle(color: Colors.white, fontSize: 32),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
 
-          // const AnswerButton(),
-          // const AnswerButton(),
-          // const AnswerButton(),
-          // const AnswerButton(),
-          // const AnswerButton(),
-          // const AnswerButton(),
-        ],
+            ...questionBank[index]
+                .shuffleQuestion()
+                .map((answer) => AnswerButton(
+                      option: answer,
+                      onClick: () {
+                        setState(() {
+                          index = index + 1;
+                        });
+                      },
+                    )),
+            // AnswerButton(
+            //   option: questionBank[index].answers[0],
+            //   onClick: () {
+            //     setState(() {
+            //       print(questionBank);
+            //       index = index + 1;
+            //     });
+            //   },
+            // ),
+            // AnswerButton(
+            //   option: questionBank[index].answers[1],
+            //   onClick: () {
+            //     setState(() {
+            //       index = index + 1;
+            //     });
+            //   },
+            // ),
+            // AnswerButton(
+            //   option: questionBank[index].answers[2],
+            //   onClick: () {
+            //     setState(() {
+            //       index = index + 1;
+            //     });
+            //   },
+            // ),
+            // AnswerButton(
+            //   option: questionBank[index].answers[3],
+            //   onClick: () {
+            //     setState(() {
+            //       index = index + 1;
+            //     });
+            //   },
+            // ),
+
+            // const AnswerButton(),
+            // const AnswerButton(),
+            // const AnswerButton(),
+            // const AnswerButton(),
+            // const AnswerButton(),
+            // const AnswerButton(),
+          ],
+        ),
       ),
     );
   }
