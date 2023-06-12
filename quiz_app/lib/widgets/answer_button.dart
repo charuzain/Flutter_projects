@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AnswerButton extends StatelessWidget {
-  const AnswerButton({required this.onClick, required this.option, super.key});
-  final String option;
+  const AnswerButton(
+      {required this.onClick, required this.question, super.key});
+  final String question;
   final VoidCallback onClick;
 
   @override
@@ -15,7 +16,7 @@ class AnswerButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0))),
       child: Text(
-        option,
+        question,
         style: const TextStyle(color: Colors.white),
       ),
     );

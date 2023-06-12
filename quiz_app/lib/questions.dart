@@ -3,7 +3,10 @@ import 'package:quiz_app/widgets/answer_button.dart';
 import 'data/question_bank.dart';
 
 class Questions extends StatefulWidget {
-  const Questions({super.key});
+  const Questions({required this.addToAnswerList, super.key});
+
+  final Function(String selectedAnswer) addToAnswerList;
+
   @override
   State<StatefulWidget> createState() {
     return _QuestionsState();
@@ -12,12 +15,14 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   int index = 0;
+  String? selectedAnswer;
+  String? correctAnswer;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 28),
+        margin: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           // mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,8 +41,11 @@ class _QuestionsState extends State<Questions> {
             ...questionBank[index]
                 .shuffleQuestion()
                 .map((answer) => AnswerButton(
-                      option: answer,
+                      question: answer,
                       onClick: () {
+                        widget.addToAnswerList(answer);
+                        correctAnswer = questionBank[index].getCorrectAnswer();
+                        selectedAnswer = answer;
                         setState(() {
                           index = index + 1;
                         });
