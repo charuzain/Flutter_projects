@@ -8,10 +8,11 @@ class Result extends StatelessWidget {
   Result(
       {required this.correctAnswerCount,
       required this.answerChoosen,
-      super.key});
+      super.key,
+      required this.restartQuiz});
   int correctAnswerCount;
   List<String> answerChoosen;
-
+  final VoidCallback restartQuiz;
   List<Map> getAnswerSummary() {
     List<Map> answerSummary = [];
 
@@ -49,7 +50,8 @@ class Result extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          OutlinedButton(onPressed: () {}, child: const Text("Restart Quiz"))
+          OutlinedButton(
+              onPressed: restartQuiz, child: const Text("Restart Quiz"))
         ],
       ),
     );
