@@ -1,10 +1,10 @@
 class Question {
   final String question;
-  final String _correctAnswer;
+  final String correctAnswer;
   final List<String> answers;
   const Question(
-     this._correctAnswer,
-      {required this.question,
+      {required this.correctAnswer,
+      required this.question,
       required this.answers,
       
       });
@@ -16,6 +16,6 @@ class Question {
   }
 
   String getCorrectAnswer() {
-    return _correctAnswer;
+    return correctAnswer;
   }
 }

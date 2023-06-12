@@ -43,7 +43,7 @@ class _QuizState extends State<Quiz> {
       print("===========");
       // switch to result screen
       setState(() {
-        startScreen = Result(correctAnswerCount: correctAnswerCount);
+        startScreen = Result(correctAnswerCount: correctAnswerCount , answerChoosen: answerChoosen);
       });
     }
   }
