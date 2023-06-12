@@ -3,7 +3,8 @@ import '../model/question.dart';
 const questionBank = [
   Question(
     correctAnswer: 'Dart',
-    question: "Which language is used for flutter",
+    question:
+        "Which language is used for flutter jjjahhahahbahab aba a a ahbaba ha hab",
     answers: ['Dart', 'Java', 'C', 'C++'],
   ),
   Question(
