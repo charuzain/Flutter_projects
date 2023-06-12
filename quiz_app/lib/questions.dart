@@ -3,9 +3,15 @@ import 'package:quiz_app/widgets/answer_button.dart';
 import 'data/question_bank.dart';
 
 class Questions extends StatefulWidget {
-  const Questions({required this.addToAnswerList, super.key});
+  Questions(
+      {required this.addToAnswerList,
+      required this.correctAnswerCount,
+      required this.finalScore,
+      super.key});
 
   final Function(String selectedAnswer) addToAnswerList;
+  int correctAnswerCount;
+  final void Function() finalScore;
 
   @override
   State<StatefulWidget> createState() {
@@ -43,12 +49,20 @@ class _QuestionsState extends State<Questions> {
                 .map((answer) => AnswerButton(
                       question: answer,
                       onClick: () {
-                        widget.addToAnswerList(answer);
-                    
                         correctAnswer = questionBank[index].getCorrectAnswer();
-                        selectedAnswer = answer;
+                    
+                        if (answer == correctAnswer) {
+                          widget.finalScore();
+                        }
+                        widget.addToAnswerList(answer);
                         setState(() {
+                          // if (answer == correctAnswer) {
+                          //   widget.finalScore();
+                          // }
                           index = index + 1;
+                          print(index);
+
+                          // print(widget.correctAnswerCount);
                         });
                       },
                     )),

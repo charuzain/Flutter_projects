@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/questions.dart';
 import 'package:quiz_app/result.dart';
 
-
 import 'data/question_bank.dart';
 
 import 'home_screen.dart';
@@ -18,6 +17,7 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   Widget? startScreen;
   List<String> answerChoosen = [];
+  int correctAnswerCount = 0;
 
   @override
   void initState() {
@@ -27,18 +27,32 @@ class _QuizState extends State<Quiz> {
 
   void changeScreen() {
     setState(() {
-      startScreen = Questions(addToAnswerList:addToSelectedAnswerList);
+      startScreen = Questions(
+          addToAnswerList: addToSelectedAnswerList,
+          correctAnswerCount: correctAnswerCount,
+          finalScore: finalScore);
     });
   }
 
   void addToSelectedAnswerList(String answer) {
     answerChoosen.add(answer);
-    if(answerChoosen.length == questionBank.length){
+    if (answerChoosen.length == questionBank.length) {
+      print("o0jwwwwww");
+      print("===========");
+      print(correctAnswerCount);
+      print("===========");
       // switch to result screen
-        setState(() {
-        startScreen = Result();
+      setState(() {
+        startScreen = Result(correctAnswerCount: correctAnswerCount);
       });
     }
+  }
+
+  void finalScore() {
+    correctAnswerCount++;
+    print("===========");
+    print(correctAnswerCount);
+    print("===========");
   }
 
   @override
