@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/questions.dart';
 import 'package:quiz_app/result.dart';
-
 import 'data/question_bank.dart';
-
 import 'home_screen.dart';
-// import 'package:flutter/widgets.dart';
+
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -34,25 +32,34 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void restartQuiz() {
+    answerChoosen = [];
+    correctAnswerCount = 0;
+
+    setState(() {
+      startScreen = Questions(
+          addToAnswerList: addToSelectedAnswerList,
+          correctAnswerCount: correctAnswerCount,
+          finalScore: finalScore);
+      ;
+    });
+  }
+
   void addToSelectedAnswerList(String answer) {
     answerChoosen.add(answer);
     if (answerChoosen.length == questionBank.length) {
-      print("o0jwwwwww");
-      print("===========");
-      print(correctAnswerCount);
-      print("===========");
       // switch to result screen
       setState(() {
-        startScreen = Result(correctAnswerCount: correctAnswerCount , answerChoosen: answerChoosen);
+        startScreen = Result(
+            correctAnswerCount: correctAnswerCount,
+            answerChoosen: answerChoosen,
+            restartQuiz: restartQuiz);
       });
     }
   }
 
   void finalScore() {
     correctAnswerCount++;
-    print("===========");
-    print(correctAnswerCount);
-    print("===========");
   }
 
   @override
