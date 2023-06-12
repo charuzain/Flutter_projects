@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/questions.dart';
+import 'package:quiz_app/result.dart';
+
+
+import 'data/question_bank.dart';
 
 import 'home_screen.dart';
 // import 'package:flutter/widgets.dart';
@@ -29,6 +33,12 @@ class _QuizState extends State<Quiz> {
 
   void addToSelectedAnswerList(String answer) {
     answerChoosen.add(answer);
+    if(answerChoosen.length == questionBank.length){
+      // switch to result screen
+        setState(() {
+        startScreen = Result();
+      });
+    }
   }
 
   @override

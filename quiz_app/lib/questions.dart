@@ -44,6 +44,7 @@ class _QuestionsState extends State<Questions> {
                       question: answer,
                       onClick: () {
                         widget.addToAnswerList(answer);
+                    
                         correctAnswer = questionBank[index].getCorrectAnswer();
                         selectedAnswer = answer;
                         setState(() {
