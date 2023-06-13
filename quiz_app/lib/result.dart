@@ -60,8 +60,16 @@ class Result extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        OutlinedButton(
-            onPressed: restartQuiz, child: const Text("Restart Quiz"))
+        OutlinedButton.icon(
+            icon: Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
+            onPressed: restartQuiz,
+            label: const Text(
+              "Restart Quiz!",
+              style: TextStyle(color: Colors.white),
+            ))
       ],
     );
   }
@@ -86,6 +94,7 @@ class QuestionSummary extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
+                radius: 15,
                 backgroundColor: item['answer'] == item['selectedAns']
                     ? Colors.green
                     : Color.fromARGB(255, 234, 102, 102),
