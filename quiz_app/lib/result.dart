@@ -93,15 +93,32 @@ class QuestionSummary extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 15,
-                backgroundColor: item['answer'] == item['selectedAns']
-                    ? Colors.green
-                    : Color.fromARGB(255, 234, 102, 102),
+              Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: item['answer'] == item['selectedAns']
+                        ? Colors.green
+                        : const Color.fromARGB(255, 234, 102, 102),
+                    borderRadius: BorderRadius.circular(100)),
                 child: Text(
                   '${item['questionNo'] + 1}'.toString(),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
                 ),
               ),
+              // CircleAvatar(
+              //   radius: 15,
+              //   backgroundColor: item['answer'] == item['selectedAns']
+              //       ? Colors.green
+              //       : Color.fromARGB(255, 234, 102, 102),
+              //   child: Text(
+              //     '${item['questionNo'] + 1}'.toString(),
+              //   ),
+              // ),
               SizedBox(
                 width: 10,
               ),
