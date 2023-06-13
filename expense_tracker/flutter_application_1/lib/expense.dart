@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/expense_list.dart';
+import 'package:flutter_application_1/widgets/listview.dart';
 
 class Expense extends StatefulWidget {
   const Expense({super.key});
@@ -18,13 +19,9 @@ class _ExpenseState extends State<Expense> {
       ),
       body: Column(
         children: [
-          Text("Chart"),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) => Text(expenseList[index].title),
-              itemCount: expenseList.length,
-            ),
-          )
+          const Text("Chart"),
+          Expanded(child: ExpenseListView(expenseList: expenseList)),
+        
         ],
       ),
     );
