@@ -50,7 +50,7 @@ class _QuestionsState extends State<Questions> {
                       question: answer,
                       onClick: () {
                         correctAnswer = questionBank[index].getCorrectAnswer();
-                    
+
                         if (answer == correctAnswer) {
                           widget.finalScore();
                         }

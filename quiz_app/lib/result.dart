@@ -30,30 +30,35 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'You have answerd $correctAnswerCount correctly out of ${answerChoosen.length} questions',
-            style: const TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'You have answerd $correctAnswerCount correctly out of ${answerChoosen.length} questions',
+          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        SizedBox(
+          height: 300,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ...getAnswerSummary().map(
+                  (item) => QuestionSummary(item: item),
+                )
+              ],
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          ...getAnswerSummary().map(
-            (item) => QuestionSummary(item: item),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          OutlinedButton(
-              onPressed: restartQuiz, child: const Text("Restart Quiz"))
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        OutlinedButton(
+            onPressed: restartQuiz, child: const Text("Restart Quiz"))
+      ],
     );
   }
 }
@@ -76,7 +81,7 @@ class QuestionSummary extends StatelessWidget {
             Text(
               '${item['questionNo'] + 1}'.toString(),
             ),
-            Text(item['question']),
+            Expanded(child: Text(item['question'])),
           ],
         ),
         Text(item['answer'],
@@ -88,7 +93,7 @@ class QuestionSummary extends StatelessWidget {
                     ? Colors.green
                     : Colors.red)),
         const SizedBox(
-          height: 30,
+          height: 3,
         )
       ],
     );
