@@ -31,18 +31,22 @@ class Result extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'You have answerd $correctAnswerCount correctly out of ${answerChoosen.length} questions',
-          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          'You have answerd $correctAnswerCount question out of ${answerChoosen.length} questions correctly !',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 20,
+              fontWeight: FontWeight.w300),
         ),
         const SizedBox(
-          height: 30,
+          height: 50,
         ),
         SizedBox(
-          height: 300,
+          height: 400,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -73,29 +77,60 @@ class QuestionSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              '${item['questionNo'] + 1}'.toString(),
-            ),
-            Expanded(child: Text(item['question'])),
-          ],
-        ),
-        Text(item['answer'],
-            style: const TextStyle(color: Colors.yellow),
-            textAlign: TextAlign.start),
-        Text(item['selectedAns'],
-            style: TextStyle(
-                color: item['answer'] == item['selectedAns']
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                backgroundColor: item['answer'] == item['selectedAns']
                     ? Colors.green
-                    : Colors.red)),
-        const SizedBox(
-          height: 3,
-        )
-      ],
+                    : Color.fromARGB(255, 234, 102, 102),
+                child: Text(
+                  '${item['questionNo'] + 1}'.toString(),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      item['question'],
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 22,
+                          color: Colors.white),
+                    ),
+                    Text(item['answer'],
+                        style: const TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.start),
+                    Text(item['selectedAns'],
+                        style: TextStyle(
+                          color: item['answer'] == item['selectedAns']
+                              ? Colors.green
+                              : Color.fromARGB(255, 234, 102, 102),
+                          fontSize: 16,
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
