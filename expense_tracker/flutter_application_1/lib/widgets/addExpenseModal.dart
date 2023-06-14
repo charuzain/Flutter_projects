@@ -10,7 +10,15 @@ class AddExpenseModal extends StatefulWidget {
 }
 
 class _AddExpenseModalState extends State<AddExpenseModal> {
-  String expenseTitle = "";
+  // String expenseTitle = "";
+  final titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +26,8 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
       child: Column(
         children: [
           TextField(
-            onChanged: (value) => {expenseTitle = value},
+            // onChanged: (value) => {expenseTitle = value},
+            controller: titleController,
             maxLength: 50,
             decoration: const InputDecoration(
               label: Text("Title"),
@@ -30,9 +39,9 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
           ),
           ElevatedButton(
             onPressed: () {
-              print(expenseTitle);
+              print(titleController.text);
             },
-            child: Text("Add Expense"),
+            child: const Text("Add Expense"),
           ),
         ],
       ),
