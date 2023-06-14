@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/expense_list.dart';
+import 'package:flutter_application_1/widgets/addExpenseModal.dart';
 import 'package:flutter_application_1/widgets/listview.dart';
 
 class Expense extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ExpenseState extends State<Expense> {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                    context: context, builder: (ctx) => Text("Modal"));
+                    context: context, builder: (ctx) => AddExpenseModal());
               },
               icon: const Icon(Icons.add))
           // Padding(
