@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../model/expense_data.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseListView extends StatelessWidget {
   const ExpenseListView({required this.expenseList, super.key});
 
   final List<ExpenseList> expenseList;
+
+  String formatTime(date) {
+    return DateFormat.yMd().format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -30,7 +36,13 @@ class ExpenseListView extends StatelessWidget {
                               categoryIcon[expenseList[index].category],
                               color: Colors.amber,
                             ),
-                            Text(expenseList[index].date.toString())
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              formatTime(expenseList[index].date),
+                              textAlign: TextAlign.center,
+                            )
                           ],
                         )
                       ],
