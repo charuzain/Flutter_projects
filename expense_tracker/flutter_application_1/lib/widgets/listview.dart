@@ -36,7 +36,7 @@ class ExpenseListView extends StatelessWidget {
                               categoryIcon[expenseList[index].category],
                               color: Colors.amber,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(

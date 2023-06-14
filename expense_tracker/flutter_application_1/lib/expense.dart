@@ -13,15 +13,28 @@ class _ExpenseState extends State<Expense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+  
       appBar: AppBar(
+    
         title: const Text("Flutter Expense Tracker"),
         backgroundColor: const Color.fromARGB(255, 69, 13, 89),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context, builder: (ctx) => Text("Modal"));
+              },
+              icon: const Icon(Icons.add))
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: Icon(Icons.add),
+          // )
+        ],
       ),
       body: Column(
         children: [
           const Text("Chart"),
           Expanded(child: ExpenseListView(expenseList: expenseList)),
-        
         ],
       ),
     );
