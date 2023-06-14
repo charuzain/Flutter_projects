@@ -17,12 +17,12 @@ final expenseList = [
       date: DateTime.now(),
       title: "Movie"),
   ExpenseList(
-      category: ExpenseCategory.grocery,
-      amount: 150.00,
+      category: ExpenseCategory.travel,
+      amount: 3050.00,
       date: DateTime.now(),
-      title: "Freshco Grocery Store"),
+      title: "Travel"),
   ExpenseList(
-      category: ExpenseCategory.bill,
+      category: ExpenseCategory.shopping,
       amount: 90.40,
       date: DateTime.now(),
       title: "Internet"),

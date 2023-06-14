@@ -4,7 +4,7 @@ import 'expense.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: Expense(),
     ),
   );

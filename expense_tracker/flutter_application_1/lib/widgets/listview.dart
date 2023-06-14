@@ -26,7 +26,10 @@ class ExpenseListView extends StatelessWidget {
                         Text(expenseList[index].title),
                         Row(
                           children: [
-                            const Icon(Icons.alarm),
+                            Icon(
+                              categoryIcon[expenseList[index].category],
+                              color: Colors.amber,
+                            ),
                             Text(expenseList[index].date.toString())
                           ],
                         )
