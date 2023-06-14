@@ -12,10 +12,13 @@ class AddExpenseModal extends StatefulWidget {
 class _AddExpenseModalState extends State<AddExpenseModal> {
   // String expenseTitle = "";
   final titleController = TextEditingController();
+  final amountCotroller = TextEditingController();
 
   @override
   void dispose() {
+    // destroy titleController when modal is closed as its no longer needed , will save memory
     titleController.dispose();
+    amountCotroller.dispose();
     super.dispose();
   }
 
@@ -34,14 +37,30 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
             ),
             keyboardType: TextInputType.text,
           ),
+          TextField(
+            controller: amountCotroller,
+            maxLength: 8,
+            decoration: InputDecoration(label: Text("Expense amount")),
+            keyboardType: TextInputType.number,
+          ),
           const SizedBox(
             height: 20,
           ),
-          ElevatedButton(
-            onPressed: () {
-              print(titleController.text);
-            },
-            child: const Text("Add Expense"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print(titleController.text);
+                  print(amountCotroller.text);
+                },
+                child: const Text("Add Expense"),
+              ),
+              SizedBox(
+                width: 25,
+              ),
+              ElevatedButton(onPressed: () {}, child: Text("Reset"))
+            ],
           ),
         ],
       ),
