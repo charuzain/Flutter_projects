@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
 
 class AddExpenseModal extends StatefulWidget {
   const AddExpenseModal({super.key});
@@ -13,6 +14,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
   // String expenseTitle = "";
   final titleController = TextEditingController();
   final amountCotroller = TextEditingController();
+  DateTime? choosenDate;
 
   @override
   void dispose() {
@@ -22,13 +24,18 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
     super.dispose();
   }
 
-  void presentDatePicker() {
+  void presentDatePicker() async {
     DateTime now = DateTime.now();
-    showDatePicker(
+
+    final selectedDate = await showDatePicker(
         context: context,
         initialDate: now,
         firstDate: DateTime(now.year - 1),
         lastDate: now);
+
+    setState(() {
+      choosenDate = selectedDate;
+    });
   }
 
   @override
@@ -65,7 +72,9 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
               ),
               Row(
                 children: [
-                  const Text("Selected Date"),
+                  Text(choosenDate == null
+                      ? "No Date selected"
+                      : DateFormat.yMd().format(choosenDate!)),
                   IconButton(
                     onPressed: presentDatePicker,
                     icon: const Icon(Icons.calendar_month),
