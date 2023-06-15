@@ -22,6 +22,15 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
     super.dispose();
   }
 
+  void presentDatePicker() {
+    DateTime now = DateTime.now();
+    showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: DateTime(now.year - 1),
+        lastDate: now);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -58,14 +67,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                 children: [
                   const Text("Selected Date"),
                   IconButton(
-                    onPressed: () {
-                      DateTime now = DateTime.now();
-                      showDatePicker(
-                          context: context,
-                          initialDate: now,
-                          firstDate: DateTime(now.year - 1),
-                          lastDate: now);
-                    },
+                    onPressed: presentDatePicker,
                     icon: const Icon(Icons.calendar_month),
                   ),
                 ],
