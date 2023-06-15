@@ -37,11 +37,40 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
             ),
             keyboardType: TextInputType.text,
           ),
-          TextField(
-            controller: amountCotroller,
-            maxLength: 8,
-            decoration: InputDecoration(label: Text("Expense amount")),
-            keyboardType: TextInputType.number,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: amountCotroller,
+                  decoration: const InputDecoration(
+                    label: Text("Expense"),
+                    prefix: Text('\$'),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+              ),
+              Row(
+                children: [
+                  const Text("Selected Date"),
+                  IconButton(
+                    onPressed: () {
+                      DateTime now = DateTime.now();
+                      showDatePicker(
+                          context: context,
+                          initialDate: now,
+                          firstDate: DateTime(now.year - 1),
+                          lastDate: now);
+                    },
+                    icon: const Icon(Icons.calendar_month),
+                  ),
+                ],
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
