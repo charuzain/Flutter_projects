@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 
+import '../model/expense_data.dart';
+
 class AddExpenseModal extends StatefulWidget {
   const AddExpenseModal({super.key});
 
@@ -15,6 +17,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
   final titleController = TextEditingController();
   final amountCotroller = TextEditingController();
   DateTime? choosenDate;
+  dynamic selectedVal = "bill";
 
   @override
   void dispose() {
@@ -62,12 +65,12 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                   controller: amountCotroller,
                   decoration: const InputDecoration(
                     label: Text("Expense"),
-                    prefix: Text('\$'),
+                    prefix: Text('\$ '),
                   ),
                   keyboardType: TextInputType.number,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 40,
               ),
               Row(
@@ -87,7 +90,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
             height: 20,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
                 onPressed: () {
@@ -96,10 +99,26 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                 },
                 child: const Text("Add Expense"),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 25,
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Reset"))
+              ElevatedButton(onPressed: () {}, child: Text("Reset")),
+              const SizedBox(
+                width: 25,
+              ),
+              DropdownButton(
+                  value: selectedVal,
+                  items: ExpenseCategory.values
+                      .map((item) => DropdownMenuItem(
+                            child: Text(item.name),
+                            value: item.name,
+                          ))
+                      .toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      selectedVal = val;
+                    });
+                  })
             ],
           ),
         ],
