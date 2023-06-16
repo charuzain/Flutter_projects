@@ -17,7 +17,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
   final titleController = TextEditingController();
   final amountCotroller = TextEditingController();
   DateTime? choosenDate;
-  dynamic selectedVal = "bill";
+  ExpenseCategory selectedVal = ExpenseCategory.bill;
 
   @override
   void dispose() {
@@ -39,6 +39,35 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
     setState(() {
       choosenDate = selectedDate;
     });
+  }
+
+  void addExpense() {
+// first do validation
+// check inputs are there
+// Amount : amount should be greater than 0 and it should be integer
+    bool isAmountValid = double.tryParse(amountCotroller.text) == null ||
+        amountCotroller.text.isEmpty;
+
+    if (titleController.text.trim().isEmpty || isAmountValid) {
+      // show error
+
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text("Invalid Data"),
+                content: const Text(
+                    "Enter a valid Input ! Make sure the fields are not empty !"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text("Close"),
+                  )
+                ],
+              ));
+      return;
+    }
   }
 
   @override
@@ -93,31 +122,28 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  print(titleController.text);
-                  print(amountCotroller.text);
-                },
+                onPressed: addExpense,
                 child: const Text("Add Expense"),
               ),
               const SizedBox(
                 width: 25,
               ),
               ElevatedButton(onPressed: () {}, child: Text("Reset")),
-              const SizedBox(
-                width: 25,
-              ),
+              const Spacer(),
               DropdownButton(
                   value: selectedVal,
                   items: ExpenseCategory.values
                       .map((item) => DropdownMenuItem(
+                            value: item,
                             child: Text(item.name),
-                            value: item.name,
                           ))
                       .toList(),
                   onChanged: (val) {
-                    setState(() {
-                      selectedVal = val;
-                    });
+                    if (val != null) {
+                      setState(() {
+                        selectedVal = val;
+                      });
+                    }
                   })
             ],
           ),
