@@ -18,16 +18,27 @@ class _ExpenseState extends State<Expense> {
     });
   }
 
+  void insertExpense(int index, ExpenseList expenseToremove) {
+    setState(() {
+      expenseList.insert(index, expenseToremove);
+    });
+  }
+
   void removeExpense(ExpenseList expenseToremove) {
+    final indexOfRemovedExpense = expenseList.indexOf(expenseToremove);
     setState(() {
       expenseList.remove(expenseToremove);
     });
-    SnackBar snackBar = SnackBar(
-      content: Text("Are you sure "),
-      action: SnackBarAction(label: "Undo", onPressed: () {}),
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Are you sure you want to add back the expense"),
+      action: SnackBarAction(
+        label: "Undo",
+        onPressed: () {
+          insertExpense(indexOfRemovedExpense, expenseToremove);
+        },
+      ),
+      elevation: 2.0,
+    ));
   }
 
   @override
@@ -56,11 +67,13 @@ class _ExpenseState extends State<Expense> {
       body: Column(
         children: [
           const Text("Chart"),
-          Expanded(
-              child: ExpenseListView(
-            expenseList: expenseList,
-            removeExpense: removeExpense,
-          )),
+          expenseList.length == 0
+              ? Expanded(child: Center(child: Text("Add More expense")))
+              : Expanded(
+                  child: ExpenseListView(
+                  expenseList: expenseList,
+                  removeExpense: removeExpense,
+                )),
         ],
       ),
     );
