@@ -18,6 +18,12 @@ class _ExpenseState extends State<Expense> {
     });
   }
 
+  void removeExpense(ExpenseList expenseToremove) {
+    setState(() {
+      expenseList.remove(expenseToremove);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +34,7 @@ class _ExpenseState extends State<Expense> {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                  // when isScrollControlled is true modal pverlay will take full height
+                    // when isScrollControlled is true modal pverlay will take full height
                     isScrollControlled: true,
                     context: context,
                     builder: (ctx) =>
@@ -44,7 +50,11 @@ class _ExpenseState extends State<Expense> {
       body: Column(
         children: [
           const Text("Chart"),
-          Expanded(child: ExpenseListView(expenseList: expenseList)),
+          Expanded(
+              child: ExpenseListView(
+            expenseList: expenseList,
+            removeExpense: removeExpense,
+          )),
         ],
       ),
     );
