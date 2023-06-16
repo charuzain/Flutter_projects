@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/expense_list.dart';
+import 'package:flutter_application_1/model/expense_data.dart';
 import 'package:flutter_application_1/widgets/addExpenseModal.dart';
 import 'package:flutter_application_1/widgets/listview.dart';
 
@@ -11,19 +12,23 @@ class Expense extends StatefulWidget {
 }
 
 class _ExpenseState extends State<Expense> {
+  void displayList(ExpenseList newExpense) {
+    setState(() {
+      expenseList.add(newExpense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       appBar: AppBar(
-    
         title: const Text("Flutter Expense Tracker"),
         backgroundColor: const Color.fromARGB(255, 69, 13, 89),
         actions: [
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                    context: context, builder: (ctx) => AddExpenseModal());
+                    context: context, builder: (ctx) => AddExpenseModal(displayList : displayList));
               },
               icon: const Icon(Icons.add))
           // Padding(

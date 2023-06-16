@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_application_1/data/expense_list.dart';
 import 'package:intl/intl.dart';
 
 import '../model/expense_data.dart';
 
 class AddExpenseModal extends StatefulWidget {
-  const AddExpenseModal({super.key});
+  AddExpenseModal({required this.displayList, super.key});
+  void Function(ExpenseList) displayList;
 
   @override
   State<AddExpenseModal> createState() => _AddExpenseModalState();
@@ -46,9 +48,15 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
 // check inputs are there
 // Amount : amount should be greater than 0 and it should be integer
     bool isAmountValid = double.tryParse(amountCotroller.text) == null ||
-        amountCotroller.text.isEmpty;
+        amountCotroller.text.isEmpty ||
+        double.tryParse(amountCotroller.text)! <= 0;
 
-    if (titleController.text.trim().isEmpty || isAmountValid) {
+    print(selectedVal.name.isEmpty);
+
+    if (titleController.text.trim().isEmpty ||
+        isAmountValid ||
+        choosenDate == null ||
+        selectedVal.name.isEmpty) {
       // show error
 
       showDialog(
@@ -68,6 +76,14 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
               ));
       return;
     }
+
+    widget.displayList(ExpenseList(
+        title: titleController.text,
+        date: choosenDate!,
+        amount: double.tryParse(amountCotroller.text)!,
+        category: selectedVal));
+    Navigator.pop(context);
+
   }
 
   @override
