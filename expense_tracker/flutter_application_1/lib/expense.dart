@@ -28,7 +28,11 @@ class _ExpenseState extends State<Expense> {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                    context: context, builder: (ctx) => AddExpenseModal(displayList : displayList));
+                  // when isScrollControlled is true modal pverlay will take full height
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (ctx) =>
+                        AddExpenseModal(displayList: displayList));
               },
               icon: const Icon(Icons.add))
           // Padding(

@@ -83,13 +83,12 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
         amount: double.tryParse(amountCotroller.text)!,
         category: selectedVal));
     Navigator.pop(context);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 40, 4, 0),
       child: Column(
         children: [
           TextField(
@@ -144,7 +143,19 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
               const SizedBox(
                 width: 25,
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Reset")),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  // titleController.text = "";
+                  // amountCotroller.text = "";
+                  // selectedVal = ExpenseCategory.bill;
+                  // // choosenDate = DateTime.now();
+                  // // choosenDate
+
+                  print(titleController.text);
+                },
+                child: const Text("Cancel"),
+              ),
               const Spacer(),
               DropdownButton(
                   value: selectedVal,
