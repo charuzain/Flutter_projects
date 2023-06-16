@@ -22,6 +22,12 @@ class _ExpenseState extends State<Expense> {
     setState(() {
       expenseList.remove(expenseToremove);
     });
+    SnackBar snackBar = SnackBar(
+      content: Text("Are you sure "),
+      action: SnackBarAction(label: "Undo", onPressed: () {}),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
