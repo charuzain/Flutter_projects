@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/expense_list.dart';
 import 'package:flutter_application_1/model/expense_data.dart';
 import 'package:flutter_application_1/widgets/addExpenseModal.dart';
+import 'package:flutter_application_1/widgets/chart.dart';
 import 'package:flutter_application_1/widgets/listview.dart';
 
 class Expense extends StatefulWidget {
@@ -65,8 +66,11 @@ class _ExpenseState extends State<Expense> {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text("Chart"),
+          expenseList.length == 0
+              ? Container()
+              : Chart(expenseList: expenseList),
           expenseList.length == 0
               ? Expanded(child: Center(child: Text("Add More expense")))
               : Expanded(
