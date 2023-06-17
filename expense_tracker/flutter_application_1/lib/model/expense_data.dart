@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 
@@ -21,6 +22,29 @@ class ExpenseList {
   DateTime date;
   double amount;
   ExpenseCategory category;
+}
 
-  
+class ExpenseSummary {
+// total expense
+  ExpenseSummary({required this.expenseList, required this.category});
+  List<ExpenseList> expenseList;
+  ExpenseCategory category;
+
+  double get categoryExpense {
+    double categorySum = 0;
+    for (final expense in expenseList) {
+      if (expense.category == category) {
+        categorySum += expense.amount;
+      }
+    }
+    return categorySum;
+  }
+
+  double get totalExpense {
+    double sum = 0;
+    for (final expense in expenseList) {
+      sum = sum + expense.amount;
+    }
+    return sum;
+  }
 }
