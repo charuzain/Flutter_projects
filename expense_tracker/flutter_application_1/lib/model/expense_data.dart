@@ -37,6 +37,8 @@ class ExpenseSummary {
         categorySum += expense.amount;
       }
     }
+    print("=======================");
+    print(categorySum);
     return categorySum;
   }
 
@@ -45,6 +47,8 @@ class ExpenseSummary {
     for (final expense in expenseList) {
       sum = sum + expense.amount;
     }
+    print("=======================");
+    print(sum);
     return sum;
   }
 }
