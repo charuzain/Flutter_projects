@@ -45,41 +45,56 @@ class _ExpenseState extends State<Expense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Flutter Expense Tracker"),
-        backgroundColor: const Color.fromARGB(255, 69, 13, 89),
-        actions: [
-          IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                    // when isScrollControlled is true modal pverlay will take full height
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (ctx) =>
-                        AddExpenseModal(displayList: displayList));
-              },
-              icon: const Icon(Icons.add))
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20),
-          //   child: Icon(Icons.add),
-          // )
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          expenseList.length == 0
-              ? Container()
-              : Chart(expenseList: expenseList),
-          expenseList.length == 0
-              ? Expanded(child: Center(child: Text("Add More expense")))
-              : Expanded(
-                  child: ExpenseListView(
-                  expenseList: expenseList,
-                  removeExpense: removeExpense,
-                )),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Flutter Expense Tracker"),
+          backgroundColor: const Color.fromARGB(255, 69, 13, 89),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      // when isScrollControlled is true modal pverlay will take full height
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (ctx) =>
+                          AddExpenseModal(displayList: displayList));
+                },
+                icon: const Icon(Icons.add))
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Icon(Icons.add),
+            // )
+          ],
+        ),
+        body: MediaQuery.of(context).size.width < 600
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  expenseList.length == 0
+                      ? Container()
+                      : Chart(expenseList: expenseList),
+                  expenseList.length == 0
+                      ? Expanded(child: Center(child: Text("Add More expense")))
+                      : Expanded(
+                          child: ExpenseListView(
+                          expenseList: expenseList,
+                          removeExpense: removeExpense,
+                        )),
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  expenseList.length == 0
+                      ? Container()
+                      : Chart(expenseList: expenseList),
+                  expenseList.length == 0
+                      ? Expanded(child: Center(child: Text("Add More expense")))
+                      : Expanded(
+                          child: ExpenseListView(
+                          expenseList: expenseList,
+                          removeExpense: removeExpense,
+                        )),
+                ],
+              ));
   }
 }
