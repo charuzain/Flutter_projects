@@ -87,94 +87,100 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 40, 4, 0),
-      child: Column(
-        children: [
-          TextField(
-            // onChanged: (value) => {expenseTitle = value},
-            controller: titleController,
-            maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text("Title"),
-            ),
-            keyboardType: TextInputType.text,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
+    double keyBoardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return SizedBox(
+      height: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(10.0, 40, 4, keyBoardSpace),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Expanded(
-                child: TextField(
-                  controller: amountCotroller,
-                  decoration: const InputDecoration(
-                    label: Text("Expense"),
-                    prefix: Text('\$ '),
-                  ),
-                  keyboardType: TextInputType.number,
+              TextField(
+                // onChanged: (value) => {expenseTitle = value},
+                controller: titleController,
+                maxLength: 50,
+                decoration: const InputDecoration(
+                  label: Text("Title"),
                 ),
-              ),
-              const SizedBox(
-                width: 40,
+                keyboardType: TextInputType.text,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(choosenDate == null
-                      ? "No Date selected"
-                      : DateFormat.yMd().format(choosenDate!)),
-                  IconButton(
-                    onPressed: presentDatePicker,
-                    icon: const Icon(Icons.calendar_month),
+                  Expanded(
+                    child: TextField(
+                      controller: amountCotroller,
+                      decoration: const InputDecoration(
+                        label: Text("Expense"),
+                        prefix: Text('\$ '),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  Row(
+                    children: [
+                      Text(choosenDate == null
+                          ? "No Date selected"
+                          : DateFormat.yMd().format(choosenDate!)),
+                      IconButton(
+                        onPressed: presentDatePicker,
+                        icon: const Icon(Icons.calendar_month),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: addExpense,
+                    child: const Text("Add Expense"),
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      // titleController.text = "";
+                      // amountCotroller.text = "";
+                      // selectedVal = ExpenseCategory.bill;
+                      // // choosenDate = DateTime.now();
+                      // // choosenDate
+
+                      print(titleController.text);
+                    },
+                    child: const Text("Cancel"),
+                  ),
+                  const Spacer(),
+                  DropdownButton(
+                      value: selectedVal,
+                      items: ExpenseCategory.values
+                          .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(item.name),
+                              ))
+                          .toList(),
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            selectedVal = val;
+                          });
+                        }
+                      })
                 ],
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: addExpense,
-                child: const Text("Add Expense"),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  // titleController.text = "";
-                  // amountCotroller.text = "";
-                  // selectedVal = ExpenseCategory.bill;
-                  // // choosenDate = DateTime.now();
-                  // // choosenDate
-
-                  print(titleController.text);
-                },
-                child: const Text("Cancel"),
-              ),
-              const Spacer(),
-              DropdownButton(
-                  value: selectedVal,
-                  items: ExpenseCategory.values
-                      .map((item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(item.name),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    if (val != null) {
-                      setState(() {
-                        selectedVal = val;
-                      });
-                    }
-                  })
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

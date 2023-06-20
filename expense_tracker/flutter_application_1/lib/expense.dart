@@ -82,7 +82,7 @@ class _ExpenseState extends State<Expense> {
                 ],
               )
             : Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   expenseList.length == 0
                       ? Container()
