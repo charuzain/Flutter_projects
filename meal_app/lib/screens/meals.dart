@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:meal_app/model/category.dart';
 
@@ -21,9 +20,32 @@ class Meals extends StatelessWidget {
       appBar: AppBar(title: Text(category.title)),
       body: ListView.builder(
         itemCount: mealList.length,
-        itemBuilder: (context, index) => Text(
-          mealList[index].title,
-          style: const TextStyle(color: Colors.white24, fontSize: 32),
+        itemBuilder: (context, index) => Card(
+          child: Stack(
+            children: [
+              Image(
+                image: NetworkImage(mealList[index].imageUrl),
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Container(
+                  color: Colors.black45,
+                  child: Text(
+                    mealList[index].title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
