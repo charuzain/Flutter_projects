@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../model/meal.dart';
-
 class MealItemMetaData extends StatelessWidget {
   const MealItemMetaData({super.key, required this.title, required this.icon});
 
