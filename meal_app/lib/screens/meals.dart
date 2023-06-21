@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/model/category.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../model/meal.dart';
 
@@ -23,7 +24,12 @@ class Meals extends StatelessWidget {
         itemBuilder: (context, index) => Card(
           child: Stack(
             children: [
-              Image(
+              // Image(
+              //   image: NetworkImage(mealList[index].imageUrl),
+              //   fit: BoxFit.cover,
+              // ),
+              FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
                 image: NetworkImage(mealList[index].imageUrl),
                 fit: BoxFit.cover,
               ),
