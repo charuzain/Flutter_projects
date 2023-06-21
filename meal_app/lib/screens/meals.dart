@@ -25,9 +25,11 @@ class Meals extends StatelessWidget {
         itemCount: mealList.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            print("lets go to nexr screem");
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MealDetail()));
+            print('${mealList[index]} clicked');
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => MealDetail(
+                      selectedMeal: mealList[index],
+                    )));
           },
           child: Card(
             // margin: EdgeInsets.all(10),
