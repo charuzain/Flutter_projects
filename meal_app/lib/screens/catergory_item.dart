@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-
 import '../model/category.dart';
-import 'meals.dart';
+
 
 class CatergoryItem extends StatelessWidget {
-  const CatergoryItem({required this.category, super.key});
+  const CatergoryItem({required this.category, required this.selectCategory, super.key});
   final Category category;
+  final Function() selectCategory;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // print(category.id);
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Meals(category: category)));
-      },
+      onTap: selectCategory,
+      //  () {
+      //   // print(category.id);
+      //   // Navigator.of(context).push(
+      //   //     MaterialPageRoute(builder: (context) => Meals(category: category)));
+      // },
       splashColor: Theme.of(context).primaryColor,
       child: Container(
         decoration: BoxDecoration(

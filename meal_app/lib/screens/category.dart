@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/model/category.dart';
 
 import '../data/categoryList.dart';
+import '../model/meal.dart';
 import 'catergory_item.dart';
+import 'meals.dart';
 
-class Category extends StatelessWidget {
-  const Category({super.key});
+class CategoryScreen extends StatelessWidget {
+  const CategoryScreen({super.key});
+
+  void selectCategory(BuildContext context, Category category) {
+    List<Meal> mealList = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Meals(
+                  category: category,
+                  mealList: mealList,
+                )));
+  }
+
+  // final List<Meal> meal = dummyMeals
+  //   .where((meal) => meal.categories.contains(CategoryScreen.id))
+  //   .toList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Meals Category")),
+      appBar: AppBar(title: const Text("Meals CategoryScreen")),
       body: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -17,7 +37,12 @@ class Category extends StatelessWidget {
               crossAxisSpacing: 20,
               mainAxisSpacing: 20),
           children: categoryList
-              .map((category) => CatergoryItem(category: category))
+              .map((category) => CatergoryItem(
+                    category: category,
+                    selectCategory: () {
+                      selectCategory(context, category);
+                    },
+                  ))
               .toList()),
     );
   }

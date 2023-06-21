@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   ),
   textTheme: GoogleFonts.latoTextTheme(),
 ),
-      home: Category(),
+      home: const CategoryScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
