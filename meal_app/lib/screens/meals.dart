@@ -3,6 +3,7 @@ import 'package:meal_app/model/category.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../model/meal.dart';
+import '../widgets/meal_item_meta_data.dart';
 
 class Meals extends StatelessWidget {
   const Meals({super.key, required this.category, required this.mealList});
@@ -42,6 +43,7 @@ class Meals extends StatelessWidget {
                 right: 0,
                 left: 0,
                 child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 4),
                   color: Colors.black45,
                   child: Column(
                     children: [
@@ -57,47 +59,40 @@ class Meals extends StatelessWidget {
                         softWrap: true,
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 14,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(children: [
-                            const Icon(Icons.timer),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              mealList[index].duration.toString(),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ]),
-                          const SizedBox(
-                            width: 30,
+                          MealItemMetaData(
+                            title:
+                                '${mealList[index].duration.toString()} mins',
+                            icon: Icons.timer,
                           ),
-                          Row(children: [
-                            const Icon(Icons.gif_box),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              mealList[index].complexity.name,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ]),
                           const SizedBox(
-                            width: 30,
+                            width: 12,
                           ),
-                          Row(children: [
-                            const Icon(Icons.currency_exchange),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              mealList[index].affordability.name,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ])
+                          MealItemMetaData(
+                              title: mealList[index]
+                                      .complexity
+                                      .name[0]
+                                      .toUpperCase() +
+                                  mealList[index].complexity.name.substring(1),
+                              icon: Icons.work),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          MealItemMetaData(
+                              title: mealList[index]
+                                      .affordability
+                                      .name[0]
+                                      .toUpperCase() +
+                                  mealList[index]
+                                      .affordability
+                                      .name
+                                      .substring(1),
+                              icon: Icons.currency_rupee),
                         ],
                       )
                     ],
