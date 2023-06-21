@@ -11,16 +11,21 @@ class CatergoryItem extends StatelessWidget {
       onTap: () {
         print("hi");
       },
+      splashColor: Theme.of(context).primaryColor,
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [category.color, category.color.withOpacity(0.9)],
                 begin: Alignment.topLeft,
-                end: Alignment.bottomRight)),
+                end: Alignment.bottomRight),
+            borderRadius: BorderRadius.circular(16)),
         child: Center(
           child: Text(
             category.title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: Theme.of(context).colorScheme.background),
           ),
         ),
       ),

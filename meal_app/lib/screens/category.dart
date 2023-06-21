@@ -13,12 +13,11 @@ class Category extends StatelessWidget {
       body: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 1.5,
+              childAspectRatio: 3 / 2,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20),
           children: categoryList
-              .map((category) =>
-                  Expanded(child: CatergoryItem(category: category)))
+              .map((category) => CatergoryItem(category: category))
               .toList()),
     );
   }
