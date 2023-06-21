@@ -22,6 +22,10 @@ class Meals extends StatelessWidget {
       body: ListView.builder(
         itemCount: mealList.length,
         itemBuilder: (context, index) => Card(
+          // margin: EdgeInsets.all(10),
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          clipBehavior: Clip.hardEdge,
           child: Stack(
             children: [
               // Image(
@@ -41,6 +45,8 @@ class Meals extends StatelessWidget {
                   color: Colors.black45,
                   child: Text(
                     mealList[index].title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
