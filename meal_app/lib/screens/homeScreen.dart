@@ -41,8 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.start,
               ),
               Expanded(
-                  child: TabBarView(
-                      children: [CategoryScreen(), Text("No Favorite yet")]))
+                child: TabBarView(children: [
+                  CategoryScreen(),
+                  Meals(mealList: [])
+                  // Text("No Favorite yet"),
+                ]),
+              )
             ],
           )),
     );
