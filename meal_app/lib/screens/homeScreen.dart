@@ -15,11 +15,29 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedVal = 0;
   final List<Meal> favoriteMeal = [];
 
+  void showPopUpMessage(String message, Color color) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+      backgroundColor: color,
+    ));
+  }
+
   void addOrRemoveTofavorite(Meal meal) {
     if (favoriteMeal.contains(meal)) {
-      favoriteMeal.remove(meal);
+      setState(() {
+        favoriteMeal.remove(meal);
+        showPopUpMessage("Remove from favorite List", Colors.red);
+      });
     } else {
-      favoriteMeal.add(meal);
+      setState(() {
+        favoriteMeal.add(meal);
+        showPopUpMessage("Meal Added to favorite List", Colors.green);
+      });
     }
   }
 
