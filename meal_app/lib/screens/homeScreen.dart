@@ -3,6 +3,7 @@ import 'package:meal_app/screens/category.dart';
 import 'package:meal_app/screens/meals.dart';
 
 import '../model/meal.dart';
+import 'filter_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: [
                 Icon(
-                  Icons.restaurant_menu,
+                  Icons.settings,
                   size: 24,
                 ),
                 SizedBox(
@@ -71,7 +72,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Theme.of(context).colorScheme.primary)),
               ],
             ),
-          )
+          ),
+          ListTile(
+            leading: Icon(Icons.cookie),
+            title: Text("Menu",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 22)),
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.filter),
+            title: Text("Filter",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 22)),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
+            },
+          ),
         ],
       )),
       body: DefaultTabController(
