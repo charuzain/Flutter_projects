@@ -47,6 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(selectedVal == 0 ? "Category" : "Favorite"),
       ),
+      drawer: Drawer(
+          child: Column(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Theme.of(context).colorScheme.primaryContainer,
+                Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7)
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.restaurant_menu,
+                  size: 24,
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Text("Whats Cooking",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary)),
+              ],
+            ),
+          )
+        ],
+      )),
       body: DefaultTabController(
           length: 2,
           child: Column(
