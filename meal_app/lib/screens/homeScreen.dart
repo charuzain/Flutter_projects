@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:meal_app/screens/category.dart';
 import 'package:meal_app/screens/meals.dart';
+
+import '../model/meal.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +13,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedVal = 0;
+  final List<Meal> favoriteMeal = [];
+
+  void addOrRemoveTofavorite(Meal meal) {
+    if (favoriteMeal.contains(meal)) {
+      favoriteMeal.remove(meal);
+    } else {
+      favoriteMeal.add(meal);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         )
                       },
-                  tabs: [
+                  tabs: const [
                     Tab(text: "Category"),
                     Tab(text: "Favorite"),
                   ]),
-              Text(
-                "Export",
-                textAlign: TextAlign.start,
-              ),
+              // Text(
+              //   "Export",
+              //   textAlign: TextAlign.start,
+              // ),
               Expanded(
                 child: TabBarView(children: [
-                  CategoryScreen(),
-                  Meals(mealList: [])
+                  CategoryScreen(addOrRemoveTofavorite: addOrRemoveTofavorite),
+                  Meals(
+                    mealList: favoriteMeal,
+                    addOrRemoveTofavorite: addOrRemoveTofavorite,
+                  )
                   // Text("No Favorite yet"),
                 ]),
               )

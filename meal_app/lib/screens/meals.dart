@@ -7,9 +7,10 @@ import '../model/meal.dart';
 import '../widgets/meal_item_meta_data.dart';
 
 class Meals extends StatelessWidget {
-  const Meals({super.key,  this.category, required this.mealList});
+  const Meals({super.key, this.category, required this.mealList , required this.addOrRemoveTofavorite});
   final Category? category;
   final List<Meal> mealList;
+  final Function(Meal meal) addOrRemoveTofavorite;
 
   // List<Meal> getMeals() {
   //   return dummyMeals
@@ -24,10 +25,11 @@ class Meals extends StatelessWidget {
         itemCount: mealList.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            print('${mealList[index]} clicked');
+            // print('${mealList[index]} clicked');
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => MealDetail(
                       selectedMeal: mealList[index],
+                      addOrRemoveTofavorite: addOrRemoveTofavorite,
                     )));
           },
           child: Card(
@@ -123,10 +125,11 @@ class Meals extends StatelessWidget {
         itemCount: mealList.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            print('${mealList[index]} clicked');
+            // print('${mealList[index]} clicked');
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => MealDetail(
                       selectedMeal: mealList[index],
+                      addOrRemoveTofavorite: addOrRemoveTofavorite
                     )));
           },
           child: Card(

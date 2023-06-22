@@ -7,7 +7,9 @@ import 'catergory_item.dart';
 import 'meals.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
+  const CategoryScreen({super.key , required this.addOrRemoveTofavorite});
+
+  final Function(Meal meal) addOrRemoveTofavorite;
 
   void selectCategory(BuildContext context, Category category) {
     List<Meal> mealList = dummyMeals
@@ -19,6 +21,7 @@ class CategoryScreen extends StatelessWidget {
             builder: (context) => Meals(
                   category: category,
                   mealList: mealList,
+                  addOrRemoveTofavorite: addOrRemoveTofavorite,
                 )));
   }
 
@@ -31,7 +34,7 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       // appBar: AppBar(title: const Text("Meals CategoryScreen")),
       body: GridView(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3 / 2,

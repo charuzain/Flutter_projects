@@ -1,15 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../model/meal.dart';
 
 class MealDetail extends StatelessWidget {
-  const MealDetail({super.key, required this.selectedMeal});
+  const MealDetail(
+      {super.key,
+      required this.selectedMeal,
+      required this.addOrRemoveTofavorite});
   final Meal selectedMeal;
+  final void Function(Meal meal) addOrRemoveTofavorite;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      appBar: AppBar(title: Text(selectedMeal.title)),
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                addOrRemoveTofavorite(selectedMeal);
+              },
+              icon: const Icon(Icons.favorite))
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Image.network(
@@ -18,13 +30,13 @@ class MealDetail extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text("Ingredients",
               style: TextStyle(
                   fontSize: 32, color: Theme.of(context).colorScheme.primary)),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           ...selectedMeal.ingredients.map(
@@ -33,7 +45,7 @@ class MealDetail extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Text("Steps",
