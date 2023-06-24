@@ -89,10 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 22)),
-            onTap: () {
+            onTap: () async {
               Navigator.of(context).pop();
-              Navigator.of(context)
+              final val = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
+              print("=====");
+              print(val);
             },
           ),
         ],
