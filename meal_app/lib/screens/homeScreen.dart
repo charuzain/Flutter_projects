@@ -90,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 22)),
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
             },
