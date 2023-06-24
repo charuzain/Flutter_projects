@@ -113,10 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Tab(text: "Category"),
                     Tab(text: "Favorite"),
                   ]),
-              // Text(
-              //   "Export",
-              //   textAlign: TextAlign.start,
-              // ),
+              Text(
+                "Export",
+                textAlign: TextAlign.start,
+              ),
               Expanded(
                 child: TabBarView(children: [
                   CategoryScreen(addOrRemoveTofavorite: addOrRemoveTofavorite),
