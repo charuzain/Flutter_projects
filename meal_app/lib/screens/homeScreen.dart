@@ -95,6 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
               print("=====");
               print(val);
+              
+
+
+
+
             },
           ),
         ],

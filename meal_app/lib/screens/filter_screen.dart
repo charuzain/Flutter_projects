@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../data/categoryList.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -136,7 +139,63 @@ class _FilterScreenState extends State<FilterScreen> {
                   activeTrackColor: Theme.of(context).colorScheme.primary,
                   //  inactiveTrackColor: Colors.red,),
                 ),
-              )
+              ),
+
+              Container(
+                height: 50,
+                child: CupertinoPicker(
+                    selectionOverlay: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 8),
+                      child: Text("Category"),
+                    ),
+                    useMagnifier: true,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    itemExtent: 60,
+                    onSelectedItemChanged: (int) {
+                      print(int);
+                    },
+                    children: categoryList
+                        .map((e) => Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(e.title),
+                              ),
+                            ))
+                        .toList()),
+              ),
+              // Container(
+              //   color: Theme.of(context).colorScheme.secondaryContainer,
+              //   width: double.infinity,
+              //   child: Center(
+              //     child: DropdownButton(
+
+              //       items: [
+              //         ...categoryList
+              //             .map((cat) => DropdownMenuItem(
+              //                   child: Text(cat.title),
+              //                   value: cat.title,
+              //                 ))
+              //             .toList()
+              //       ],
+              //       onChanged: (value) {
+
+              //       },
+              //     ),
+              //   ),
+              // )
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Apply Filters",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ))),
             ],
           ),
         ));
