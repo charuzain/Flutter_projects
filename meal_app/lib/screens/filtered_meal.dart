@@ -9,17 +9,54 @@ import 'filter_screen.dart';
 
 class FilteredMeal extends StatelessWidget {
   FilteredMeal({required this.filtersSelected, super.key}) {
+    print(dummyMeals);
+    print(filtersSelected[FiltersSelected.selectedCategory]);
+    // filteredMeal = dummyMeals
+    //     .where((meal) =>
+    //         filtersSelected[FiltersSelected.gluten] == meal.isGlutenFree)
+    //     .where((meal) =>
+    //         filtersSelected[FiltersSelected.lactose] == meal.isLactoseFree)
+    //     .where((meal) =>
+    //         filtersSelected[FiltersSelected.vegetarian] == meal.isVegetarian)
+    //     .where((meal) => filtersSelected[FiltersSelected.vegan] == meal.isVegan)
+    //     .where((meal) => meal.categories
+    //         .contains(filtersSelected[FiltersSelected.selectedCategory]))
+    //     .toList();
+
     filteredMeal = dummyMeals
-        .where((meal) =>
-            filtersSelected[FiltersSelected.gluten] == meal.isGlutenFree)
-        .where((meal) =>
-            filtersSelected[FiltersSelected.lactose] == meal.isLactoseFree)
-        .where((meal) =>
-            filtersSelected[FiltersSelected.vegetarian] == meal.isVegetarian)
-        .where((meal) => filtersSelected[FiltersSelected.vegan] == meal.isVegan)
-        .toList();
+        .where((meal) => meal.categories
+            .contains(filtersSelected[FiltersSelected.selectedCategory]))
+        .where((meal){
+          if(!meal.isGlutenFree && filtersSelected[FiltersSelected.gluten] as bool){
+            return false;
+          }
+           if(!meal.isLactoseFree && filtersSelected[FiltersSelected.lactose] as bool){
+            return false;
+          }           if(!meal.isVegan && filtersSelected[FiltersSelected.vegan] as bool){
+            return false;
+          }
+
+           if(!meal.isVegetarian && filtersSelected[FiltersSelected.vegetarian] as bool){
+            return false;
+          }
+          return true;
+        }
+         ).toList();
+
+    // .where((meal) =>
+    //     filtersSelected[FiltersSelected.gluten] == meal.isGlutenFree)
+    // .where((meal) =>
+    //     filtersSelected[FiltersSelected.lactose] == meal.isLactoseFree)
+    // .where((meal) =>
+    //     filtersSelected[FiltersSelected.vegetarian] == meal.isVegetarian)
+    // .where((meal) => filtersSelected[FiltersSelected.vegan] == meal.isVegan)
+    // .where((meal) => meal.categories
+    //     .contains(filtersSelected[FiltersSelected.selectedCategory]))
+    // .toList();
+
+    print(filteredMeal);
   }
-  Map<FiltersSelected, bool> filtersSelected;
+  Map<FiltersSelected, Object> filtersSelected;
   late List filteredMeal;
   // final List filteredMeal = dummyMeals;
 
@@ -42,6 +79,7 @@ class FilteredMeal extends StatelessWidget {
                   print("-----------");
                   print(filtersSelected);
                   print(filtersSelected[FiltersSelected.gluten]);
+                  print(filtersSelected[FiltersSelected.selectedCategory]);
                 },
                 child: Card(
                   // margin: EdgeInsets.all(10),
