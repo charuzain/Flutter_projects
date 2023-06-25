@@ -11,14 +11,16 @@ class FilterScreen extends StatefulWidget {
   State<FilterScreen> createState() => _FilterScreenState();
 }
 
-enum FiltersSelected { gluten, lactose, vegetarian, vegan }
+enum FiltersSelected { gluten, lactose, vegetarian, vegan, selectedCategory }
 
 class _FilterScreenState extends State<FilterScreen> {
   bool isGlutenSelected = false;
   bool isLactoseSelected = false;
   bool isVegetarianSelected = false;
   bool isVeganSelected = false;
-  String selectedCategory = "Italian";
+  // String selectedCategory = categoryList[0].id;
+
+  String? selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -143,52 +145,62 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
               ),
 
+              // Container(
+              //   height: 50,
+              //   child: CupertinoPicker(
+
+              //       selectionOverlay: const Padding(
+              //         padding:
+              //             EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+              //         child: Text("Category"),
+              //       ),
+              //       useMagnifier: true,
+              //       backgroundColor:
+              //           Theme.of(context).colorScheme.secondaryContainer,
+              //       itemExtent: 60,
+              //       onSelectedItemChanged: (int) {
+              //         print(int);
+              //         selectedCategory = categoryList[int].id;
+              //         print(selectedCategory);
+              //       },
+              //       children: categoryList
+              //           .map((e) => Container(
+              //                 child: Padding(
+              //                   padding: const EdgeInsets.all(12.0),
+              //                   child: Text(e.title),
+              //                 ),
+              //               ))
+              //           .toList()),
+              // ),
+
               Container(
-                height: 50,
-                child: CupertinoPicker(
-                    selectionOverlay: const Padding(
-                      padding:  EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 8),
-                      child: Text("Category"),
-                    ),
-                    useMagnifier: true,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    itemExtent: 60,
-                    onSelectedItemChanged: (int) {
-                      print(int);
-                      selectedCategory = categoryList[int].title;
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                width: double.infinity,
+                child: Center(
+                  child: DropdownButton(
+                    hint: Text('Select a category'),
+                    value: selectedCategory,
+                    items: [
+                      ...categoryList
+                          .map((cat) => DropdownMenuItem(
+                                child: Text(
+                                  cat.title,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                value: cat.id,
+                              ))
+                          .toList()
+                    ],
+                    onChanged: (value) {
+                      print(value);
+                      setState(() {
+                        selectedCategory = value;
+                      });
                       print(selectedCategory);
                     },
-                    children: categoryList
-                        .map((e) => Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(e.title),
-                              ),
-                            ))
-                        .toList()),
+                  ),
+                ),
               ),
-              // Container(
-              //   color: Theme.of(context).colorScheme.secondaryContainer,
-              //   width: double.infinity,
-              //   child: Center(
-              //     child: DropdownButton(
-
-              //       items: [
-              //         ...categoryList
-              //             .map((cat) => DropdownMenuItem(
-              //                   child: Text(cat.title),
-              //                   value: cat.title,
-              //                 ))
-              //             .toList()
-              //       ],
-              //       onChanged: (value) {
-
-              //       },
-              //     ),
-              //   ),
-              // )
               const SizedBox(
                 height: 20,
               ),
@@ -199,13 +211,16 @@ class _FilterScreenState extends State<FilterScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (ctx) => FilteredMeal(filtersSelected: {
+                                builder: (ctx) =>
+                                    FilteredMeal(filtersSelected: {
                                       FiltersSelected.gluten: isGlutenSelected,
                                       FiltersSelected.lactose:
                                           isLactoseSelected,
                                       FiltersSelected.vegetarian:
                                           isVegetarianSelected,
                                       FiltersSelected.vegan: isVeganSelected,
+                                      FiltersSelected.selectedCategory:
+                                          selectedCategory!
                                     })));
                       },
                       child: const Text(
