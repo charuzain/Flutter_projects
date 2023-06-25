@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../data/categoryList.dart';
+import 'filtered_meal.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -10,13 +11,14 @@ class FilterScreen extends StatefulWidget {
   State<FilterScreen> createState() => _FilterScreenState();
 }
 
-enum filtersSelected { gluten, lactose, vegetarian, vegan }
+enum FiltersSelected { gluten, lactose, vegetarian, vegan }
 
 class _FilterScreenState extends State<FilterScreen> {
   bool isGlutenSelected = false;
   bool isLactoseSelected = false;
   bool isVegetarianSelected = false;
   bool isVeganSelected = false;
+  String selectedCategory = "Italian";
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,10 @@ class _FilterScreenState extends State<FilterScreen> {
         body: WillPopScope(
           onWillPop: () async {
             Navigator.pop(context, {
-              filtersSelected.gluten: isGlutenSelected,
-              filtersSelected.lactose: isLactoseSelected,
-              filtersSelected.vegetarian: isVegetarianSelected,
-              filtersSelected.vegan: isVeganSelected,
+              FiltersSelected.gluten: isGlutenSelected,
+              FiltersSelected.lactose: isLactoseSelected,
+              FiltersSelected.vegetarian: isVegetarianSelected,
+              FiltersSelected.vegan: isVeganSelected,
             });
             return false;
           },
@@ -144,8 +146,8 @@ class _FilterScreenState extends State<FilterScreen> {
               Container(
                 height: 50,
                 child: CupertinoPicker(
-                    selectionOverlay: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    selectionOverlay: const Padding(
+                      padding:  EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 8),
                       child: Text("Category"),
                     ),
@@ -155,6 +157,8 @@ class _FilterScreenState extends State<FilterScreen> {
                     itemExtent: 60,
                     onSelectedItemChanged: (int) {
                       print(int);
+                      selectedCategory = categoryList[int].title;
+                      print(selectedCategory);
                     },
                     children: categoryList
                         .map((e) => Container(
@@ -185,14 +189,26 @@ class _FilterScreenState extends State<FilterScreen> {
               //     ),
               //   ),
               // )
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                   color: Theme.of(context).colorScheme.secondaryContainer,
                   child: TextButton(
-                      onPressed: () {},
-                      child: Text(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (ctx) => FilteredMeal(filtersSelected: {
+                                      FiltersSelected.gluten: isGlutenSelected,
+                                      FiltersSelected.lactose:
+                                          isLactoseSelected,
+                                      FiltersSelected.vegetarian:
+                                          isVegetarianSelected,
+                                      FiltersSelected.vegan: isVeganSelected,
+                                    })));
+                      },
+                      child: const Text(
                         "Apply Filters",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ))),
