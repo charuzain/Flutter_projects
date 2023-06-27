@@ -66,11 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.settings,
                   size: 24,
                 ),
-                SizedBox(
+               const SizedBox(
                   width: 16,
                 ),
                 Text("Whats Cooking",
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.cookie),
+            leading: const Icon(Icons.cookie),
             title: Text("Menu",
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,

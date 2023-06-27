@@ -26,22 +26,25 @@ class FilteredMeal extends StatelessWidget {
     filteredMeal = dummyMeals
         .where((meal) => meal.categories
             .contains(filtersSelected[FiltersSelected.selectedCategory]))
-        .where((meal){
-          if(!meal.isGlutenFree && filtersSelected[FiltersSelected.gluten] as bool){
-            return false;
-          }
-           if(!meal.isLactoseFree && filtersSelected[FiltersSelected.lactose] as bool){
-            return false;
-          }           if(!meal.isVegan && filtersSelected[FiltersSelected.vegan] as bool){
-            return false;
-          }
+        .where((meal) {
+      if (!meal.isGlutenFree &&
+          filtersSelected[FiltersSelected.gluten] as bool) {
+        return false;
+      }
+      if (!meal.isLactoseFree &&
+          filtersSelected[FiltersSelected.lactose] as bool) {
+        return false;
+      }
+      if (!meal.isVegan && filtersSelected[FiltersSelected.vegan] as bool) {
+        return false;
+      }
 
-           if(!meal.isVegetarian && filtersSelected[FiltersSelected.vegetarian] as bool){
-            return false;
-          }
-          return true;
-        }
-         ).toList();
+      if (!meal.isVegetarian &&
+          filtersSelected[FiltersSelected.vegetarian] as bool) {
+        return false;
+      }
+      return true;
+    }).toList();
 
     // .where((meal) =>
     //     filtersSelected[FiltersSelected.gluten] == meal.isGlutenFree)
