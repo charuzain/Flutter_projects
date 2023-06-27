@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../data/categoryList.dart';
@@ -18,7 +17,6 @@ class _FilterScreenState extends State<FilterScreen> {
   bool isLactoseSelected = false;
   bool isVegetarianSelected = false;
   bool isVeganSelected = false;
-  // String selectedCategory = categoryList[0].id;
 
   String? selectedCategory;
 
@@ -192,7 +190,6 @@ class _FilterScreenState extends State<FilterScreen> {
                           .toList()
                     ],
                     onChanged: (value) {
-                      print(value);
                       setState(() {
                         selectedCategory = value;
                       });
@@ -220,7 +217,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                           isVegetarianSelected,
                                       FiltersSelected.vegan: isVeganSelected,
                                       FiltersSelected.selectedCategory:
-                                          selectedCategory!
+                                          selectedCategory ?? "c1"
                                     })));
                       },
                       child: const Text(

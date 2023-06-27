@@ -15,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedVal = 0;
   final List<Meal> favoriteMeal = [];
+  late Map<FiltersSelected, bool> val = {
+    FiltersSelected.gluten: false,
+    FiltersSelected.lactose: false,
+    FiltersSelected.vegetarian: false,
+    FiltersSelected.vegan: false,
+  };
 
   void showPopUpMessage(String message, Color color) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -91,15 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 22)),
             onTap: () async {
               Navigator.of(context).pop();
-              final val = await Navigator.of(context)
+              Map<FiltersSelected, bool> result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
-              print("=====");
-              print(val);
-              
 
-
-
-
+              setState(() {
+                val = result;
+              });
             },
           ),
         ],
@@ -127,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: TabBarView(children: [
-                  CategoryScreen(addOrRemoveTofavorite: addOrRemoveTofavorite),
+                  CategoryScreen(
+                      addOrRemoveTofavorite: addOrRemoveTofavorite, val: val),
                   Meals(
                     mealList: favoriteMeal,
                     addOrRemoveTofavorite: addOrRemoveTofavorite,

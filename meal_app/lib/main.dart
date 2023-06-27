@@ -14,11 +14,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme: ThemeData().copyWith(
-      //   colorScheme: ColorScheme.fromSeed(
-      //       seedColor: Colors.orange, brightness: Brightness.dark),
-      //   textTheme: GoogleFonts.latoTextTheme(),
-      // ),
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/model/category.dart';
+import 'package:meal_app/screens/filter_screen.dart';
 
 import '../data/categoryList.dart';
 import '../model/meal.dart';
@@ -7,14 +8,32 @@ import 'catergory_item.dart';
 import 'meals.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key , required this.addOrRemoveTofavorite});
+  CategoryScreen(
+      {super.key, required this.addOrRemoveTofavorite, required this.val});
 
   final Function(Meal meal) addOrRemoveTofavorite;
+  Map<FiltersSelected, bool> val;
 
   void selectCategory(BuildContext context, Category category) {
     List<Meal> mealList = dummyMeals
         .where((meal) => meal.categories.contains(category.id))
-        .toList();
+        .where((meal) {
+      if (!meal.isGlutenFree && val[FiltersSelected.gluten] as bool) {
+        return false;
+      }
+      if (!meal.isLactoseFree && val[FiltersSelected.lactose] as bool) {
+        return false;
+      }
+      if (!meal.isVegan && val[FiltersSelected.vegan] as bool) {
+        return false;
+      }
+
+      if (!meal.isVegetarian && val[FiltersSelected.vegetarian] as bool) {
+        return false;
+      }
+      return true;
+    }).toList();
+
     Navigator.push(
         context,
         MaterialPageRoute(

@@ -11,11 +11,7 @@ class CatergoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: selectCategory,
-      //  () {
-      //   // print(category.id);
-      //   // Navigator.of(context).push(
-      //   //     MaterialPageRoute(builder: (context) => Meals(category: category)));
-      // },
+    
       splashColor: Theme.of(context).primaryColor,
       child: Container(
         decoration: BoxDecoration(

@@ -82,17 +82,12 @@ class FilteredMeal extends StatelessWidget {
                   print(filtersSelected[FiltersSelected.selectedCategory]);
                 },
                 child: Card(
-                  // margin: EdgeInsets.all(10),
                   elevation: 3,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                   clipBehavior: Clip.hardEdge,
                   child: Stack(
                     children: [
-                      // Image(
-                      //   image: NetworkImage(mealList[index].imageUrl),
-                      //   fit: BoxFit.cover,
-                      // ),
                       FadeInImage(
                         placeholder: MemoryImage(kTransparentImage),
                         image: NetworkImage(filteredMeal[index].imageUrl),
@@ -133,29 +128,6 @@ class FilteredMeal extends StatelessWidget {
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  // MealItemMetaData(
-                                  //     title: filteredMeal[index]
-                                  //             .complexity
-                                  //             .name[0]
-                                  //             .toUpperCase() +
-                                  //         filteredMeal[index]
-                                  //             .complexity
-                                  //             .name
-                                  //             .substring(1),
-                                  //     icon: Icons.work),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  // MealItemMetaData(
-                                  //     title: filteredMeal[index]
-                                  //             .affordability
-                                  //             .name[0]
-                                  //             .toUpperCase() +
-                                  //         filteredMeal[index]
-                                  //             .affordability
-                                  //             .name
-                                  //             .substring(1),
-                                  //     icon: Icons.currency_rupee),
                                 ],
                               )
                             ],
