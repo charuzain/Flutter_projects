@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_app/provider/favorite_meal.dart';
 import 'package:meal_app/screens/category.dart';
 import 'package:meal_app/screens/meals.dart';
 
 import '../model/meal.dart';
 import 'filter_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() {
+    return _HomeScreenState();
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int selectedVal = 0;
+  // ref.read()
   final List<Meal> favoriteMeal = [];
   late Map<FiltersSelected, bool> val = {
     FiltersSelected.gluten: false,
@@ -22,34 +27,36 @@ class _HomeScreenState extends State<HomeScreen> {
     FiltersSelected.vegan: false,
   };
 
-  void showPopUpMessage(String message, Color color) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        message,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-      ),
-      backgroundColor: color,
-    ));
-  }
+  // void showPopUpMessage(String message, Color color) {
+  //   ScaffoldMessenger.of(context).clearSnackBars();
+  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //     content: Text(
+  //       message,
+  //       textAlign: TextAlign.center,
+  //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+  //     ),
+  //     backgroundColor: color,
+  //   ));
+  // }
 
-  void addOrRemoveTofavorite(Meal meal) {
-    if (favoriteMeal.contains(meal)) {
-      setState(() {
-        favoriteMeal.remove(meal);
-        showPopUpMessage("Remove from favorite List", Colors.red);
-      });
-    } else {
-      setState(() {
-        favoriteMeal.add(meal);
-        showPopUpMessage("Meal Added to favorite List", Colors.green);
-      });
-    }
-  }
+  // void addOrRemoveTofavorite(Meal meal) {
+  //   if (favoriteMeal.contains(meal)) {
+  //     setState(() {
+  //       favoriteMeal.remove(meal);
+  //       showPopUpMessage("Remove from favorite List", Colors.red);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       favoriteMeal.add(meal);
+  //       showPopUpMessage("Meal Added to favorite List", Colors.green);
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final favoriteMeal = ref.read(favoriteMealProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(selectedVal == 0 ? "Category" : "Favorite"),
@@ -70,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.settings,
                   size: 24,
                 ),
-               const SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Text("Whats Cooking",
@@ -80,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.cookie),
+            leading: Icon(Icons.cookie),
             title: Text("Menu",
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
@@ -131,10 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: TabBarView(children: [
                   CategoryScreen(
-                      addOrRemoveTofavorite: addOrRemoveTofavorite, val: val),
+                      // addOrRemoveTofavorite: addOrRemoveTofavorite, 
+                      val: val),
                   Meals(
                     mealList: favoriteMeal,
-                    addOrRemoveTofavorite: addOrRemoveTofavorite,
+                    // addOrRemoveTofavorite: addOrRemoveTofavorite,
                   )
                   // Text("No Favorite yet"),
                 ]),

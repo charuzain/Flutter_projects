@@ -7,11 +7,14 @@ import '../model/meal.dart';
 import '../widgets/meal_item_meta_data.dart';
 
 class Meals extends StatelessWidget {
-  const Meals({super.key, this.category, required this.mealList , required this.addOrRemoveTofavorite});
+  const Meals({super.key, this.category, 
+  required this.mealList , 
+  // required this.addOrRemoveTofavorite
+  });
   
   final Category? category;
   final List<Meal> mealList;
-  final Function(Meal meal) addOrRemoveTofavorite;
+  // final Function(Meal meal) addOrRemoveTofavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class Meals extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => MealDetail(
                       selectedMeal: mealList[index],
-                      addOrRemoveTofavorite: addOrRemoveTofavorite,
+                      // addOrRemoveTofavorite: addOrRemoveTofavorite,
                     )));
           },
           child: Card(
@@ -124,7 +127,7 @@ class Meals extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => MealDetail(
                       selectedMeal: mealList[index],
-                      addOrRemoveTofavorite: addOrRemoveTofavorite
+                      // addOrRemoveTofavorite: addOrRemoveTofavorite
                     )));
           },
           child: Card(

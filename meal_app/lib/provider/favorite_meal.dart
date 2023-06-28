@@ -10,14 +10,16 @@ class FavoriteMealNotifier extends StateNotifier<List<Meal>> {
   // It is essential to note that when you extend your class with StateNotifier, you must pass the initial value in the constructor, or else you will encounter an error. So let's provide the initial value.
   FavoriteMealNotifier() : super([]);
 
-  void addToFavorite(Meal meal) {
+  bool addToFavorite(Meal meal) {
     bool isInFavorite = state.contains(meal);
 
     if (isInFavorite) {
       // remove from list
       state = state.where((m) => m.id != meal.id).toList();
+      return true;
     } else {
       state = [...state, meal];
+      return false;
     }
   }
 }
@@ -27,7 +29,9 @@ class FavoriteMealNotifier extends StateNotifier<List<Meal>> {
 
 // StateNotifierProvider is a provider that is used to listen to and expose a StateNotifier.
 
-final favoriteMealProvider = StateNotifierProvider<FavoriteMealNotifier , List<Meal>>((ref) => FavoriteMealNotifier());
+final favoriteMealProvider =
+    StateNotifierProvider<FavoriteMealNotifier, List<Meal>>(
+        (ref) => FavoriteMealNotifier());
 
 // Here, we need to define two things:
 

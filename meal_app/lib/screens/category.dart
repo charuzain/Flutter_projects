@@ -9,9 +9,11 @@ import 'meals.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen(
-    {super.key, required this.addOrRemoveTofavorite, required this.val});
+    {super.key, 
+    // required this.addOrRemoveTofavorite,
+     required this.val});
 
-  final Function(Meal meal) addOrRemoveTofavorite;
+  // final Function(Meal meal) addOrRemoveTofavorite;
   final Map<FiltersSelected, bool> val;
 
   void selectCategory(BuildContext context, Category category) {
@@ -40,7 +42,7 @@ class CategoryScreen extends StatelessWidget {
             builder: (context) => Meals(
                   category: category,
                   mealList: mealList,
-                  addOrRemoveTofavorite: addOrRemoveTofavorite,
+                  // addOrRemoveTofavorite: addOrRemoveTofavorite,
                 )));
   }
 
