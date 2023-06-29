@@ -14,6 +14,8 @@ class MealDetail extends ConsumerWidget {
   // final void Function(Meal meal) addOrRemoveTofavorite;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteMeal = ref.watch(favoriteMealProvider);
+    bool isFavorite = favoriteMeal.contains(selectedMeal);
     return (Scaffold(
       appBar: AppBar(
         title: Text(selectedMeal.title),
@@ -32,7 +34,14 @@ class MealDetail extends ConsumerWidget {
                       alreadyPresentInFavorite ? Colors.red : Colors.green,
                 ));
               },
-              icon: const Icon(Icons.favorite))
+              icon: isFavorite
+                  ? Icon(
+                      Icons.favorite,
+                      color: Colors.yellow,
+                    )
+                  : Icon(
+                      Icons.favorite_outline_outlined,
+                    ))
         ],
       ),
       body: SingleChildScrollView(
