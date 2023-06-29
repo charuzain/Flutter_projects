@@ -4,25 +4,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:meal_app/data/categoryList.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import '../provider/filter_provider.dart';
 import '../widgets/meal_item_meta_data.dart';
-import 'filter_screen.dart';
 
 class FilteredMeal extends StatelessWidget {
   FilteredMeal({required this.filtersSelected, super.key}) {
-    print(dummyMeals);
-    print(filtersSelected[FiltersSelected.selectedCategory]);
-    // filteredMeal = dummyMeals
-    //     .where((meal) =>
-    //         filtersSelected[FiltersSelected.gluten] == meal.isGlutenFree)
-    //     .where((meal) =>
-    //         filtersSelected[FiltersSelected.lactose] == meal.isLactoseFree)
-    //     .where((meal) =>
-    //         filtersSelected[FiltersSelected.vegetarian] == meal.isVegetarian)
-    //     .where((meal) => filtersSelected[FiltersSelected.vegan] == meal.isVegan)
-    //     .where((meal) => meal.categories
-    //         .contains(filtersSelected[FiltersSelected.selectedCategory]))
-    //     .toList();
-
+  
     filteredMeal = dummyMeals
         .where((meal) => meal.categories
             .contains(filtersSelected[FiltersSelected.selectedCategory]))

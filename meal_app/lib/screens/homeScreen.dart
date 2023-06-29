@@ -20,12 +20,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   int selectedVal = 0;
   // ref.read()
   final List<Meal> favoriteMeal = [];
-  late Map<FiltersSelected, bool> val = {
-    FiltersSelected.gluten: false,
-    FiltersSelected.lactose: false,
-    FiltersSelected.vegetarian: false,
-    FiltersSelected.vegan: false,
-  };
+  // late Map<FiltersSelected, bool> val = {
+  //   FiltersSelected.gluten: false,
+  //   FiltersSelected.lactose: false,
+  //   FiltersSelected.vegetarian: false,
+  //   FiltersSelected.vegan: false,
+  // };
 
   // void showPopUpMessage(String message, Color color) {
   //   ScaffoldMessenger.of(context).clearSnackBars();
@@ -104,12 +104,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     fontSize: 22)),
             onTap: () async {
               Navigator.of(context).pop();
-              Map<FiltersSelected, bool> result = await Navigator.of(context)
+              Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
 
-              setState(() {
-                val = result;
-              });
+              // setState(() {
+              //   val = result;
+              // });
             },
           ),
         ],
@@ -139,7 +139,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: TabBarView(children: [
                   CategoryScreen(
                       // addOrRemoveTofavorite: addOrRemoveTofavorite, 
-                      val: val),
+                      // val: val
+                      ),
                   Meals(
                     mealList: favoriteMeal,
                     // addOrRemoveTofavorite: addOrRemoveTofavorite,
