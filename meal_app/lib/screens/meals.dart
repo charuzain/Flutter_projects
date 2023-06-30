@@ -142,10 +142,13 @@ class Meals extends StatelessWidget {
                 //   image: NetworkImage(mealList[index].imageUrl),
                 //   fit: BoxFit.cover,
                 // ),
-                FadeInImage(
-                  placeholder: MemoryImage(kTransparentImage),
-                  image: NetworkImage(mealList[index].imageUrl),
-                  fit: BoxFit.cover,
+                Hero(
+                  tag: mealList[index].id,
+                  child: FadeInImage(
+                    placeholder: MemoryImage(kTransparentImage),
+                    image: NetworkImage(mealList[index].imageUrl),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
