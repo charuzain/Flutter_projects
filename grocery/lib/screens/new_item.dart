@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:grocery/model/grocery_item.dart';
 
 // enum Category { dairy, meat, vegetable, fruit, carbs, sweets, spices, other }
@@ -18,7 +15,7 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Grocery Item"),
+        title: const Text("Add New Grocery Item"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,11 +25,20 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
               TextFormField(
                 maxLength: 50,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Enter the name of grocery item",
                   label: Text("Name"),
                   // border: UnderlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.trim().isEmpty) {
+                    return "Enter some value";
+                  }
+                  if (value.length > 50) {
+                    return "Total character should be less than 50";
+                  }
+                  return null;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,9 +48,20 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                       initialValue: "1",
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(labelText: "Quantity"),
+                        validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.trim().isEmpty || int.tryParse(value) == null) {
+                          return "Enter some value / Enter a valid input";
+                        }
+                        if (int.tryParse(value)! < 0) {
+                          return "Quanitity should be a positive number";
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -56,14 +73,14 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(onPressed: () {}, child: Text("Reset")),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   ElevatedButton(onPressed: () {}, child: Text("Save"))
