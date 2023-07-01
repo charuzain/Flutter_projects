@@ -35,6 +35,7 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                 ),
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: TextFormField(
@@ -43,6 +44,9 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                       decoration: InputDecoration(labelText: "Quantity"),
                     ),
                   ),
+                  SizedBox(
+                    width: 15,
+                  ),
                   Expanded(
                     child: DropdownButtonFormField(items: [
                       for (final category in GroceryCategory.values)
@@ -50,6 +54,19 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                             value: category.name, child: Text(category.name))
                     ], onChanged: (val) {}),
                   )
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(onPressed: () {}, child: Text("Reset")),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  ElevatedButton(onPressed: () {}, child: Text("Save"))
                 ],
               )
             ],
