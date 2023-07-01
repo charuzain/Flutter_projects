@@ -21,27 +21,39 @@ class MealDetail extends ConsumerWidget {
         title: Text(selectedMeal.title),
         actions: [
           IconButton(
-              onPressed: () {
-                bool alreadyPresentInFavorite = ref
-                    .read(favoriteMealProvider.notifier)
-                    .addToFavorite(selectedMeal);
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: alreadyPresentInFavorite
-                      ? const Text("Removed from favorite list")
-                      : const Text("Added to favorite List"),
-                  backgroundColor:
-                      alreadyPresentInFavorite ? Colors.red : Colors.green,
-                ));
+            onPressed: () {
+              bool alreadyPresentInFavorite = ref
+                  .read(favoriteMealProvider.notifier)
+                  .addToFavorite(selectedMeal);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: alreadyPresentInFavorite
+                    ? const Text("Removed from favorite list")
+                    : const Text("Added to favorite List"),
+                backgroundColor:
+                    alreadyPresentInFavorite ? Colors.red : Colors.green,
+              ));
+            },
+            icon: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween(begin: 0.6, end: 1.0).animate(animation),
+                  child: child,
+                );
               },
-              icon: isFavorite
-                  ? Icon(
-                      Icons.favorite,
-                      color: Colors.yellow,
-                    )
-                  : Icon(
-                      Icons.favorite_outline_outlined,
-                    ))
+
+
+              child: Icon(
+                isFavorite
+                    ? Icons.favorite
+                    // color: Colors.yellow
+
+                    : Icons.favorite_outline_outlined,
+                    key: ValueKey(isFavorite),
+              ),
+            ),
+          )
         ],
       ),
       body: SingleChildScrollView(
