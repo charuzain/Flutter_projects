@@ -11,6 +11,10 @@ class NewGroceryItem extends StatefulWidget {
 }
 
 class _NewGroceryItemState extends State<NewGroceryItem> {
+  final _formKey = GlobalKey<FormState>();
+  final initialTitle = '';
+  final initialQuantity = '1';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +24,11 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
+                initialValue: initialTitle,
                 maxLength: 50,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -45,13 +51,14 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      initialValue: "1",
+                      initialValue: initialQuantity,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(labelText: "Quantity"),
-                        validator: (value) {
+                      validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
-                            value.trim().isEmpty || int.tryParse(value) == null) {
+                            value.trim().isEmpty ||
+                            int.tryParse(value) == null) {
                           return "Enter some value / Enter a valid input";
                         }
                         if (int.tryParse(value)! < 0) {
@@ -79,7 +86,11 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text("Reset")),
+                  ElevatedButton(
+                      onPressed: () {
+                        _formKey.currentState!.reset();
+                      },
+                      child: Text("Reset")),
                   const SizedBox(
                     width: 15,
                   ),
