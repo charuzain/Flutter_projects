@@ -10,7 +10,10 @@ class GroceryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grocery List"),
+        title: const Text("Grocery List"),
+        actions: [IconButton(onPressed: (
+          
+        ) {}, icon: Icon(Icons.add))],
       ),
       body: ListView.builder(
         itemCount: groceryList.length,
@@ -26,13 +29,16 @@ class GroceryList extends StatelessWidget {
                     width: 20,
                     decoration: BoxDecoration(color: groceryList[index].color),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
-                  Text(groceryList[index].title,
-                      style: TextStyle(
-                        fontSize: 18,
-                      )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(groceryList[index].title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        )),
+                  ),
                 ],
               ),
               Text(groceryList[index].quantity.toString())
