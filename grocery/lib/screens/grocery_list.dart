@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:grocery/data/geocerylist_data.dart';
+import 'package:grocery/screens/new_item.dart';
 
 class GroceryList extends StatelessWidget {
   const GroceryList({super.key});
@@ -11,9 +12,14 @@ class GroceryList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Grocery List"),
-        actions: [IconButton(onPressed: (
-          
-        ) {}, icon: Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: ListView.builder(
         itemCount: groceryList.length,
