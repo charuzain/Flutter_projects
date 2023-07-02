@@ -2,21 +2,29 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-enum GroceryCategory { dairy, meat, vegetable, fruit, carbs, sweets, spices, other }
+enum GroceryCategory {
+  dairy,
+  meat,
+  vegetable,
+  fruit,
+  carbs,
+  sweets,
+  spices,
+  other
+}
 
 class GroceryItem {
-  GroceryItem(this.id, this.title, this.quantity, this.category){
+  GroceryItem(this.id, this.title, this.quantity, this.category) {
     setColor(category);
   }
   final String id;
   final String title;
-  final int quantity;
+  final String quantity;
   final GroceryCategory category;
-  
+
   late Color color;
 
-
-  void setColor(GroceryCategory category){
+  void setColor(GroceryCategory category) {
     switch (category) {
       case GroceryCategory.dairy:
         color = Colors.blue;
@@ -43,8 +51,5 @@ class GroceryItem {
         color = Colors.grey;
         break;
     }
-
   }
 }
-
-

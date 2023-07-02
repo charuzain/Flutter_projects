@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery/model/grocery_item.dart';
 
@@ -14,6 +15,7 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
   final _formKey = GlobalKey<FormState>();
   String initialTitle = '';
   String initialQuantity = '1';
+  GroceryCategory selectedCategory = GroceryCategory.vegetable;
 
   @override
   Widget build(BuildContext context) {
@@ -78,17 +80,21 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                     width: 15,
                   ),
                   Expanded(
-                    
                     child: DropdownButtonFormField(
-                      
-                      items: [
-                      for (final category in GroceryCategory.values)
-                        DropdownMenuItem(
-                          
-                            value: category.name, child: Text(category.name))
-                    ], onChanged: (val) {
+                        value: selectedCategory,
+                        items: [
+                          for (final category in GroceryCategory.values)
+                            DropdownMenuItem(
+                                value: category,
+                                child: Text(category.name))
+                        ],
+                        onChanged: (val) {
+                          setState(() {
+                            selectedCategory = val!;
+                          });
 
-                    }),
+                          // selectedCategory = val;
+                        }),
                   )
                 ],
               ),
@@ -108,11 +114,16 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        _formKey.currentState!.validate();
-                        _formKey.currentState!.save();
-                        print("-------");
-                        print(initialQuantity);
-                        print(initialTitle);
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          Navigator.pop(
+                              context,
+                              GroceryItem(
+                                  DateTime.now().toString(),
+                                  initialTitle,
+                                  initialQuantity,
+                                  selectedCategory));
+                        }
                       },
                       child: Text("Save"))
                 ],

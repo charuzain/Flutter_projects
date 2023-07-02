@@ -4,9 +4,14 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:grocery/data/geocerylist_data.dart';
 import 'package:grocery/screens/new_item.dart';
 
-class GroceryList extends StatelessWidget {
+class GroceryList extends StatefulWidget {
   const GroceryList({super.key});
 
+  @override
+  State<GroceryList> createState() => _GroceryListState();
+}
+
+class _GroceryListState extends State<GroceryList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +19,12 @@ class GroceryList extends StatelessWidget {
         title: const Text("Grocery List"),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.push(context,
+              onPressed: () async {
+                final val = await Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
+                setState(() {
+                  groceryList.add(val);
+                });
               },
               icon: Icon(Icons.add))
         ],
