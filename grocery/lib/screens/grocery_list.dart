@@ -29,34 +29,41 @@ class _GroceryListState extends State<GroceryList> {
               icon: Icon(Icons.add))
         ],
       ),
-      body: ListView.builder(
+      body: 
+      
+      
+       ListView.builder(
         itemCount: groceryList.length,
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(color: groceryList[index].color),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(groceryList[index].title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        )),
-                  ),
-                ],
-              ),
-              Text(groceryList[index].quantity.toString())
-            ],
+        itemBuilder: (context, index) => Dismissible(
+          key: ValueKey(index),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 20,
+                      decoration:
+                          BoxDecoration(color: groceryList[index].color),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(groceryList[index].title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                          )),
+                    ),
+                  ],
+                ),
+                Text(groceryList[index].quantity.toString())
+              ],
+            ),
           ),
         ),
       ),
