@@ -29,44 +29,60 @@ class _GroceryListState extends State<GroceryList> {
               icon: Icon(Icons.add))
         ],
       ),
-      body: 
-      
-      
-       ListView.builder(
-        itemCount: groceryList.length,
-        itemBuilder: (context, index) => Dismissible(
-          key: ValueKey(index),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 20,
-                      width: 20,
-                      decoration:
-                          BoxDecoration(color: groceryList[index].color),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(groceryList[index].title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          )),
-                    ),
-                  ],
+      body: groceryList.isEmpty
+          ? Container(
+              color: Colors.orangeAccent,
+              padding: EdgeInsets.all(20),
+              child: Center(
+                child: Text(
+                  "No Grocery Item !! To Add Item in List click on plus icon at the top",
+                  softWrap: true,
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
                 ),
-                Text(groceryList[index].quantity.toString())
-              ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: groceryList.length,
+              itemBuilder: (context, index) => Dismissible(
+                key: Key(groceryList[index].id),
+                onDismissed: (direction) {
+                  setState(() {
+                    groceryList.remove(groceryList[index]);
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 20,
+                            decoration:
+                                BoxDecoration(color: groceryList[index].color),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(groceryList[index].title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                          ),
+                        ],
+                      ),
+                      Text(groceryList[index].quantity.toString())
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
