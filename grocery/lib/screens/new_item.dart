@@ -12,8 +12,8 @@ class NewGroceryItem extends StatefulWidget {
 
 class _NewGroceryItemState extends State<NewGroceryItem> {
   final _formKey = GlobalKey<FormState>();
-  final initialTitle = '';
-  final initialQuantity = '1';
+  String initialTitle = '';
+  String initialQuantity = '1';
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +45,9 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                   }
                   return null;
                 },
+                onChanged: (value) {
+                  initialTitle = value;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -66,17 +69,26 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                         }
                         return null;
                       },
+                      onChanged: (value) {
+                        initialQuantity = value;
+                      },
                     ),
                   ),
                   const SizedBox(
                     width: 15,
                   ),
                   Expanded(
-                    child: DropdownButtonFormField(items: [
+                    
+                    child: DropdownButtonFormField(
+                      
+                      items: [
                       for (final category in GroceryCategory.values)
                         DropdownMenuItem(
+                          
                             value: category.name, child: Text(category.name))
-                    ], onChanged: (val) {}),
+                    ], onChanged: (val) {
+
+                    }),
                   )
                 ],
               ),
@@ -94,7 +106,15 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                   const SizedBox(
                     width: 15,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text("Save"))
+                  ElevatedButton(
+                      onPressed: () {
+                        _formKey.currentState!.validate();
+                        _formKey.currentState!.save();
+                        print("-------");
+                        print(initialQuantity);
+                        print(initialTitle);
+                      },
+                      child: Text("Save"))
                 ],
               )
             ],
