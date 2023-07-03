@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery/model/grocery_item.dart';
+import 'package:http/http.dart' as http;
 
 // enum Category { dairy, meat, vegetable, fruit, carbs, sweets, spices, other }
 
@@ -85,8 +86,7 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                         items: [
                           for (final category in GroceryCategory.values)
                             DropdownMenuItem(
-                                value: category,
-                                child: Text(category.name))
+                                value: category, child: Text(category.name))
                         ],
                         onChanged: (val) {
                           setState(() {
