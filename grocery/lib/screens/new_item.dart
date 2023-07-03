@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery/model/grocery_item.dart';
@@ -116,6 +119,15 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
+                          final url = Uri.https(
+                              'flutter-1d4a5-default-rtdb.firebaseio.com',
+                              "list.json");
+                          http.post(url,
+                              body: json.encode({
+                                'title': initialTitle,
+                                'quantity': initialQuantity,
+                                'category': selectedCategory.name,
+                              }));
                           Navigator.pop(
                               context,
                               GroceryItem(

@@ -21,3 +21,8 @@ https://firebase.google.com/docs/reference/rest/database
 // to send http request 
 - Install http package
 - Import package as http
+- use http object to send request
+- to send data
+http.post(url)
+url = URI.https()
+url can be constructed using a URI class (has several constructor) which in turn uses a http constructor to create url that point at a http backend , at server which uses https protocl
