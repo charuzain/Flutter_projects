@@ -16,6 +16,7 @@ class GroceryList extends StatefulWidget {
 
 class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> groceryList = [];
+  bool isLoading = true;
 
   void loadData() async {
     final url =
@@ -41,6 +42,7 @@ class _GroceryListState extends State<GroceryList> {
 
     setState(() {
       groceryList = loadedList;
+      isLoading = false;
     });
   }
 
@@ -52,85 +54,93 @@ class _GroceryListState extends State<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Grocery List"),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                final result = await Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
-                // print(result);
+    return isLoading
+        ? Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text("Grocery List"),
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => NewGroceryItem()));
+                      // print(result);
 
-                // Instead of loading thw whole data again and again making the get request we can just add the newly added item to list
-                if (result != null) {
-                  setState(() {
-                    groceryList.add(GroceryItem(result['id'], result['title'],
-                        result['quantity'], result['category']));
-                  });
-                }
+                      // Instead of loading thw whole data again and again making the get request we can just add the newly added item to list
+                      if (result != null) {
+                        setState(() {
+                          groceryList.add(GroceryItem(
+                              result['id'],
+                              result['title'],
+                              result['quantity'],
+                              result['category']));
+                        });
+                      }
 
-                // when we come back to this screen after adding an item we want to make a get request again
+                      // when we come back to this screen after adding an item we want to make a get request again
 
-                // loadData();
-              },
-              icon: Icon(Icons.add))
-        ],
-      ),
-      body: groceryList.isEmpty
-          ? Container(
-              color: Colors.orangeAccent,
-              padding: EdgeInsets.all(20),
-              child: const Center(
-                child: Text(
-                  "No Grocery Item !! To Add Item in List click on plus icon at the top",
-                  softWrap: true,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-                ),
-              ),
-            )
-          : ListView.builder(
-              itemCount: groceryList.length,
-              itemBuilder: (context, index) => Dismissible(
-                key: Key(groceryList[index].id),
-                onDismissed: (direction) {
-                  setState(() {
-                    groceryList.remove(groceryList[index]);
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 20,
-                            width: 20,
-                            decoration:
-                                BoxDecoration(color: groceryList[index].color),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(groceryList[index].title,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                )),
-                          ),
-                        ],
-                      ),
-                      Text(groceryList[index].quantity.toString())
-                    ],
-                  ),
-                ),
-              ),
+                      // loadData();
+                    },
+                    icon: Icon(Icons.add))
+              ],
             ),
-    );
+            body: groceryList.isEmpty
+                ? Container(
+                    color: Colors.orangeAccent,
+                    padding: EdgeInsets.all(20),
+                    child: const Center(
+                      child: Text(
+                        "No Grocery Item !! To Add Item in List click on plus icon at the top",
+                        softWrap: true,
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: groceryList.length,
+                    itemBuilder: (context, index) => Dismissible(
+                      key: Key(groceryList[index].id),
+                      onDismissed: (direction) {
+                        setState(() {
+                          groceryList.remove(groceryList[index]);
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                      color: groceryList[index].color),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Text(groceryList[index].title,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      )),
+                                ),
+                              ],
+                            ),
+                            Text(groceryList[index].quantity.toString())
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+          );
   }
 }
