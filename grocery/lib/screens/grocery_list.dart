@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 // import 'package:grocery/data/geocerylist_data.dart';
 import 'package:grocery/screens/new_item.dart';
@@ -16,11 +18,29 @@ class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> groceryList = [];
 
   void loadData() async {
-    final url = Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
+    final url =
+        Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
     final response = await http.get(url);
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
 
+    final data = jsonDecode(response.body);
+    List<GroceryItem> loadedList = [];
+
+    for (final item in data.entries) {
+      final category = GroceryCategory.values.firstWhere((element) =>
+          element.toString().split('.').last.toLowerCase() ==
+          item.value['category']);
+
+      loadedList.add(GroceryItem(
+          item.key, item.value['title'], item.value['quantity'], category));
+    }
+
+    print(loadedList);
+
+    setState(() {
+      groceryList = loadedList;
+    });
   }
 
   @override
