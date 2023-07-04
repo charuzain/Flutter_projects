@@ -24,12 +24,13 @@ class _GroceryListState extends State<GroceryList> {
     final url =
         Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
     final response = await http.get(url);
-    print("===========================");
-    print(response);
-    print(response.body);
-    print(response.statusCode);
 
-    print("===========================");
+    if (response.body == 'null') {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     if (response.statusCode >= 400) {
       setState(() {
         errorMsg = "OOPS !!! There was some issue in fetching data";
@@ -37,7 +38,7 @@ class _GroceryListState extends State<GroceryList> {
       });
     } else {
       final data = jsonDecode(response.body);
-      print(data);
+      // print(data);
       List<GroceryItem> loadedList = [];
 
       for (final item in data.entries) {
@@ -131,6 +132,7 @@ class _GroceryListState extends State<GroceryList> {
                       onDismissed: (direction) async {
                         // remove the item from UI
                         final itemToRemove = groceryList[index];
+                        final iDOfItem = groceryList[index].id;
                         setState(() {
                           groceryList.remove(groceryList[index]);
                         });
@@ -138,9 +140,14 @@ class _GroceryListState extends State<GroceryList> {
                         // remove the item from database
 
                         final url = Uri.https(
-                            'fluter-1d4a5-default-rtdb.firebaseio.com',
-                            'list/${groceryList[index].id}.json');
+                            'flutter-1d4a5-default-rtdb.firebaseio.com',
+                            'list/${iDOfItem}.json');
                         final response = await http.delete(url);
+
+                        print("===================================");
+                        print("jo");
+                        print(response);
+                        print("===================================");
 
                         // if there was an error and the item is not removed from backend , add it back to UI
                         if (response.statusCode >= 400) {
