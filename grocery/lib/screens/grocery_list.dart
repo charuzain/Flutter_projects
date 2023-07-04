@@ -128,7 +128,12 @@ class _GroceryListState extends State<GroceryList> {
                     itemCount: groceryList.length,
                     itemBuilder: (context, index) => Dismissible(
                       key: Key(groceryList[index].id),
-                      onDismissed: (direction) {
+                      onDismissed: (direction) async {
+                        final url = Uri.https(
+                            'flutter-1d4a5-default-rtdb.firebaseio.com' ,'list/${groceryList[index].id}.json');
+                        final response = await http.delete(url);
+                        // print(response.statusCode); // 200 success
+
                         setState(() {
                           groceryList.remove(groceryList[index]);
                         });
