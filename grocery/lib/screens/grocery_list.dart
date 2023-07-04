@@ -36,7 +36,7 @@ class _GroceryListState extends State<GroceryList> {
           item.key, item.value['title'], item.value['quantity'], category));
     }
 
-    print(loadedList);
+    // print(loadedList);
 
     setState(() {
       groceryList = loadedList;
@@ -57,9 +57,11 @@ class _GroceryListState extends State<GroceryList> {
         actions: [
           IconButton(
               onPressed: () async {
-                Navigator.push(context,
+                await Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
-                // when we come back to this screen after adding an item
+                // when we come back to this screen after adding an item we want to make a get request again
+
+                loadData();
               },
               icon: Icon(Icons.add))
         ],

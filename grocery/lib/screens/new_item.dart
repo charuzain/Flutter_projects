@@ -130,9 +130,9 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                                 'category': selectedCategory.name,
                               }));
 
-                          print(response);
-                          print(json.decode(response.body));
-                          print(response.statusCode);
+                          // print(response);
+                          // print(json.decode(response.body));
+                          // print(response.statusCode);
 // if widget is not part of the screen return
                           if (!context.mounted) {
                             return;
