@@ -129,14 +129,29 @@ class _GroceryListState extends State<GroceryList> {
                     itemBuilder: (context, index) => Dismissible(
                       key: Key(groceryList[index].id),
                       onDismissed: (direction) async {
-                        final url = Uri.https(
-                            'flutter-1d4a5-default-rtdb.firebaseio.com' ,'list/${groceryList[index].id}.json');
-                        final response = await http.delete(url);
-                        // print(response.statusCode); // 200 success
-
+                        // remove the item from UI
+                        final itemToRemove = groceryList[index];
                         setState(() {
                           groceryList.remove(groceryList[index]);
                         });
+
+                        // remove the item from database
+
+                        final url = Uri.https(
+                            'fluter-1d4a5-default-rtdb.firebaseio.com',
+                            'list/${groceryList[index].id}.json');
+                        final response = await http.delete(url);
+
+                        // if there was an error and the item is not removed from backend , add it back to UI
+                        if (response.statusCode >= 400) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "There was an error deleting the item")));
+                          setState(() {
+                            groceryList.insert(index, itemToRemove);
+                          });
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
