@@ -21,22 +21,23 @@ class _GroceryListState extends State<GroceryList> {
   String? errorMsg;
 
   void loadData() async {
-    final url =
-        Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
-    final response = await http.get(url);
+    try {
+      final url =
+          Uri.https('flutter-1d4a5-default-rtdb.firebaseio', 'list.json');
+      final response = await http.get(url);
 
-    if (response.body == 'null') {
-      setState(() {
-        isLoading = false;
-      });
-      return;
-    }
-    if (response.statusCode >= 400) {
-      setState(() {
-        errorMsg = "OOPS !!! There was some issue in fetching data";
-        isLoading = false;
-      });
-    } else {
+      if (response.body == 'null') {
+        setState(() {
+          isLoading = false;
+        });
+        return;
+      }
+      if (response.statusCode >= 400) {
+        setState(() {
+          errorMsg = "OOPS !!! There was some issue in fetching data";
+          isLoading = false;
+        });
+      }
       final data = jsonDecode(response.body);
       // print(data);
       List<GroceryItem> loadedList = [];
@@ -58,7 +59,50 @@ class _GroceryListState extends State<GroceryList> {
         print("++++++++++++++++");
         isLoading = false;
       });
+    } catch (error) {
+      setState(() {
+        errorMsg = error.toString().split(":").first; // or simple error like soemthing went wrong
+        isLoading = false;
+      });
     }
+    // final url =
+    //     Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
+    // final response = await http.get(url);
+
+    // if (response.body == 'null') {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    //   return;
+    // }
+    // if (response.statusCode >= 400) {
+    //   setState(() {
+    //     errorMsg = "OOPS !!! There was some issue in fetching data";
+    //     isLoading = false;
+    //   });
+    // } else {
+    //   final data = jsonDecode(response.body);
+    //   // print(data);
+    //   List<GroceryItem> loadedList = [];
+
+    //   for (final item in data.entries) {
+    //     // print(item.value['category']);
+    //     final category = GroceryCategory.values.firstWhere((element) =>
+    //         element.toString().split('.').last.toLowerCase() ==
+    //         item.value['category']);
+
+    //     loadedList.add(GroceryItem(
+    //         item.key, item.value['title'], item.value['quantity'], category));
+    //   }
+
+    //   // print(loadedList);
+
+    //   setState(() {
+    //     groceryList = loadedList;
+    //     print("++++++++++++++++");
+    //     isLoading = false;
+    //   });
+    // }
   }
 
   @override
