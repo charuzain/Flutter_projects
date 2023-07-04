@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:grocery/data/geocerylist_data.dart';
+// import 'package:grocery/data/geocerylist_data.dart';
 import 'package:grocery/screens/new_item.dart';
+
+import '../model/grocery_item.dart';
+import 'package:http/http.dart' as http;
 
 class GroceryList extends StatefulWidget {
   const GroceryList({super.key});
@@ -12,6 +13,22 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
+  List<GroceryItem> groceryList = [];
+
+  void loadData() async {
+    final url = Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
+    final response = await http.get(url);
+    print(response);
+    print(response.body);
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,11 +37,9 @@ class _GroceryListState extends State<GroceryList> {
         actions: [
           IconButton(
               onPressed: () async {
-                final val = await Navigator.push(context,
+                Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
-                setState(() {
-                  groceryList.add(val);
-                });
+                // when we come back to this screen after adding an item
               },
               icon: Icon(Icons.add))
         ],
@@ -33,7 +48,7 @@ class _GroceryListState extends State<GroceryList> {
           ? Container(
               color: Colors.orangeAccent,
               padding: EdgeInsets.all(20),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "No Grocery Item !! To Add Item in List click on plus icon at the top",
                   softWrap: true,
