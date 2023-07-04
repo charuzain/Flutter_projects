@@ -21,6 +21,7 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
   String initialTitle = '';
   String initialQuantity = '1';
   GroceryCategory selectedCategory = GroceryCategory.vegetable;
+  bool isSaving = false;
 
   @override
   Widget build(BuildContext context) {
@@ -117,35 +118,47 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                     width: 15,
                   ),
                   ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          final url = Uri.https(
-                              'flutter-1d4a5-default-rtdb.firebaseio.com',
-                              "list.json");
-                          final response = await http.post(url,
-                              body: json.encode({
-                                'title': initialTitle,
-                                'quantity': initialQuantity,
-                                'category': selectedCategory.name,
-                              }));
+                      onPressed: isSaving
+                          ? null
+                          : () async {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
 
-                          // print(response);
-                          // print(json.decode(response.body));
-                          // print(response.statusCode);
+// diable save button
+                                setState(() {
+                                  isSaving = true;
+                                });
+
+                                final url = Uri.https(
+                                    'flutter-1d4a5-default-rtdb.firebaseio.com',
+                                    "list.json");
+                                final response = await http.post(url,
+                                    body: json.encode({
+                                      'title': initialTitle,
+                                      'quantity': initialQuantity,
+                                      'category': selectedCategory.name,
+                                    }));
+
+                                // print(response);
+                                // print(json.decode(response.body));
+                                // print(response.statusCode);
 // if widget
-                          if (!context.mounted) {
-                            return;
-                          }
-                          Navigator.pop(context, {
-                            'id': json.decode(response.body)['name'].toString(),
-                            'title': initialTitle,
-                            'quantity': initialQuantity,
-                            'category': selectedCategory,
-                          });
-                        }
-                      },
-                      child: Text("Save"))
+                                if (!context.mounted) {
+                                  return;
+                                }
+                                Navigator.pop(context, {
+                                  'id': json
+                                      .decode(response.body)['name']
+                                      .toString(),
+                                  'title': initialTitle,
+                                  'quantity': initialQuantity,
+                                  'category': selectedCategory,
+                                });
+                              }
+                            },
+                      child: isSaving
+                          ? Center(child: CircularProgressIndicator())
+                          : Text("Save"))
                 ],
               )
             ],

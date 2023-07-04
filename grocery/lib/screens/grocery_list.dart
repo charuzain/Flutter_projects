@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 // import 'package:grocery/data/geocerylist_data.dart';
@@ -17,33 +18,46 @@ class GroceryList extends StatefulWidget {
 class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> groceryList = [];
   bool isLoading = true;
+  String? errorMsg;
 
   void loadData() async {
     final url =
         Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
     final response = await http.get(url);
-    // print(response);
-    // print(response.body);
+    print("===========================");
+    print(response);
+    print(response.body);
+    print(response.statusCode);
 
-    final data = jsonDecode(response.body);
-    List<GroceryItem> loadedList = [];
+    print("===========================");
+    if (response.statusCode >= 400) {
+      setState(() {
+        errorMsg = "OOPS !!! There was some issue in fetching data";
+        isLoading = false;
+      });
+    } else {
+      final data = jsonDecode(response.body);
+      print(data);
+      List<GroceryItem> loadedList = [];
 
-    for (final item in data.entries) {
-      // print(item.value['category']);
-      final category = GroceryCategory.values.firstWhere((element) =>
-          element.toString().split('.').last.toLowerCase() ==
-          item.value['category']);
+      for (final item in data.entries) {
+        // print(item.value['category']);
+        final category = GroceryCategory.values.firstWhere((element) =>
+            element.toString().split('.').last.toLowerCase() ==
+            item.value['category']);
 
-      loadedList.add(GroceryItem(
-          item.key, item.value['title'], item.value['quantity'], category));
+        loadedList.add(GroceryItem(
+            item.key, item.value['title'], item.value['quantity'], category));
+      }
+
+      // print(loadedList);
+
+      setState(() {
+        groceryList = loadedList;
+        print("++++++++++++++++");
+        isLoading = false;
+      });
     }
-
-    // print(loadedList);
-
-    setState(() {
-      groceryList = loadedList;
-      isLoading = false;
-    });
   }
 
   @override
@@ -90,14 +104,25 @@ class _GroceryListState extends State<GroceryList> {
                 ? Container(
                     color: Colors.orangeAccent,
                     padding: EdgeInsets.all(20),
-                    child: const Center(
-                      child: Text(
-                        "No Grocery Item !! To Add Item in List click on plus icon at the top",
-                        softWrap: true,
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                    child: errorMsg != null
+                        ? Center(
+                            child: Text(
+                            errorMsg!,
+                            style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ))
+                        : const Center(
+                            child: Text(
+                              "No Grocery Item !! To Add Item in List click on plus icon at the top",
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black),
+                            ),
+                          ),
                   )
                 : ListView.builder(
                     itemCount: groceryList.length,
