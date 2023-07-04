@@ -28,6 +28,7 @@ class _GroceryListState extends State<GroceryList> {
     List<GroceryItem> loadedList = [];
 
     for (final item in data.entries) {
+      // print(item.value['category']);
       final category = GroceryCategory.values.firstWhere((element) =>
           element.toString().split('.').last.toLowerCase() ==
           item.value['category']);
@@ -57,11 +58,21 @@ class _GroceryListState extends State<GroceryList> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Navigator.push(context,
+                final result = await Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => NewGroceryItem()));
+                // print(result);
+
+                // Instead of loading thw whole data again and again making the get request we can just add the newly added item to list
+                if (result != null) {
+                  setState(() {
+                    groceryList.add(GroceryItem(result['id'], result['title'],
+                        result['quantity'], result['category']));
+                  });
+                }
+
                 // when we come back to this screen after adding an item we want to make a get request again
 
-                loadData();
+                // loadData();
               },
               icon: Icon(Icons.add))
         ],

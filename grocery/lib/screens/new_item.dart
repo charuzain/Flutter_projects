@@ -133,11 +133,16 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                           // print(response);
                           // print(json.decode(response.body));
                           // print(response.statusCode);
-// if widget is not part of the screen return
+// if widget
                           if (!context.mounted) {
                             return;
                           }
-                          Navigator.pop(context);
+                          Navigator.pop(context, {
+                            'id': json.decode(response.body)['name'].toString(),
+                            'title': initialTitle,
+                            'quantity': initialQuantity,
+                            'category': selectedCategory,
+                          });
                         }
                       },
                       child: Text("Save"))
