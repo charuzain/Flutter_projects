@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery/model/grocery_item.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 // enum Category { dairy, meat, vegetable, fruit, carbs, sweets, spices, other }
 
@@ -116,25 +117,27 @@ class _NewGroceryItemState extends State<NewGroceryItem> {
                     width: 15,
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final url = Uri.https(
                               'flutter-1d4a5-default-rtdb.firebaseio.com',
                               "list.json");
-                          http.post(url,
+                          final response = await http.post(url,
                               body: json.encode({
                                 'title': initialTitle,
                                 'quantity': initialQuantity,
                                 'category': selectedCategory.name,
                               }));
-                          Navigator.pop(
-                              context,
-                              GroceryItem(
-                                  DateTime.now().toString(),
-                                  initialTitle,
-                                  initialQuantity,
-                                  selectedCategory));
+
+                          print(response);
+                          print(json.decode(response.body));
+                          print(response.statusCode);
+// if widget is not part of the screen return
+                          if (!context.mounted) {
+                            return;
+                          }
+                          Navigator.pop(context);
                         }
                       },
                       child: Text("Save"))
