@@ -35,13 +35,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Great Places',
-      theme: theme,
-      home: Scaffold(
-          appBar: AppBar(
-        title: Text("Places"),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
-      )),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Great Places',
+        theme: theme,
+        home: const HomeScreen());
   }
 }
