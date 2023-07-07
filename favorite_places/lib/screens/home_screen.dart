@@ -1,21 +1,21 @@
-import 'package:favorite_places/miodel/places.dart';
+import 'package:favorite_places/model/places.dart';
+import 'package:favorite_places/provider/placeProvider.dart';
 import 'package:favorite_places/screens/add_place.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../data/places_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final placeList = ref.read(placeProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("Places"),
@@ -25,16 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Place result = await Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) => const AddNewPlace()));
-                print(result);
+                // print(result);
 
                 setState(() {
-                  placesList.add(result);
+                  placeList.add(result);
                 });
               },
               icon: const Icon(Icons.add))
         ],
       ),
-      body: placesList.isEmpty
+      body: placeList.isEmpty
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
@@ -48,11 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
           : Padding(
               padding: const EdgeInsets.all(15.0),
               child: ListView.builder(
-                  itemCount: placesList.length,
+                  itemCount: placeList.length,
                   itemBuilder: (ctx, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          placesList[index].name,
+                          placeList[index].name,
                           style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context)

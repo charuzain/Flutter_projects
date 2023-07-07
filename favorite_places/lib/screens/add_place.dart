@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../miodel/places.dart';
+import '../model/places.dart';
 
 class AddNewPlace extends StatefulWidget {
   const AddNewPlace({super.key});
@@ -31,7 +31,7 @@ class _AddNewPlaceState extends State<AddNewPlace> {
                     _placeName = newValue!;
                   },
                   validator: (value) {
-                    print(value);
+                    // print(value);
                     if (value == null || value.isEmpty) {
                       return "Enter a value";
                     }
