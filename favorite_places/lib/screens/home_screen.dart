@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../provider/new_place_provider.dart';
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -15,7 +17,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final placeList = ref.read(placeProvider);
+    final placeList = ref.watch(newPlaceProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("Places"),
@@ -27,9 +29,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         builder: (context) => const AddNewPlace()));
                 // print(result);
 
-                setState(() {
-                  placeList.add(result);
-                });
+                // setState(() {
+                  ref.watch(newPlaceProvider.notifier).addPlace(result);
+                // });
               },
               icon: const Icon(Icons.add))
         ],
