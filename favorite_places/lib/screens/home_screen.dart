@@ -57,7 +57,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PlaceDetail()));
+                                  builder: (context) => PlaceDetail(place: placeList[index],)));
                         },
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
