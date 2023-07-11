@@ -21,18 +21,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final placeList = ref.watch(newPlaceProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Places"),
+        title: const Text("Places"),
         actions: [
           IconButton(
               onPressed: () async {
-                Place result = await Navigator.of(context).push(
+                 Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) => const AddNewPlace()));
-                // print(result);
-
-                // setState(() {
-                ref.watch(newPlaceProvider.notifier).addPlace(result);
-                // });
+            
               },
               icon: const Icon(Icons.add))
         ],

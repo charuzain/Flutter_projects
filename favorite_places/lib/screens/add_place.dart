@@ -1,19 +1,21 @@
+import 'package:favorite_places/provider/new_place_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/places.dart';
 
-class AddNewPlace extends StatefulWidget {
+class AddNewPlace extends ConsumerStatefulWidget {
   const AddNewPlace({super.key});
 
   @override
-  State<AddNewPlace> createState() => _AddNewPlaceState();
+  ConsumerState<AddNewPlace> createState() => _AddNewPlaceState();
 }
 
-class _AddNewPlaceState extends State<AddNewPlace> {
+class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
   final _formKey = GlobalKey<FormState>();
-  String _placeName = '';
+//  final String _placeName = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +27,12 @@ class _AddNewPlaceState extends State<AddNewPlace> {
             child: Column(
               children: [
                 TextFormField(
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  initialValue: _placeName,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  // initialValue: _placeName,
                   onSaved: (newValue) {
-                    _placeName = newValue!;
+                    ref
+                        .watch(newPlaceProvider.notifier)
+                        .addPlace(Place(name: newValue!));
                   },
                   validator: (value) {
                     // print(value);
@@ -47,11 +51,11 @@ class _AddNewPlaceState extends State<AddNewPlace> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        Navigator.pop(context, Place(name: _placeName));
+                        Navigator.pop(context);
                       }
                     },
-                    icon: Icon(Icons.add),
-                    label: Text("Save"))
+                    icon: const Icon(Icons.add),
+                    label: const Text("Save"))
               ],
             ),
           )),
