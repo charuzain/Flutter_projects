@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/places.dart';
+import '../widget/take_picture.dart';
 
 class AddNewPlace extends ConsumerStatefulWidget {
   const AddNewPlace({super.key});
@@ -20,45 +21,70 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Add a New Place")),
-      body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                TextFormField(
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  // initialValue: _placeName,
-                  onSaved: (newValue) {
-                    ref
-                        .watch(newPlaceProvider.notifier)
-                        .addPlace(Place(name: newValue!));
-                  },
-                  validator: (value) {
-                    // print(value);
-                    if (value == null || value.isEmpty) {
-                      return "Enter a value";
-                    }
-                    return null;
-                  },
-                  decoration:
-                      InputDecoration(label: Text("Enter name of the place")),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton.icon(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        Navigator.pop(context);
-                      }
+      body: SingleChildScrollView(
+        child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    // initialValue: _placeName,
+                    onSaved: (newValue) {
+                      ref
+                          .watch(newPlaceProvider.notifier)
+                          .addPlace(Place(name: newValue!));
                     },
-                    icon: const Icon(Icons.add),
-                    label: const Text("Save"))
-              ],
-            ),
-          )),
+                    validator: (value) {
+                      // print(value);
+                      if (value == null || value.isEmpty) {
+                        return "Enter a value";
+                      }
+                      return null;
+                    },
+                    decoration:
+                        InputDecoration(label: Text("Enter name of the place")),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TakePicture(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          Navigator.pop(context);
+                        }
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text("Save"))
+                ],
+              ),
+            )),
+      ),
     );
   }
 }
+
+// class TakePicture extends StatefulWidget {
+//   const TakePicture({
+//     super.key,
+//   });
+
+//   @override
+//   State<TakePicture> createState() => _TakePictureState();
+// }
+
+// class _TakePictureState extends State<TakePicture> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextButton.icon(
+//         onPressed: () {},
+//         icon: Icon(Icons.camera),
+//         label: Text("Take a picture"));
+//   }
+// }
