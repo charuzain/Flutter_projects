@@ -1,7 +1,6 @@
 import 'package:favorite_places/provider/new_place_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/places.dart';
@@ -17,6 +16,8 @@ class AddNewPlace extends ConsumerStatefulWidget {
 class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
   final _formKey = GlobalKey<FormState>();
 //  final String _placeName = '';
+  late File newImage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,7 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                     onSaved: (newValue) {
                       ref
                           .watch(newPlaceProvider.notifier)
-                          .addPlace(Place(name: newValue!));
+                          .addPlace(Place(name: newValue!, image: newImage));
                     },
                     validator: (value) {
                       // print(value);
@@ -49,7 +50,9 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TakePicture(),
+                  TakePicture(
+                    getNewImage: (File image) => {newImage = image},
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
