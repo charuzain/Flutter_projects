@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/places.dart';
+import '../widget/location.dart';
 import '../widget/take_picture.dart';
 
 class AddNewPlace extends ConsumerStatefulWidget {
@@ -56,6 +57,9 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Location(),
+
+
                   ElevatedButton.icon(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
