@@ -25,10 +25,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                 Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const AddNewPlace()));
-            
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AddNewPlace()));
               },
               icon: const Icon(Icons.add))
         ],
@@ -48,22 +46,44 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.all(15.0),
               child: ListView.builder(
                   itemCount: placeList.length,
-                  itemBuilder: (ctx, index) => ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlaceDetail(place: placeList[index],)));
-                        },
-                        leading: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            placeList[index].name,
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer),
+                  itemBuilder: (ctx, index) => Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                        child: ListTile(
+                          tileColor: Color.fromARGB(255, 228, 156, 41),
+                          hoverColor: Colors.blue,
+
+                          // tileColor: Theme.of(context).colorScheme.secondary,
+                          leading: CircleAvatar(
+                            radius: 26,
+                            backgroundImage: Image.file(
+                              placeList[index].image,
+                              fit: BoxFit.cover,
+                            ).image,
+
+                            // child: Image.file(placeList[index].image),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PlaceDetail(
+                                          place: placeList[index],
+                                        )));
+                          },
+                          title: Padding(
+                            padding: const EdgeInsets.fromLTRB(6, 0, 10, 0),
+                            child: Text(
+                              placeList[index].name,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  letterSpacing: 0.8),
+                            ),
+                          ),
+
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black,
                           ),
                         ),
                       )),
