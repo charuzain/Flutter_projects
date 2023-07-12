@@ -30,13 +30,18 @@ class _TakePictureState extends State<TakePicture> {
   @override
   Widget build(BuildContext context) {
     if (selectedImage != null) {
-      return Container(
-          height: 300,
-          width: double.infinity,
-          child: Image.file(
-            selectedImage!,
-            fit: BoxFit.cover,
-          ));
+      return GestureDetector(
+        onTap: takePic,
+        child: Container(
+            height: 300,
+            width: double.infinity,
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
+            child: Image.file(
+              selectedImage!,
+              fit: BoxFit.cover,
+            )),
+      );
     }
     return Container(
       decoration:
