@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator_platform_interface/src/enums/location_accuracy.dart' as acc;
 
@@ -20,6 +19,7 @@ class _LocationState extends State<Location> {
   // void getUserLocation() {}
   String? _currentAddress;
   Position? _currentPosition;
+  bool  isLoading = false;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -50,6 +50,10 @@ class _LocationState extends State<Location> {
 
 
   Future<void> _getCurrentPosition() async {
+    setState(() {
+      isLoading = true;
+    });
+
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(
@@ -60,7 +64,14 @@ class _LocationState extends State<Location> {
       debugPrint(e);
     });
 
-    print(_currentPosition);
+    setState(() {
+      isLoading = false;
+    });
+
+
+
+
+    print(_currentPosition!.longitude);
   }
   // void getUserLocation() async {
     // Location location = Location();
@@ -98,7 +109,7 @@ class _LocationState extends State<Location> {
               BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
           height: 200,
           width: double.infinity,
-          child: Text("No Location selected yet !",
+          child: isLoading ? CircularProgressIndicator() :    Text("No Location selected yet !",
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
