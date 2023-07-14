@@ -7,6 +7,10 @@ import 'package:geolocator_platform_interface/src/enums/location_accuracy.dart'
     as acc;
 import 'package:geocoding/geocoding.dart';
 
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class Location extends StatefulWidget {
   const Location({super.key});
 
@@ -19,6 +23,8 @@ class _LocationState extends State<Location> {
   String? _currentAddress;
   Position? _currentPosition;
   bool isLoading = false;
+  Widget ? previewContent;
+
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -115,7 +121,47 @@ class _LocationState extends State<Location> {
   // }
 
   @override
+
+
   Widget build(BuildContext context) {
+previewContent = Text("No Location selected yet !",
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground));
+
+    if(_currentPosition != null){
+      previewContent = FlutterMap(
+        options: MapOptions(
+          center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+          zoom: 16.2,
+        ),
+        nonRotatedChildren: [
+          RichAttributionWidget(
+            attributions: [
+              TextSourceAttribution(
+                'OpenStreetMap contributors',
+                onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
+              ),
+            ],
+          ),
+        ],
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.example.app',
+          ),
+        ],
+      );
+
+    }
+
+    if(isLoading){
+
+     previewContent = CircularProgressIndicator();
+
+
+    }
+
+
     return Column(
       children: [
         Container(
@@ -124,12 +170,15 @@ class _LocationState extends State<Location> {
               BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
           height: 200,
           width: double.infinity,
-          child: isLoading
-              ? CircularProgressIndicator()
-              : Text("No Location selected yet !",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground)),
+          child: previewContent,
         ),
+
+        //   isLoading
+        //       ? CircularProgressIndicator()
+        //       : Text("No Location selected yet !",
+        //           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+        //               color: Theme.of(context).colorScheme.onBackground)),
+        // ),
         const SizedBox(
           height: 10,
         ),
