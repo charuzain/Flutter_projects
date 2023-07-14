@@ -80,8 +80,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   letterSpacing: 0.8),
                             ),
                           ),
-
-                          trailing: Icon(
+subtitle:  Padding(
+  padding: const EdgeInsets.fromLTRB(6, 0, 10, 0),
+  child:   Text(
+    placeList[index].address,
+    style: TextStyle(
+        fontSize: 18,
+        color: Colors.white,
+        letterSpacing: 0.8),
+  ),
+),
+                          trailing:
+                          Icon(
                             Icons.arrow_forward_ios,
                             color: Colors.black,
                           ),

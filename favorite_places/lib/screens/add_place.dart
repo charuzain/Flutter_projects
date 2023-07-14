@@ -18,6 +18,7 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
   final _formKey = GlobalKey<FormState>();
 //  final String _placeName = '';
   late File newImage;
+  late String userAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                     onSaved: (newValue) {
                       ref
                           .watch(newPlaceProvider.notifier)
-                          .addPlace(Place(name: newValue!, image: newImage));
+                          .addPlace(Place(name: newValue!, image: newImage , address: userAddress ));
                     },
                     validator: (value) {
                       // print(value);
@@ -57,7 +58,9 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Location(),
+                  Location(
+                    getAddressAsString : (String newAddress)=> {userAddress = newAddress}
+                  ),
 
 
                   ElevatedButton.icon(

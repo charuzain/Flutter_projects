@@ -12,7 +12,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Location extends StatefulWidget {
-  const Location({super.key});
+  const Location({super.key ,required this.getAddressAsString  });
+
+  final void Function(String address) getAddressAsString;
 
   @override
   State<Location> createState() => _LocationState();
@@ -62,6 +64,7 @@ class _LocationState extends State<Location> {
       Placemark place = placemarks[0];
 
       print(place);
+      widget.getAddressAsString('${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}');
       // setState(() {
       //   _currentAddress =
       //      '${place.street}, ${place.subLocality},
@@ -70,6 +73,9 @@ class _LocationState extends State<Location> {
     }).catchError((e) {
       debugPrint(e);
     });
+
+
+        //       ${place.subAdministrativeArea}, ${place.postalCode}');
   }
 
   Future<void> _getCurrentPosition() async {
