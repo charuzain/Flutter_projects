@@ -132,7 +132,7 @@ previewContent = Text("No Location selected yet !",
       previewContent = FlutterMap(
         options: MapOptions(
           center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-          zoom: 16.2,
+          zoom: 17.2,
         ),
         nonRotatedChildren: [
           RichAttributionWidget(
@@ -149,6 +149,18 @@ previewContent = Text("No Location selected yet !",
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'com.example.app',
           ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+                width: 80,
+                height: 80,
+                builder: (context) => Icon(Icons.location_on , color: Colors.red,),
+              ),
+            ],
+          )
+
+          
         ],
       );
 
