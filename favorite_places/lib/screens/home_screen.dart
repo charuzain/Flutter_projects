@@ -67,7 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PlaceDetail(
-                                          place: placeList[index],
+                                          place: placeList[index], 
                                         )));
                           },
                           title: Padding(
