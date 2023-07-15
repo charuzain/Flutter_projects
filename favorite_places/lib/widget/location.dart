@@ -1,5 +1,4 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -12,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Location extends StatefulWidget {
-  const Location({super.key ,required this.getAddressAsString  });
+  const Location({super.key, required this.getAddressAsString});
 
   final void Function(String address) getAddressAsString;
 
@@ -25,8 +24,7 @@ class _LocationState extends State<Location> {
   String? _currentAddress;
   Position? _currentPosition;
   bool isLoading = false;
-  Widget ? previewContent;
-
+  Widget? previewContent;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -63,19 +61,14 @@ class _LocationState extends State<Location> {
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
 
-      print(place);
-      widget.getAddressAsString('${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}');
-      // setState(() {
-      //   _currentAddress =
-      //      '${place.street}, ${place.subLocality},
-      //       ${place.subAdministrativeArea}, ${place.postalCode}';
-      // });
+
+      widget.getAddressAsString(
+          '${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode}');
     }).catchError((e) {
       debugPrint(e);
     });
 
-
-        //       ${place.subAdministrativeArea}, ${place.postalCode}');
+    //       ${place.subAdministrativeArea}, ${place.postalCode}');
   }
 
   Future<void> _getCurrentPosition() async {
@@ -127,17 +120,18 @@ class _LocationState extends State<Location> {
   // }
 
   @override
-
-
   Widget build(BuildContext context) {
-previewContent = Text("No Location selected yet !",
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground));
+    previewContent = Text("No Location selected yet !",
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge!
+            .copyWith(color: Theme.of(context).colorScheme.onBackground));
 
-    if(_currentPosition != null){
+    if (_currentPosition != null) {
       previewContent = FlutterMap(
         options: MapOptions(
-          center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+          center:
+              LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
           zoom: 17.2,
         ),
         nonRotatedChildren: [
@@ -145,7 +139,8 @@ previewContent = Text("No Location selected yet !",
             attributions: [
               TextSourceAttribution(
                 'OpenStreetMap contributors',
-                onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
+                onTap: () =>
+                    launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
               ),
             ],
           ),
@@ -158,27 +153,24 @@ previewContent = Text("No Location selected yet !",
           MarkerLayer(
             markers: [
               Marker(
-                point: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+                point: LatLng(
+                    _currentPosition!.latitude, _currentPosition!.longitude),
                 width: 80,
                 height: 80,
-                builder: (context) => Icon(Icons.location_on , color: Colors.red,),
+                builder: (context) => Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
               ),
             ],
           )
-
-          
         ],
       );
-
     }
 
-    if(isLoading){
-
-     previewContent = CircularProgressIndicator();
-
-
+    if (isLoading) {
+      previewContent = CircularProgressIndicator();
     }
-
 
     return Column(
       children: [

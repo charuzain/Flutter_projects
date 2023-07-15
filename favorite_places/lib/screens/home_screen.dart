@@ -74,7 +74,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             padding: const EdgeInsets.fromLTRB(6, 0, 10, 0),
                             child: Text(
                               placeList[index].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
                                   letterSpacing: 0.8),
