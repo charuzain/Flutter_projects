@@ -19,6 +19,8 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
 //  final String _placeName = '';
   late File newImage;
   late String userAddress;
+  late double userCurrentLat;
+  late double userCurrentLong;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,10 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                     // initialValue: _placeName,
                     onSaved: (newValue) {
-                      ref
-                          .watch(newPlaceProvider.notifier)
-                          .addPlace(Place(name: newValue!, image: newImage , address: userAddress ));
+                      ref.watch(newPlaceProvider.notifier).addPlace(Place(
+                          name: newValue!,
+                          image: newImage,
+                          address: userAddress , lat: userCurrentLat , long: userCurrentLong));
                     },
                     validator: (value) {
                       // print(value);
@@ -59,10 +62,10 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
                     height: 20,
                   ),
                   Location(
-                    getAddressAsString : (String newAddress)=> {userAddress = newAddress}
-                  ),
-
-
+                      getAddressAsString: (String newAddress , double lat , double long) =>
+                          {userAddress = newAddress ,
+                          userCurrentLat = lat,
+                          userCurrentLong = long}),
                   ElevatedButton.icon(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
