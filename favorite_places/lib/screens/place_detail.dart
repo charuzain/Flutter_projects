@@ -1,9 +1,11 @@
+import 'package:favorite_places/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../model/places.dart';
+import 'map_screen.dart';
 
 class PlaceDetail extends StatefulWidget {
   const PlaceDetail({super.key, required this.place});
@@ -35,37 +37,45 @@ class _PlaceDetailState extends State<PlaceDetail> {
               right: 0,
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100.0),
-                    child: CircleAvatar(
-                        radius: 96,
-                        child: FlutterMap(
-                          options: MapOptions(
-                            center: LatLng(widget.place.lat, widget.place.long),
-                            zoom: 17.2,
-                          ),
-                          children: [
-                            TileLayer(
-                              urlTemplate:
-                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              userAgentPackageName: 'com.example.app',
+                  Listener(
+                    onPointerDown: (event) {
+                      // Handle the tap event here
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MapScreen(place: widget.place,)));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: CircleAvatar(
+                          radius: 66,
+                          child: FlutterMap(
+
+                            options: MapOptions(
+                              center:
+                                  LatLng(widget.place.lat, widget.place.long),
+                              zoom: 17.2,
                             ),
-                            MarkerLayer(
-                              markers: [
-                                Marker(
-                                  point: LatLng(
-                                      widget.place.lat, widget.place.long),
-                                  width: 80,
-                                  height: 80,
-                                  builder: (context) => Icon(
-                                    Icons.location_on,
-                                    color: Colors.red,
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                userAgentPackageName: 'com.example.app',
+                              ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: LatLng(
+                                        widget.place.lat, widget.place.long),
+                                    width: 80,
+                                    height: 80,
+                                    builder: (context) => Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
+                                ],
+                              )
+                            ],
+                          )),
+                    ),
                   ),
                   SizedBox(
                     height: 5,
