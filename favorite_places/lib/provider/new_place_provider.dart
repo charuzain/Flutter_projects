@@ -21,8 +21,7 @@ class NewPlaceProvider extends StateNotifier<List<Place>> {
    final filename =  path.basename(newPlace.image.path);
 
    // finallay copy the image 
-
-   final copiedimage =  await newPlace.image.copy('$appDocumentDir/$filename');
+   final copiedimage = await newPlace.image.copy('$appDocumentDir/$filename');
 
 
 
