@@ -101,3 +101,4 @@ class _AddNewPlaceState extends ConsumerState<AddNewPlace> {
 //         label: Text("Take a picture"));
 //   }
 // }
+
