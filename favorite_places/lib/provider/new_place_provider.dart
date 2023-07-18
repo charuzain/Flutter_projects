@@ -35,26 +35,32 @@ class NewPlaceProvider extends StateNotifier<List<Place>> {
         lat: newPlace.lat,
         long: newPlace.long);
 
-
-
     // final dbPath = sql.getDatabasesPath()
     // Get a location using getDatabasesPath
-final dbPath = await getDatabasesPath();
+    final dbPath = await getDatabasesPath();
 
-
+// open database
     final database = await openDatabase(
-      // Set the path to the database. Note: Using the `join` function from the
-      // `path` package is best practice to ensure the path is correctly
-      // constructed for each platform.
-      join(await getDatabasesPath(), 'new_places.db'),
-      onCreate: (db, version)  {
-         return db.execute(
-          'CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, address TEXT , lat REAL , long REAL , image TEXT)',
-        );
+        // Set the path to the database. Note: Using the `join` function from the
+        // `path` package is best practice to ensure the path is correctly
+        // constructed for each platform.
+        // image is Text as we will just store the file path not the image itself
+        join(await getDatabasesPath(), 'new_places.db'),
+        onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, address TEXT , lat REAL , long REAL , image TEXT)',
+      );
+    }, version: 1);
+    // insert data
+    database.insert('places', {
+      'id': newPlace.id,
+      'name':newPlace.name,
+      'image':newPlace.image.path,
+      'address':newPlace.address,
+      'lat':newPlace.lat,
+      'long':newPlace.long,
 
-      },
-      version: 1
-    );
+    });
 
     state = [...state, place];
   }
