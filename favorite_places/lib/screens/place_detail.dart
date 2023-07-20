@@ -82,16 +82,16 @@ class _PlaceDetailState extends State<PlaceDetail> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Center(
-                      child: Text(
-                        widget.place.address,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    // child: Center(
+                    //   child: Text(`
+                    //     widget.place.address,
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 28,
+                    //     ),
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    // ),
                   ),
                 ],
               ),

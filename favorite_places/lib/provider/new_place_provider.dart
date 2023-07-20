@@ -10,8 +10,48 @@ import 'package:path_provider/path_provider.dart' as sys_path;
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart' as sql;
 
+Future<Database> getDatabase() async {
+  // final dbPath = sql.getDatabasesPath()
+  // Get a location using getDatabasesPath
+  final dbPath = await getDatabasesPath();
+
+// open database
+  final database = await openDatabase(
+      // Set the path to the database. Note: Using the `join` function from the
+      // `path` package is best practice to ensure the path is correctly
+      // constructed for each platform.
+      // image is Text as we will just store the file path not the image itself
+      join(await getDatabasesPath(), 'new_places.db'), onCreate: (db, version) {
+    return db.execute(
+      'CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, address TEXT , lat REAL , long REAL , image TEXT)',
+    );
+  }, version: 1);
+
+  return database;
+}
+
 class NewPlaceProvider extends StateNotifier<List<Place>> {
   NewPlaceProvider() : super([]);
+
+  Future<void> loadPlaces() async {
+    // we again need to open database
+
+    final dbase = await getDatabase();
+    final places = await dbase.query('places');
+    final placeList = places
+        .map((e) => Place(
+            name: e['name'] as String,
+            image: File(e['image'] as String),
+            address: e['address'] as String,
+            lat: e['lat'] as double,
+            long: e['long'] as double))
+        .toList();
+    print("*************");
+    print(placeList);
+    print("*************");
+    print("*************");
+    state = placeList;
+  }
 
   void addPlace(Place newPlace) async {
     // step 1 We call getApplicationDocumentsDirectory. This comes from the path_provider package that we installed earlier. This will get whatever the common documents directory is for the platform that we are using. Use the getApplicationDocumentsDirectory() to get the Path to a directory where your application will place data.
@@ -21,8 +61,6 @@ class NewPlaceProvider extends StateNotifier<List<Place>> {
 
 // get file name by path package  To get the image name use the path.basename(url) method.
     final filename = path.basename(newPlace.image.path);
-    print("==================");
-    print(filename);
     print('${appDocumentDir}/$filename');
     // finallay copy the image
     final copiedimage =
@@ -35,31 +73,32 @@ class NewPlaceProvider extends StateNotifier<List<Place>> {
         lat: newPlace.lat,
         long: newPlace.long);
 
-    // final dbPath = sql.getDatabasesPath()
-    // Get a location using getDatabasesPath
-    final dbPath = await getDatabasesPath();
+//     // final dbPath = sql.getDatabasesPath()
+//     // Get a location using getDatabasesPath
+//     final dbPath = await getDatabasesPath();
 
-// open database
-    final database = await openDatabase(
-        // Set the path to the database. Note: Using the `join` function from the
-        // `path` package is best practice to ensure the path is correctly
-        // constructed for each platform.
-        // image is Text as we will just store the file path not the image itself
-        join(await getDatabasesPath(), 'new_places.db'),
-        onCreate: (db, version) {
-      return db.execute(
-        'CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, address TEXT , lat REAL , long REAL , image TEXT)',
-      );
-    }, version: 1);
+// // open database
+//     final database = await openDatabase(
+//         // Set the path to the database. Note: Using the `join` function from the
+//         // `path` package is best practice to ensure the path is correctly
+//         // constructed for each platform.
+//         // image is Text as we will just store the file path not the image itself
+//         join(await getDatabasesPath(), 'new_places.db'),
+//         onCreate: (db, version) {
+//       return db.execute(
+//         'CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, address TEXT , lat REAL , long REAL , image TEXT)',
+//       );
+//     }, version: 1);
     // insert data
-    database.insert('places', {
-      'id': newPlace.id,
-      'name':newPlace.name,
-      'image':newPlace.image.path,
-      'address':newPlace.address,
-      'lat':newPlace.lat,
-      'long':newPlace.long,
 
+    final dbase = await getDatabase();
+    dbase.insert('places', {
+      'id': newPlace.id,
+      'name': newPlace.name,
+      'image': newPlace.image.path,
+      'address': newPlace.address,
+      'lat': newPlace.lat,
+      'long': newPlace.long,
     });
 
     state = [...state, place];
