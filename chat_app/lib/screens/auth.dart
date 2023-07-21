@@ -10,24 +10,31 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  // final form = GlobalKey<FormState>();
+  final form = GlobalKey<FormState>();
+  String emailId = '';
+  String password = '';
 
-  // void _saveCredentials() {
-  //   //
-  //   form.currentState!validate();
-  // }
+  void _saveCredentials() {
+    //
+    bool isValid = form.currentState!.validate();
+    if (isValid) {
+      form.currentState!.save();
+      print(emailId);
+      print(password);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final form = GlobalKey<FormState>();
+    // final form = GlobalKey<FormState>();
 
-    void _saveCredentials() {
-      //
-      bool isValid = form.currentState!.validate();
-      if (isValid) {
-        form.currentState!.save();
-      }
-    }
+    // void _saveCredentials() {
+    //   //
+    //   bool isValid = form.currentState!.validate();
+    //   if (isValid) {
+    //     form.currentState!.save();
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -74,6 +81,9 @@ class _AuthScreenState extends State<AuthScreen> {
                               }
                               return null;
                             },
+                            onSaved: (newValue) {
+                              emailId = newValue!;
+                            },
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
@@ -83,13 +93,16 @@ class _AuthScreenState extends State<AuthScreen> {
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
-                                  value.trim().length == 0) {
+                                  value.trim().isEmpty) {
                                 return 'Enter a value';
                               }
                               if (value.length < 6) {
                                 return 'Password should be 6 character long';
                               }
                               return null;
+                            },
+                            onSaved: (newValue) {
+                              password = newValue!;
                             },
                           ),
                           const SizedBox(
