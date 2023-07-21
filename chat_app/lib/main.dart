@@ -11,10 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'Chat App',
+      theme: ThemeData().copyWith(
+          useMaterial3: true,
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 5, 27, 6))),
       home: AuthScreen(),
     );
   }

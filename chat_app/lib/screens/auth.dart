@@ -12,6 +12,15 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text("data");
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Chat App",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        centerTitle: true,
+      ),
+    );
   }
 }
