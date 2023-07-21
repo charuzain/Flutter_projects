@@ -10,11 +10,28 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // final form = GlobalKey<FormState>();
+
+  // void _saveCredentials() {
+  //   //
+  //   form.currentState!validate();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final form = GlobalKey<FormState>();
+
+    void _saveCredentials() {
+      //
+      bool isValid = form.currentState!.validate();
+      if (isValid) {
+        form.currentState!.save();
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title:const  Text(
+        title: const Text(
           "Chat App",
           style: TextStyle(color: Colors.white),
         ),
@@ -36,36 +53,61 @@ class _AuthScreenState extends State<AuthScreen> {
                     color: Color.fromARGB(255, 195, 224, 196),
                     shape: BoxShape.rectangle),
                 child: Form(
+                    key: form,
                     child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration:const  InputDecoration(
-                          label: Text("Enter Email"),
-                        ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              label: Text("Enter Email"),
+                            ),
+                            autocorrect: false,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Invalid Input. Enter some value';
+                              }
+                              if (!value.contains('@')) {
+                                return 'Email id should include @';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              label: Text("Password"),
+                            ),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.trim().length == 0) {
+                                return 'Enter a value';
+                              }
+                              if (value.length < 6) {
+                                return 'Password should be 6 character long';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          ElevatedButton(
+                            onPressed: _saveCredentials,
+                            child: Text("Login"),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text("Create an account"))
+                        ],
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text("Password"),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text("Login"),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextButton(
-                          onPressed: () {}, child: Text("Create an account"))
-                    ],
-                  ),
-                )),
+                    )),
               ),
             )
           ],
