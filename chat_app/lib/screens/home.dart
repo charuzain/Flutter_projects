@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:chat_app/screens/chat.dart';
+import 'package:chat_app/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -34,7 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (ctx) => AuthScreen()));
+                    // Navigator.push(context,
+                    //       MaterialPageRoute(builder: (ctx) => ChatScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
