@@ -1,13 +1,13 @@
 import 'package:chat_app/screens/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 final firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  AuthScreen({super.key, required this.isUSerAlreadyRegistered});
+
+  bool isUSerAlreadyRegistered;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -37,12 +37,8 @@ class _AuthScreenState extends State<AuthScreen> {
         late final errorMessage;
         if (e.code == 'weak-password') {
           errorMessage = 'The password provided is too weak.';
-
-          print('The password provided is too weak.');
         } else if (e.code == 'email-already-in-use') {
           errorMessage = 'The account already exists for that email';
-          print(
-              '**********************The account already exists for that email.**************');
         }
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -142,14 +138,23 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           ElevatedButton(
                             onPressed: _saveCredentials,
-                            child: Text("Login"),
+                            child: Text(widget.isUSerAlreadyRegistered
+                                ? "Login"
+                                : "Create Account"),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           TextButton(
-                              onPressed: () {},
-                              child: Text("Create an account"))
+                              onPressed: () {
+                                setState(() {
+                                  widget.isUSerAlreadyRegistered =
+                                      !widget.isUSerAlreadyRegistered;
+                                });
+                              },
+                              child: Text(widget.isUSerAlreadyRegistered
+                                  ? "Create an account"
+                                  : "Already have account LOGIN instead"))
                         ],
                       ),
                     )),

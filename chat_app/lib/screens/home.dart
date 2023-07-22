@@ -1,10 +1,5 @@
-import 'dart:io';
-
-import 'package:chat_app/screens/chat.dart';
 import 'package:chat_app/screens/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,15 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     letterSpacing: 8,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               SizedBox(
                 width: 160,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (ctx) => AuthScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => AuthScreen(
+                                  isUSerAlreadyRegistered: false,
+                                )));
                     // Navigator.push(context,
                     //       MaterialPageRoute(builder: (ctx) => ChatScreen()));
                   },
@@ -61,13 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => AuthScreen(
+                              isUSerAlreadyRegistered: true,
+                            )));
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
