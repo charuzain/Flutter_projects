@@ -31,18 +31,28 @@ class _AuthScreenState extends State<AuthScreen> {
           email: emailId,
           password: password,
         );
+        Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
       } on FirebaseAuthException catch (e) {
+        late final errorMessage;
         if (e.code == 'weak-password') {
+          errorMessage = 'The password provided is too weak.';
+
           print('The password provided is too weak.');
         } else if (e.code == 'email-already-in-use') {
+          errorMessage = 'The account already exists for that email';
           print(
               '**********************The account already exists for that email.**************');
         }
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          errorMessage,
+          textAlign: TextAlign.center,
+        )));
       } catch (e) {
         print(e);
       }
-      Navigator.push(
-          context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
     }
   }
 
