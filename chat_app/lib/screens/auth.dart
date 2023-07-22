@@ -1,6 +1,10 @@
+import 'package:chat_app/screens/chat.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+
+final firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -14,13 +18,31 @@ class _AuthScreenState extends State<AuthScreen> {
   String emailId = '';
   String password = '';
 
-  void _saveCredentials() {
-    //
+  void _saveCredentials() async {
     bool isValid = form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     if (isValid) {
       form.currentState!.save();
-      print(emailId);
-      print(password);
+
+      try {
+        final credential = await firebase.createUserWithEmailAndPassword(
+          email: emailId,
+          password: password,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print(
+              '**********************The account already exists for that email.**************');
+        }
+      } catch (e) {
+        print(e);
+      }
+      Navigator.push(
+          context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
     }
   }
 
