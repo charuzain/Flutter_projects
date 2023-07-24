@@ -25,29 +25,67 @@ class _AuthScreenState extends State<AuthScreen> {
     }
     if (isValid) {
       form.currentState!.save();
+      String errorMessage = '';
 
-      try {
-        final credential = await firebase.createUserWithEmailAndPassword(
-          email: emailId,
-          password: password,
-        );
-        Navigator.push(
-            context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
-      } on FirebaseAuthException catch (e) {
-        late final errorMessage;
-        if (e.code == 'weak-password') {
-          errorMessage = 'The password provided is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          errorMessage = 'The account already exists for that email';
+      if (widget.isUSerAlreadyRegistered == true) {
+        // login the user
+
+        try {
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: emailId, password: password);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            print("======================================");
+            print('No user found for that email.');
+            print("======================================");
+          } else if (e.code == 'wrong-password') {
+            print("======================================");
+
+            print('Wrong password provided for that user.');
+            print("======================================");
+          }
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+          )));
         }
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-          errorMessage,
-          textAlign: TextAlign.center,
-        )));
-      } catch (e) {
-        print(e);
+      } else {
+        // create new account
+
+        try {
+          final credential = await firebase.createUserWithEmailAndPassword(
+            email: emailId,
+            password: password,
+          );
+
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            print("======================================");
+
+            errorMessage = 'The password provided is too weak.';
+            print(errorMessage);
+
+            print("======================================");
+          } else if (e.code == 'email-already-in-use') {
+            print("======================================");
+
+            errorMessage = 'The account already exists for that email';
+            print(errorMessage);
+            print("======================================");
+          }
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+          )));
+        } catch (e) {
+          print(e);
+        }
       }
     }
   }
