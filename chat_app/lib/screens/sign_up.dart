@@ -2,6 +2,8 @@ import 'package:chat_app/screens/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/user_image.dart';
+
 final firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
@@ -132,6 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           horizontal: 15, vertical: 10),
                       child: Column(
                         children: [
+                          UserImage(),
                           TextFormField(
                             decoration: const InputDecoration(
                               label: Text("Enter Email"),
@@ -205,3 +208,28 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 }
+
+// class UserImage extends StatelessWidget {
+//   const UserImage({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         CircleAvatar(
+//           radius: 40,
+//           backgroundColor: Colors.grey,
+//         ),
+//         SizedBox(
+//           height: 15,
+//         ),
+//         TextButton.icon(
+//             onPressed: () {},
+//             icon: Icon(Icons.image),
+//             label: Text("Add Image")),
+//       ],
+//     );
+//   }
+// }
