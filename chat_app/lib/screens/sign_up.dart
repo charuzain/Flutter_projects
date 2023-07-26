@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/user_image.dart';
+import 'dart:io';
 
 final firebase = FirebaseAuth.instance;
 
@@ -19,6 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final form = GlobalKey<FormState>();
   String emailId = '';
   String password = '';
+  File ? selectedImage;
 
   void _saveCredentials() async {
     bool isValid = form.currentState!.validate();
@@ -134,7 +136,11 @@ class _AuthScreenState extends State<AuthScreen> {
                           horizontal: 15, vertical: 10),
                       child: Column(
                         children: [
-                          UserImage(),
+                          UserImage(
+                            selectImageFile: (selectedFile) => {
+                              selectedImage = selectedFile
+                            },
+                          ),
                           TextFormField(
                             decoration: const InputDecoration(
                               label: Text("Enter Email"),

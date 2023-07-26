@@ -1,31 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class UserImage extends StatefulWidget {
-  const UserImage({
-    super.key,
-  });
+  const UserImage({super.key, required this.selectImageFile});
+
+  final void Function(File selectedFile) selectImageFile;
 
   @override
   State<UserImage> createState() => _UserImageState();
 }
 
 class _UserImageState extends State<UserImage> {
-  File? pickedImage;
+  File? pickedImageFile;
 
   void takeImage() async {
     final ImagePicker picker = ImagePicker();
-    final imageClicked = await picker.pickImage(source: ImageSource.camera);
+    final imageClicked = await picker.pickImage(
+        source: ImageSource.camera, imageQuality: 50, maxWidth: 150);
+    // image can be null if we close the camera without taking any picture
     if (imageClicked == null) {
       return;
     }
     setState(() {
-      pickedImage = File(imageClicked.path);
+      pickedImageFile = File(imageClicked.path);
     });
+
+    widget.selectImageFile(pickedImageFile!);
   }
 
   @override
@@ -35,8 +36,9 @@ class _UserImageState extends State<UserImage> {
         CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey,
+            // FileImage yield imageProvider and foregroundImage use imageProvider
             foregroundImage:
-                pickedImage != null ? FileImage(pickedImage!) : null),
+                pickedImageFile != null ? FileImage(pickedImageFile!) : null),
         const SizedBox(
           height: 15,
         ),
