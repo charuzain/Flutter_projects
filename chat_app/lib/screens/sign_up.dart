@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/user_image.dart';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 final firebase = FirebaseAuth.instance;
 
@@ -20,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final form = GlobalKey<FormState>();
   String emailId = '';
   String password = '';
-  File ? selectedImage;
+  File? selectedImage;
 
   void _saveCredentials() async {
     bool isValid = form.currentState!.validate();
@@ -32,11 +33,15 @@ class _AuthScreenState extends State<AuthScreen> {
       String errorMessage = '';
 
       if (widget.isUSerAlreadyRegistered == true) {
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        print("user is already registered");
         // login the user
 
         try {
           final credential = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: emailId, password: password);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => ChatScreen()));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             print("======================================");
@@ -63,23 +68,21 @@ class _AuthScreenState extends State<AuthScreen> {
             email: emailId,
             password: password,
           );
+          final firebaseStorageRef = FirebaseStorage.instance
+              .ref()
+              .child('user_image')
+              .child('${credential.user!.uid}.jpg');
 
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
+          await firebaseStorageRef.putFile(selectedImage!);
+          final imageUrl = await firebaseStorageRef.getDownloadURL();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
-            print("======================================");
-
             errorMessage = 'The password provided is too weak.';
-            print(errorMessage);
-
-            print("======================================");
           } else if (e.code == 'email-already-in-use') {
-            print("======================================");
 
             errorMessage = 'The account already exists for that email';
-            print(errorMessage);
-            print("======================================");
           }
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -137,9 +140,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         children: [
                           UserImage(
-                            selectImageFile: (selectedFile) => {
-                              selectedImage = selectedFile
-                            },
+                            selectImageFile: (selectedFile) =>
+                                {selectedImage = selectedFile},
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
