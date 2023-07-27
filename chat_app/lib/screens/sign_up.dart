@@ -1,4 +1,3 @@
-import 'package:chat_app/screens/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _saveCredentials() async {
     bool isValid = form.currentState!.validate();
-    if (!isValid) {
+    if (!isValid || !widget.isUSerAlreadyRegistered && selectedImage == null) {
       return;
     }
     if (isValid) {
@@ -33,26 +32,14 @@ class _AuthScreenState extends State<AuthScreen> {
       String errorMessage = '';
 
       if (widget.isUSerAlreadyRegistered == true) {
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        print("user is already registered");
-        // login the user
-
         try {
           final credential = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: emailId, password: password);
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (ctx) => ChatScreen()));
+          print("******** user");
+          Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
-            print("======================================");
-            print('No user found for that email.');
-            print("======================================");
-          } else if (e.code == 'wrong-password') {
-            print("======================================");
-
-            print('Wrong password provided for that user.');
-            print("======================================");
-          }
+          } else if (e.code == 'wrong-password') {}
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
@@ -75,13 +62,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
           await firebaseStorageRef.putFile(selectedImage!);
           final imageUrl = await firebaseStorageRef.getDownloadURL();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (ctx) => ChatScreen()));
+          Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             errorMessage = 'The password provided is too weak.';
           } else if (e.code == 'email-already-in-use') {
-
             errorMessage = 'The account already exists for that email';
           }
           ScaffoldMessenger.of(context).clearSnackBars();
@@ -99,16 +84,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final form = GlobalKey<FormState>();
-
-    // void _saveCredentials() {
-    //   //
-    //   bool isValid = form.currentState!.validate();
-    //   if (isValid) {
-    //     form.currentState!.save();
-    //   }
-    // }
-
+    print("*********************************");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -130,7 +106,7 @@ class _AuthScreenState extends State<AuthScreen> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(255, 195, 224, 196),
+                    color: const Color.fromARGB(255, 195, 224, 196),
                     shape: BoxShape.rectangle),
                 child: Form(
                     key: form,
@@ -139,10 +115,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           horizontal: 15, vertical: 10),
                       child: Column(
                         children: [
-                          UserImage(
-                            selectImageFile: (selectedFile) =>
-                                {selectedImage = selectedFile},
-                          ),
+                          !widget.isUSerAlreadyRegistered
+                              ? UserImage(
+                                  selectImageFile: (selectedFile) =>
+                                      {selectedImage = selectedFile},
+                                )
+                              : Container(),
                           TextFormField(
                             decoration: const InputDecoration(
                               label: Text("Enter Email"),
@@ -216,28 +194,3 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 }
-
-// class UserImage extends StatelessWidget {
-//   const UserImage({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         CircleAvatar(
-//           radius: 40,
-//           backgroundColor: Colors.grey,
-//         ),
-//         SizedBox(
-//           height: 15,
-//         ),
-//         TextButton.icon(
-//             onPressed: () {},
-//             icon: Icon(Icons.image),
-//             label: Text("Add Image")),
-//       ],
-//     );
-//   }
-// }

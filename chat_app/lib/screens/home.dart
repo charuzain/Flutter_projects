@@ -40,8 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (ctx) => AuthScreen(
                                   isUSerAlreadyRegistered: false,
                                 )));
-                    // Navigator.push(context,
-                    //       MaterialPageRoute(builder: (ctx) => ChatScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(

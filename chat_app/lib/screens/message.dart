@@ -1,23 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
+
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<MessageScreen> createState() => _MessageScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
-    print("chat screen============================");
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
-          "Chat Messages",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text("chat"),
         actions: [
           IconButton(
               onPressed: () {
@@ -29,7 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ))
         ],
       ),
-      body: const Center(child: Text("Chat Screen")),
+      body: Text("Message"),
     );
   }
 }
