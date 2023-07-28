@@ -22,8 +22,12 @@ class _AuthScreenState extends State<AuthScreen> {
   String password = '';
   File? selectedImage;
   late String userName;
+  bool isAuthenticated = false;
 
   void _saveCredentials() async {
+    setState(() {
+      isAuthenticated = true;
+    });
     bool isValid = form.currentState!.validate();
     if (!isValid || !widget.isUSerAlreadyRegistered && selectedImage == null) {
       return;
@@ -36,7 +40,9 @@ class _AuthScreenState extends State<AuthScreen> {
         try {
           final credential = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: emailId, password: password);
-          print("******** user");
+          setState(() {
+            isAuthenticated = true;
+          });
           Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
@@ -56,6 +62,7 @@ class _AuthScreenState extends State<AuthScreen> {
             email: emailId,
             password: password,
           );
+
           final firebaseStorageRef = FirebaseStorage.instance
               .ref()
               .child('user_image')
@@ -178,12 +185,14 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          ElevatedButton(
-                            onPressed: _saveCredentials,
-                            child: Text(widget.isUSerAlreadyRegistered
-                                ? "Login"
-                                : "Create Account"),
-                          ),
+                          !isAuthenticated
+                              ? ElevatedButton(
+                                  onPressed: _saveCredentials,
+                                  child: Text(widget.isUSerAlreadyRegistered
+                                      ? "Login"
+                                      : "Create Account"),
+                                )
+                              : CircularProgressIndicator(),
                           const SizedBox(
                             height: 10,
                           ),
