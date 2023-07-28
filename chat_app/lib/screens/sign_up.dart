@@ -25,9 +25,6 @@ class _AuthScreenState extends State<AuthScreen> {
   bool isAuthenticated = false;
 
   void _saveCredentials() async {
-    setState(() {
-      isAuthenticated = true;
-    });
     bool isValid = form.currentState!.validate();
     if (!isValid || !widget.isUSerAlreadyRegistered && selectedImage == null) {
       return;
@@ -38,26 +35,35 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (widget.isUSerAlreadyRegistered == true) {
         try {
-          final credential = await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: emailId, password: password);
           setState(() {
             isAuthenticated = true;
           });
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: emailId, password: password);
           Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
-          } else if (e.code == 'wrong-password') {}
+            errorMessage = 'User doesnot exist';
+          } else if (e.code == 'wrong-password') {
+            errorMessage = 'Incoreect password';
+          }
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
             errorMessage,
             textAlign: TextAlign.center,
           )));
+          setState(() {
+            isAuthenticated = false;
+          });
         }
       } else {
         // create new account
 
         try {
+          setState(() {
+            isAuthenticated = true;
+          });
           final credential = await firebase.createUserWithEmailAndPassword(
             email: emailId,
             password: password,
@@ -83,6 +89,9 @@ class _AuthScreenState extends State<AuthScreen> {
             errorMessage,
             textAlign: TextAlign.center,
           )));
+          setState(() {
+            isAuthenticated = false;
+          });
         } catch (e) {
           print(e);
         }
