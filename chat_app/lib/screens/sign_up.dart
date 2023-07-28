@@ -21,6 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   String emailId = '';
   String password = '';
   File? selectedImage;
+  late String userName;
 
   void _saveCredentials() async {
     bool isValid = form.currentState!.validate();
@@ -160,6 +161,20 @@ class _AuthScreenState extends State<AuthScreen> {
                               password = newValue!;
                             },
                           ),
+                          !widget.isUSerAlreadyRegistered
+                              ? TextFormField(
+                                  onSaved: (newValue) => {userName = newValue!},
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return "Add a user name";
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  decoration: const InputDecoration(
+                                      label: Text("Enter name")),
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 15,
                           ),
