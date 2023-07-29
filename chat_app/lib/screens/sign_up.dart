@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../widgets/user_image.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final firebase = FirebaseAuth.instance;
 
@@ -76,6 +77,18 @@ class _AuthScreenState extends State<AuthScreen> {
 
           await firebaseStorageRef.putFile(selectedImage!);
           final imageUrl = await firebaseStorageRef.getDownloadURL();
+
+          //Step1:  Initialize an instance of Cloud Firestore:
+
+          await FirebaseFirestore.instance
+              .collection('user')
+              .doc(credential.user!.uid)
+              .set({
+            'email': emailId,
+            'username': userName,
+            'imageUrl': imageUrl
+          });
+
           Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
