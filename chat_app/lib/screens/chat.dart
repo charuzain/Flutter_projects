@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/chat_messages.dart';
+import '../widgets/new_chat_message.dart';
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
   @override
@@ -10,7 +13,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
-    print("chat screen============================");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -29,7 +31,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ))
         ],
       ),
-      body: const Center(child: Text("Chat Screen")),
+      body: Column(children: [
+        Expanded(child: ChatMessages()),
+        NewChatMessage(),
+      ]),
     );
   }
 }
