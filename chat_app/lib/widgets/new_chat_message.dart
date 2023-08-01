@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewChatMessage extends StatefulWidget {
@@ -10,8 +12,31 @@ class NewChatMessage extends StatefulWidget {
 class _NewChatMessageState extends State<NewChatMessage> {
   final _messageController = TextEditingController();
 
-  void submitMessage() {
+  void submitMessage() async {
     final chatMessage = _messageController.text;
+
+// validation
+    if (chatMessage.trim().isEmpty) {
+      return;
+    }
+// get user
+
+    final user = FirebaseAuth.instance.currentUser!;
+
+    // get userData as userName and other details are not stored using auth
+
+    final userData =
+        await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+
+
+    // create new table (collection) chat
+    FirebaseFirestore.instance.collection('chat').add({
+      'message': chatMessage,
+      'created at': DateTime.now(),
+      'username': userData.data()!['username'],
+      'userImage': userData.data()!['imageUrl']
+    });
+
     _messageController.clear();
   }
 
