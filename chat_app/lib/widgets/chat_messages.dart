@@ -9,7 +9,7 @@ class ChatMessages extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('chat')
-          .orderBy('created at', descending: false)
+          .orderBy('created at', descending: true)
           .snapshots(),
       builder: (ctx, snapshot) {
         // if connection state is  waiting display loading spinner
@@ -34,9 +34,67 @@ class ChatMessages extends StatelessWidget {
         }
 
         return ListView.builder(
+            // display message from bottom to top
+            reverse: true,
+            padding: EdgeInsets.only(bottom: 40, right: 30, left: 30),
             itemCount: snapshot.data!.docs.length,
-            itemBuilder: (ctx, index) =>
-                Text(snapshot.data!.docs[index].data()['message']));
+            itemBuilder: (ctx, index) => Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            snapshot.data!.docs[index].data()['username'],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(snapshot.data!.docs[index]
+                                    .data()['message']),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      CircleAvatar(
+                        radius: 25,
+                        foregroundImage: NetworkImage(
+                            snapshot.data!.docs[index].data()['userImage']),
+                      )
+                    ],
+                  ),
+                )
+
+            // Row(
+            //       children: [
+            //         Text(snapshot.data!.docs[index].data()['message']),
+            //         SizedBox(
+            //           width: 20,
+            //         ),
+            //         Text(snapshot.data!.docs[index].data()['username']),
+            //       ],
+            //     ),
+
+            );
       },
     );
   }

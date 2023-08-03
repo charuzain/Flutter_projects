@@ -23,16 +23,23 @@ class _NewChatMessageState extends State<NewChatMessage> {
 
     final user = FirebaseAuth.instance.currentUser!;
 
+    print(user);
+
     // get userData as userName and other details are not stored using auth
 
     final userData =
         await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
 
+    print("=====================");
+    print(userData);
+    print("=====================");
+    print(userData.metadata);
 
     // create new table (collection) chat
     FirebaseFirestore.instance.collection('chat').add({
       'message': chatMessage,
       'created at': DateTime.now(),
+      'userID' : user.uid,
       'username': userData.data()!['username'],
       'userImage': userData.data()!['imageUrl']
     });
