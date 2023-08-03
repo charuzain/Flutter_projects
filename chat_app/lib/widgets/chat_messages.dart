@@ -49,6 +49,21 @@ class ChatMessages extends StatelessWidget {
               final Color containerColor =
                   isSentByCurrentUser ? Colors.grey : Colors.grey.shade300;
 
+              // final nextMessageSender;
+              // if (snapshot.data!.docs.length > index + 1) {
+              //   print("+++++");
+              //   print(index + 1);
+              //   nextMessageSender =
+              //       snapshot.data!.docs[index + 1].data()['userID'];
+              // } else {
+              //   print("=====");
+              //   nextMessageSender = snapshot.data!.docs[index].data()['userID'];
+              // }
+              // ;
+
+              // final isNewSender = snapshot.data!.docs[index].data()['userID'] ==
+              //     nextMessageSender;
+
               return Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
@@ -70,18 +85,24 @@ class ChatMessages extends StatelessWidget {
                           )
                         ],
                       ),
-                    Column(
-                      children: [
-                        userName(
-                          username:
-                              snapshot.data!.docs[index].data()['username'],
-                        ),
-                        chatMessage(
-                          containerColor: containerColor,
-                          chatText:
-                              snapshot.data!.docs[index].data()['message'],
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: !isSentByCurrentUser
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.end,
+                        children: [
+                          userName(
+                            username:
+                                snapshot.data!.docs[index].data()['username'],
+                          ),
+                          chatMessage(
+                            containerColor: containerColor,
+                            isCurrentUser: isSentByCurrentUser,
+                            chatText:
+                                snapshot.data!.docs[index].data()['message'],
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: 5,
@@ -116,10 +137,14 @@ class userImage extends StatelessWidget {
 
 class chatMessage extends StatelessWidget {
   const chatMessage(
-      {super.key, required this.containerColor, required this.chatText});
+      {super.key,
+      required this.containerColor,
+      required this.chatText,
+      required this.isCurrentUser});
 
   final Color containerColor;
   final String chatText;
+  final bool isCurrentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +153,10 @@ class chatMessage extends StatelessWidget {
         shape: BoxShape.rectangle,
         color: containerColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
+          topLeft: !isCurrentUser ? Radius.circular(0) : Radius.circular(10),
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
+          topRight: isCurrentUser ? Radius.circular(0) : Radius.circular(10),
         ),
       ),
       child: Padding(
