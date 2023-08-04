@@ -49,20 +49,12 @@ class ChatMessages extends StatelessWidget {
               final Color containerColor =
                   isSentByCurrentUser ? Colors.grey : Colors.grey.shade300;
 
-              // final nextMessageSender;
-              // if (snapshot.data!.docs.length > index + 1) {
-              //   print("+++++");
-              //   print(index + 1);
-              //   nextMessageSender =
-              //       snapshot.data!.docs[index + 1].data()['userID'];
-              // } else {
-              //   print("=====");
-              //   nextMessageSender = snapshot.data!.docs[index].data()['userID'];
-              // }
-              // ;
-
-              // final isNewSender = snapshot.data!.docs[index].data()['userID'] ==
-              //     nextMessageSender;
+              final currentMessageUser =
+                  snapshot.data!.docs[index].data()['userID'];
+              final nextMessageUser = index + 1 < snapshot.data!.docs.length
+                  ? snapshot.data!.docs[index + 1].data()['userID']
+                  : null;
+              final nextUserIsSame = currentMessageUser == nextMessageUser;
 
               return Padding(
                 padding: const EdgeInsets.all(5.0),
@@ -76,10 +68,14 @@ class ChatMessages extends StatelessWidget {
                     if (!isSentByCurrentUser)
                       Row(
                         children: [
-                          userImage(
-                            userImageURL:
-                                snapshot.data!.docs[index].data()['userImage'],
-                          ),
+                          !nextUserIsSame
+                              ? userImage(
+                                  userImageURL: snapshot.data!.docs[index]
+                                      .data()['userImage'],
+                                )
+                              : Container(
+                                  width: 50,
+                                ),
                           SizedBox(
                             width: 5,
                           )
@@ -91,10 +87,12 @@ class ChatMessages extends StatelessWidget {
                             ? CrossAxisAlignment.start
                             : CrossAxisAlignment.end,
                         children: [
-                          userName(
-                            username:
-                                snapshot.data!.docs[index].data()['username'],
-                          ),
+                          !nextUserIsSame
+                              ? userName(
+                                  username: snapshot.data!.docs[index]
+                                      .data()['username'],
+                                )
+                              : Container(),
                           chatMessage(
                             containerColor: containerColor,
                             isCurrentUser: isSentByCurrentUser,
@@ -108,10 +106,14 @@ class ChatMessages extends StatelessWidget {
                       width: 5,
                     ),
                     if (isSentByCurrentUser)
-                      userImage(
-                        userImageURL:
-                            snapshot.data!.docs[index].data()['userImage'],
-                      )
+                      !nextUserIsSame
+                          ? userImage(
+                              userImageURL: snapshot.data!.docs[index]
+                                  .data()['userImage'],
+                            )
+                          : Container(
+                              width: 50,
+                            )
                   ],
                 ),
               );
