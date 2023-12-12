@@ -23,7 +23,7 @@ class _GroceryListState extends State<GroceryList> {
   void loadData() async {
     try {
       final url =
-          Uri.https('flutter-1d4a5-default-rtdb.firebaseio', 'list.json');
+          Uri.https('flutter-1d4a5-default-rtdb.firebaseio.com', 'list.json');
       final response = await http.get(url);
 
       if (response.body == 'null') {
@@ -61,7 +61,10 @@ class _GroceryListState extends State<GroceryList> {
       });
     } catch (error) {
       setState(() {
-        errorMsg = error.toString().split(":").first; // or simple error like soemthing went wrong
+        errorMsg = error
+            .toString()
+            .split(":")
+            .first; // or simple error like soemthing went wrong
         isLoading = false;
       });
     }

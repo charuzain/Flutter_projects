@@ -54,6 +54,7 @@ class _ExpenseState extends State<Expense> {
                   showModalBottomSheet(
                       // when isScrollControlled is true modal pverlay will take full height
                       isScrollControlled: true,
+                      useSafeArea: true,
                       context: context,
                       builder: (ctx) =>
                           AddExpenseModal(displayList: displayList));
@@ -82,7 +83,7 @@ class _ExpenseState extends State<Expense> {
                 ],
               )
             : Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   expenseList.length == 0
                       ? Container()

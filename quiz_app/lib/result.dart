@@ -61,7 +61,7 @@ class Result extends StatelessWidget {
           height: 30,
         ),
         OutlinedButton.icon(
-            icon: Icon(
+            icon: const Icon(
               Icons.refresh,
               color: Colors.white,
             ),
@@ -76,12 +76,12 @@ class Result extends StatelessWidget {
 }
 
 class QuestionSummary extends StatelessWidget {
-  QuestionSummary({
+  const QuestionSummary({
     required this.item,
     super.key,
   });
 
-  Map<dynamic, dynamic> item;
+  final Map<dynamic, dynamic> item;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class QuestionSummary extends StatelessWidget {
               //     '${item['questionNo'] + 1}'.toString(),
               //   ),
               // ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -129,7 +129,7 @@ class QuestionSummary extends StatelessWidget {
                   children: [
                     Text(
                       item['question'],
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 22,
                           color: Colors.white),
@@ -144,7 +144,7 @@ class QuestionSummary extends StatelessWidget {
                         style: TextStyle(
                           color: item['answer'] == item['selectedAns']
                               ? Colors.green
-                              : Color.fromARGB(255, 234, 102, 102),
+                              :const Color.fromARGB(255, 234, 102, 102),
                           fontSize: 16,
                         )),
                     const SizedBox(
